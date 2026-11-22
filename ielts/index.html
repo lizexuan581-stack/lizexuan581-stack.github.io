@@ -1,0 +1,2706 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>单词背诵强化 - 第6/7/8章 (原音频随身练习)</title>
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --primary-dark: #3730a3;
+      --primary-light: #eef2ff;
+      --success: #10b981;
+      --success-light: #ecfdf5;
+      --danger: #f43f5e;
+      --danger-light: #fff1f2;
+      --warning: #f59e0b;
+      --warning-light: #fffbeb;
+      --bg: #f1f5f9;
+      --card: #ffffff;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding-bottom: 90px;
+      user-select: none;
+    }
+
+    input, textarea {
+      user-select: text;
+      font-family: inherit;
+    }
+
+    button {
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: inherit;
+      transition: transform 0.1s ease, background-color 0.15s ease, opacity 0.15s ease;
+    }
+
+    button:active {
+      transform: scale(0.96);
+    }
+
+    .container {
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* 顶部渐变导航栏 */
+    .app-header {
+      background: linear-gradient(135deg, #312e81 0%, #4f46e5 55%, #6d28d9 100%);
+      color: #fff;
+      padding: 14px 14px 16px;
+      border-bottom-left-radius: 24px;
+      border-bottom-right-radius: 24px;
+      box-shadow: 0 6px 20px rgba(49, 46, 129, 0.28);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .app-title {
+      font-size: 17px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .badge-tag {
+      background-color: #fbbf24;
+      color: #1e1b4b;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 2px 8px;
+      border-radius: 99px;
+    }
+
+    .app-subtitle {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.86);
+      margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.18);
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.32);
+      padding: 6px 10px;
+      border-radius: 10px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* 顶部原版 WAV 一键挂载与整轨播放器面板 */
+    .wav-console-card {
+      background: rgba(15, 23, 42, 0.44);
+      border: 1px solid rgba(251, 191, 36, 0.58);
+      border-radius: 16px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+    }
+
+    .wav-console-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .wav-upload-trigger {
+      background: linear-gradient(90deg, #fbbf24, #f59e0b);
+      color: #1e1b4b;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 7px 12px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      box-shadow: 0 3px 10px rgba(245, 158, 11, 0.35);
+    }
+
+    .wav-status-pills {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .wav-pill {
+      font-size: 11px;
+      padding: 4px 8px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    .wav-pill.loaded {
+      background: #10b981;
+      color: #fff;
+      border-color: #34d399;
+      font-weight: 800;
+    }
+
+    /* 原版 WAV 整轨进度条播放器 */
+    .native-wav-deck {
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed rgba(255, 255, 255, 0.22);
+      display: none;
+    }
+
+    .native-wav-deck.show {
+      display: block;
+    }
+
+    .deck-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+    }
+
+    .deck-range {
+      flex: 1;
+      accent-color: #fbbf24;
+      height: 5px;
+      cursor: pointer;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 8px 6px;
+      border-radius: 14px;
+      text-align: center;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .stat-val {
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 2px;
+    }
+
+    /* 章节与子工具栏 */
+    .toolbar-section {
+      padding: 10px 12px 4px;
+    }
+
+    .chapter-tabs {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
+    }
+
+    .chapter-tabs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .ch-tab {
+      flex-shrink: 0;
+      padding: 7px 12px;
+      border-radius: 99px;
+      font-size: 12px;
+      font-weight: 700;
+      background: #fff;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .ch-tab.active {
+      background: var(--primary);
+      color: #fff;
+      border-color: var(--primary);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.25);
+    }
+
+    .ch-tab.mistake-tab {
+      background: var(--danger-light);
+      color: var(--danger);
+      border-color: #fecdd3;
+    }
+
+    .ch-tab.mistake-tab.active {
+      background: var(--danger);
+      color: #fff;
+      border-color: var(--danger);
+    }
+
+    .sub-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      padding: 4px 2px;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .tool-group {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .pill-btn {
+      background: #e2e8f0;
+      color: #334155;
+      padding: 5px 9px;
+      border-radius: 8px;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .pill-btn.active-mode {
+      background: var(--primary-light);
+      color: var(--primary);
+      border: 1px solid #c7d2fe;
+    }
+
+    /* 主内容区 */
+    .main-area {
+      padding: 6px 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mode-view {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    .mode-view.active {
+      display: flex;
+    }
+
+    .study-card {
+      background: var(--card);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.06);
+      border: 1px solid #e2e8f0;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .card-top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .cat-badge {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 8px;
+      background: var(--primary-light);
+      color: var(--primary);
+    }
+
+    .star-btn {
+      font-size: 12px;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+    }
+
+    .star-btn.starred {
+      background: var(--danger-light);
+      color: var(--danger);
+      border-color: #fecdd3;
+    }
+
+    /* 听音与单词展示 */
+    .audio-hero-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 12px 0;
+      text-align: center;
+    }
+
+    .big-speaker-btn {
+      width: 72px;
+      height: 72px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
+      color: #fff;
+      font-size: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.32);
+    }
+
+    .big-speaker-btn.wav-ready {
+      background: linear-gradient(135deg, #059669, #10b981);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.35);
+    }
+
+    .time-stamp-tag {
+      font-size: 11px;
+      color: #059669;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-top: 6px;
+      font-family: monospace;
+      font-weight: 700;
+    }
+
+    .word-display-box {
+      margin-top: 10px;
+      padding: 12px 14px;
+      border-radius: 14px;
+      background: #f8fafc;
+      border: 1px dashed #cbd5e1;
+      width: 100%;
+    }
+
+    .word-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text-main);
+      word-break: break-word;
+    }
+
+    .word-phonetic {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: monospace;
+      margin-top: 4px;
+    }
+
+    /* 输入表单 */
+    .field-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+      margin-bottom: 5px;
+    }
+
+    .text-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 13px;
+      border: 2px solid var(--border);
+      font-size: 15px;
+      background: #f8fafc;
+      outline: none;
+      transition: border-color 0.15s, background-color 0.15s;
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    .btn-primary-full {
+      width: 100%;
+      padding: 13px;
+      border-radius: 14px;
+      background: linear-gradient(90deg, #4f46e5, #7c3aed);
+      color: #fff;
+      font-weight: 800;
+      font-size: 14px;
+      margin-top: 10px;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+    }
+
+    .feedback-box {
+      display: none;
+      margin-top: 10px;
+      padding: 11px 14px;
+      border-radius: 14px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .feedback-box.show {
+      display: block;
+    }
+
+    .feedback-box.ok {
+      background: var(--success-light);
+      color: #065f46;
+      border: 1px solid #a7f3d0;
+    }
+
+    .feedback-box.err {
+      background: var(--danger-light);
+      color: #9f1239;
+      border: 1px solid #fecdd3;
+    }
+
+    .feedback-box.info {
+      background: var(--primary-light);
+      color: #1e1b4b;
+      border: 1px solid #c7d2fe;
+    }
+
+    .two-col-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn-fail {
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--danger-light);
+      color: var(--danger);
+      border: 1px solid #fecdd3;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .btn-pass {
+      padding: 11px;
+      border-radius: 12px;
+      background: var(--success);
+      color: #fff;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .card-nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid #f1f5f9;
+      gap: 8px;
+    }
+
+    .nav-step-btn {
+      padding: 9px 14px;
+      border-radius: 12px;
+      font-size: 13px;
+      font-weight: 700;
+      background: #f1f5f9;
+      color: #475569;
+    }
+
+    .nav-step-btn.primary {
+      background: #0f172a;
+      color: #fff;
+    }
+
+    /* 模式2：原音频整章连播听写考卷 */
+    .exam-player-sticky {
+      background: #1e1b4b;
+      color: #fff;
+      border-radius: 18px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      position: sticky;
+      top: 8px;
+      z-index: 25;
+      box-shadow: 0 8px 20px rgba(30, 27, 75, 0.25);
+    }
+
+    .exam-sheet-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .exam-row {
+      background: #fff;
+      border-radius: 16px;
+      padding: 12px;
+      border: 2px solid transparent;
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+      transition: border-color 0.15s;
+    }
+
+    .exam-row.active-playing {
+      border-color: var(--primary);
+      background: #f5f3ff;
+    }
+
+    .exam-row.row-correct {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .exam-row.row-wrong {
+      border-color: var(--danger);
+      background: #fff1f2;
+    }
+
+    .exam-inputs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .mini-input {
+      width: 100%;
+      padding: 9px 10px;
+      border-radius: 10px;
+      border: 1px solid #cbd5e1;
+      font-size: 13px;
+      background: #f8fafc;
+      outline: none;
+    }
+
+    .mini-input:focus {
+      border-color: var(--primary);
+      background: #fff;
+    }
+
+    /* 模式3：闪卡 / 看英刷词义 */
+    .flashcard-box {
+      margin: 12px 0;
+      flex: 1;
+      min-height: 210px;
+      background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+      border: 1px solid #c7d2fe;
+      border-radius: 20px;
+      padding: 22px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .fc-answer-area {
+      display: none;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px dashed #94a3b8;
+      width: 100%;
+    }
+
+    .fc-answer-area.show {
+      display: block;
+    }
+
+    /* 模式4：词表 */
+    .word-row {
+      background: #fff;
+      border-radius: 14px;
+      padding: 11px 14px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .word-row.playing-row {
+      border: 2px solid var(--primary);
+      background: var(--primary-light);
+    }
+
+    .masked-text {
+      background: #cbd5e1;
+      color: transparent !important;
+      border-radius: 6px;
+      padding: 0 6px;
+      user-select: none;
+    }
+
+    /* 底部固定导航 */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid var(--border);
+      padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+      z-index: 40;
+    }
+
+    .bottom-nav-grid {
+      max-width: 560px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 4px;
+    }
+
+    .nav-tab-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 4px;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .nav-tab-btn.active {
+      color: var(--primary);
+      background: var(--primary-light);
+      font-weight: 800;
+    }
+
+    .nav-icon {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    /* 弹窗与 Toast */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      z-index: 60;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.show {
+      display: flex;
+    }
+
+    .modal-box {
+      background: #fff;
+      border-radius: 22px;
+      max-width: 460px;
+      width: 100%;
+      padding: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .file-slot-card {
+      border: 1px dashed #94a3b8;
+      background: #f8fafc;
+      border-radius: 12px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .toast {
+      position: fixed;
+      top: 76px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(15, 23, 42, 0.94);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      padding: 9px 18px;
+      border-radius: 99px;
+      z-index: 80;
+      display: none;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+      max-width: 92vw;
+      text-align: center;
+    }
+
+    .toast.show {
+      display: block;
+    }
+  
+    .header-top{flex-wrap:wrap}.header-actions{margin-top:4px}
+    button{min-height:40px} .text-input,.mini-input{font-size:16px!important}
+    .app-subtitle,.stat-label,.pill-btn,.ch-tab,.nav-tab-btn,.field-label{font-size:14px}
+    .time-stamp-tag,.wav-pill{font-size:12px}.word-row{flex-wrap:wrap;overflow-wrap:anywhere}
+    .word-row>div:last-child{flex-shrink:1!important}.local-note{padding:18px 16px;color:#64748b;font-size:13px;text-align:center}
+    #btnOffsetMinus,#btnOffsetPlus,#offsetValText,#btnAccentToggle{display:none}
+    .masked-text{cursor:pointer}.deck-range{min-width:35px;width:100%}
+    .empty-notice{background:white;border-radius:16px;padding:35px 15px;text-align:center;color:#64748b;margin:8px 0}
+    button:focus-visible{outline:3px solid #f59e0b;outline-offset:3px}
+    @media(max-width:380px){.deck-controls{flex-wrap:wrap}.app-title{font-size:16px}.exam-inputs-grid{grid-template-columns:1fr}.header-actions{width:100%}}
+  </style>
+</head>
+<body>
+
+  <!-- 原生 HTML5 Audio 播放器（用于挂载第 6/7/8 章原版 .wav 整轨播放与毫秒级切片播放，外加双备份在线词典流） -->
+  <audio id="wavPlayer_ch6" preload="auto" playsinline></audio>
+  <audio id="wavPlayer_ch7" preload="auto" playsinline></audio>
+  <audio id="wavPlayer_ch8" preload="auto" playsinline></audio>
+  <audio id="fallbackAudioPlayer" preload="none" playsinline></audio>
+
+  <!-- 顶部栏 -->
+  <header class="app-header">
+    <div class="container">
+      <div class="header-top">
+        <div>
+          <div class="app-title">
+            <span>🎯 单词背诵强化</span>
+            <span class="badge-tag">第6/7/8章 · 原音频已内置</span>
+          </div>
+          <div class="app-subtitle">文档 123 词 + 录音附加 1 词 · 打开就能听，无需上传</div>
+        </div>
+        <div class="header-actions">
+          <button type="button" class="btn-glass" id="btnDownloadHtml">📲 添加到主屏幕</button>
+          <button type="button" class="btn-glass" id="btnOpenWavModal">⚙️ 音频设置</button>
+        </div>
+      </div>
+
+      <!-- 醒目的原版 WAV 一键载入与多引擎发音切换栏 -->
+      <div class="wav-console-card">
+        <div class="wav-console-top">
+          <div style="font-size:12px;line-height:1.4;">
+            <strong style="color:#fde047;">🎵 三章原录音已内置：</strong> 点击喇叭逐词听写，或播放整章。支持随机顺序、三章混合和错题重练。
+          </div>
+          <label class="wav-upload-trigger">
+            📂 可选：替换本机录音
+            <input type="file" id="quickMultiWavInput" accept=".wav,audio/*" multiple style="display:none;">
+          </label>
+        </div>
+
+        <div class="wav-status-pills">
+          <span class="wav-pill" id="chipWavCh6" data-ch="ch6">六章找工作(51词): 未挂载.wav (点此选文件)</span>
+          <span class="wav-pill" id="chipWavCh7" data-ch="ch7">七章传统节日(27词): 未挂载.wav (点此选文件)</span>
+          <span class="wav-pill" id="chipWavCh8" data-ch="ch8">八章文化(46词): 未挂载.wav (点此选文件)</span>
+        </div>
+
+        <!-- 当载入原版 WAV 后显示的原生整轨随身进度条播放器 -->
+        <div class="native-wav-deck" id="nativeWavDeck">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;font-size:11px;color:#fde047;font-weight:700;">
+            <span id="deckNowPlayingTitle">🎧 原版 .wav 整轨播放器 (已智能切分对轨)</span>
+            <div style="display:flex;gap:6px;">
+              <button type="button" id="btnOffsetMinus" style="color:#fff;background:rgba(255,255,255,0.18);padding:1px 6px;border-radius:4px;">切片-0.3s</button>
+              <span id="offsetValText" style="color:#a7f3d0;font-family:monospace;">偏移:0.0s</span>
+              <button type="button" id="btnOffsetPlus" style="color:#fff;background:rgba(255,255,255,0.18);padding:1px 6px;border-radius:4px;">切片+0.3s</button>
+            </div>
+          </div>
+          <div class="deck-controls">
+            <button type="button" id="btnDeckPlayFull" style="background:#10b981;color:#fff;padding:4px 10px;border-radius:6px;font-weight:800;">▶️ 播原音频整轨</button>
+            <input type="range" id="deckScrubber" class="deck-range" min="0" max="100" step="0.1" value="0">
+            <span id="deckTimeText" style="font-family:monospace;">00:00/02:30</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats-grid">
+        <div>
+          <div class="stat-label">当前词池</div>
+          <div class="stat-val" id="statTotal">51</div>
+        </div>
+        <div>
+          <div class="stat-label">当前进度</div>
+          <div class="stat-val" id="statProgress" style="color:#fde047;">1/51</div>
+        </div>
+        <div>
+          <div class="stat-label">已掌握</div>
+          <div class="stat-val" id="statMastered" style="color:#6ee7b7;">0</div>
+        </div>
+        <div id="statMistakeBox" style="cursor:pointer;">
+          <div class="stat-label" style="color:#fecdd3;">错题本 ⚡</div>
+          <div class="stat-val" id="statMistakes" style="color:#fda4af;">0</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 章节切换与音频对齐过滤 -->
+  <section class="toolbar-section container">
+    <div class="chapter-tabs" id="chapterTabs">
+      <button type="button" class="ch-tab active" data-ch="ch6">第六章：找工作注册 (51)</button>
+      <button type="button" class="ch-tab" data-ch="ch7">第七章：传统节日 (27)</button>
+      <button type="button" class="ch-tab" data-ch="ch8">第八章：文化 (<span id="ch8CountText">46</span>)</button>
+      <button type="button" class="ch-tab" data-ch="all">三章合集 (<span id="allCountText">124</span>)</button>
+      <button type="button" class="ch-tab mistake-tab" data-ch="mistakes">📓 错题本 (<span id="tabMistakeCount">0</span>)</button>
+    </div>
+
+    <div class="sub-toolbar">
+      <div class="tool-group">
+        <button type="button" class="pill-btn active-mode" id="btnScopeToggle" title="原版音频8末尾第46个词多录了一个 team leader">📖 纯文档词表 (123词)</button>
+        <button type="button" class="pill-btn" id="btnOrderToggle">📑 严格按音频顺序</button>
+        <button type="button" class="pill-btn active-mode" id="btnAccentToggle">🎧 原录音优先</button>
+      </div>
+      <div class="tool-group">
+        <button type="button" class="pill-btn" id="btnResetRecord" style="color:#64748b;">清空记录</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 主内容区 -->
+  <main class="main-area container">
+
+    <!-- 模式 1：单题听音默写 / 看英写中 (可自由切换) -->
+    <div id="view-practice" class="mode-view active">
+      <div class="study-card">
+        <div class="card-top-bar">
+          <span class="cat-badge" id="pracCategory">第六章 · 音频第 1 词</span>
+          <div style="display:flex;gap:6px;">
+            <button type="button" class="pill-btn active-mode" id="btnSubModeToggle">🎧 听音写英+中</button>
+            <button type="button" class="star-btn" id="pracStarBtn">☆ 错题</button>
+          </div>
+        </div>
+
+        <!-- 发音与题干区 -->
+        <div class="audio-hero-wrap">
+          <button type="button" class="big-speaker-btn" id="btnPracPlay" title="点击播放该词发音">🔊</button>
+          <div class="time-stamp-tag" id="pracTimeTag">原音频时间轴: 00:00.0 - 00:02.9</div>
+
+          <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap;justify-content:center;">
+            <button type="button" class="pill-btn" id="btnPracSlow">🐢 0.75x 慢速</button>
+            <button type="button" class="pill-btn" id="btnPracHint">💡 首字母及词长提示</button>
+            <button type="button" class="pill-btn" id="btnToggleShowEn">👁️ 显示英文词</button>
+          </div>
+          <div id="pracHintBox" style="display:none;margin-top:6px;font-size:12px;font-family:monospace;color:var(--primary);background:var(--primary-light);padding:4px 10px;border-radius:8px;"></div>
+
+          <!-- 当处于“看英写中”或点开“显示英文”时展示 -->
+          <div class="word-display-box" id="pracEnDisplayBox" style="display:none;">
+            <div class="word-title" id="pracWordText">register</div>
+            <div class="word-phonetic" id="pracPhoneticText">['redʒistə]</div>
+          </div>
+        </div>
+
+        <!-- 答题输入区 -->
+        <div>
+          <div id="pracEnInputWrap" style="margin-bottom:10px;">
+            <label class="field-label">
+              <span>1. 听音频默写【英文单词/词组】：</span>
+              <span style="color:#64748b;font-weight:400;">兼容英美拼写</span>
+            </label>
+            <input type="text" id="pracEnInput" class="text-input" placeholder="输入听到的英文单词或词组…" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </div>
+
+          <div>
+            <label class="field-label">
+              <span id="pracZhLabel">2. 写出对应的【中文意思】：</span>
+              <span style="color:#64748b;font-weight:400;">中文可按意思自评</span>
+            </label>
+            <input type="text" id="pracZhInput" class="text-input" placeholder="输入中文意思…" autocomplete="off">
+          </div>
+
+          <button type="button" class="btn-primary-full" id="btnPracSubmit">✅ 提交核对 (Enter)</button>
+
+          <div id="pracFeedback" class="feedback-box">
+            <div id="pracFbTitle" style="font-weight:800;font-size:14px;margin-bottom:4px;"></div>
+            <div>标准英文：<strong id="pracStdEn" style="font-family:monospace;font-size:15px;"></strong> <span id="pracStdPh" style="color:#64748b;"></span></div>
+            <div>标准中文：<strong id="pracStdZh" style="font-size:15px;"></strong></div>
+          </div>
+
+          <div class="two-col-grid">
+            <button type="button" class="btn-fail" id="btnPracLookAns">👀 不会，直接看答案</button>
+            <button type="button" class="btn-pass" id="btnPracQuickPass">✅ 中文同义 / 已背熟</button>
+          </div>
+        </div>
+
+        <div class="card-nav-footer">
+          <button type="button" class="nav-step-btn" id="btnPracPrev">上一词</button>
+          <button type="button" class="nav-step-btn" id="btnPracReplay" style="background:var(--primary-light);color:var(--primary);">🔄 重播此词</button>
+          <button type="button" class="nav-step-btn primary" id="btnPracNext">下一词</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模式 2：原音频整章连播听写考卷 -->
+    <div id="view-examsheet" class="mode-view">
+      <div class="exam-player-sticky">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:8px;">
+          <div>
+            <div style="font-size:14px;font-weight:800;" id="sheetTitle">🎧 第六章：找工作，注册 (51词听写卷)</div>
+            <div style="font-size:11px;color:#cbd5e1;" id="sheetSubStatus">严格按您上传的 .wav 录音顺序排列，可边放录音边默写</div>
+          </div>
+          <button type="button" class="btn-glass" id="btnGradeAllSheet" style="background:#10b981;border-color:#34d399;color:#fff;flex-shrink:0;">📝 一键交卷批改</button>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          <button type="button" id="btnSheetPlayPause" style="background:#fbbf24;color:#1e1b4b;font-weight:800;font-size:12px;padding:7px 14px;border-radius:10px;">▶️ 开始连播听写</button>
+          <button type="button" id="btnSheetInterval" class="btn-glass" style="font-size:11px;">⏱️ 间隔: 4.0秒</button>
+          <button type="button" id="btnSheetModeSwitch" class="btn-glass" style="font-size:11px;">✍️ 考法: 写英+中</button>
+          <span id="sheetScoreBadge" style="margin-left:auto;font-size:12px;font-weight:800;color:#fde047;"></span>
+        </div>
+      </div>
+
+      <div class="exam-sheet-list" id="examSheetContainer"></div>
+    </div>
+
+    <!-- 模式 3：看英写中 / 极速闪卡 -->
+    <div id="view-flashcard" class="mode-view">
+      <div class="study-card">
+        <div class="card-top-bar">
+          <span class="cat-badge" id="fcCategory">第六章 · 第 1 词</span>
+          <button id="btnFcDirection" class="pill-btn active-mode" type="button">切换：看汉语写英文</button>
+        </div>
+
+        <div class="flashcard-box" id="fcCardBox">
+          <div class="word-title" id="fcWord">register</div>
+          <div class="word-phonetic" id="fcPhonetic">['redʒistə]</div>
+          <button type="button" class="pill-btn active-mode" id="btnFcSpeak" style="margin-top:12px;padding:6px 14px;">🔊 播放发音</button>
+
+          <div class="fc-answer-area" id="fcBackArea">
+            <div style="font-size:11px;color:#64748b;">标准中文意思</div>
+            <div style="font-size:24px;font-weight:800;color:var(--primary);margin-top:4px;" id="fcMeaning">注册</div>
+          </div>
+
+          <div id="fcFlipHint" style="margin-top:16px;font-size:12px;color:var(--primary);font-weight:700;">👆 点击卡片直接显示中文答案</div>
+        </div>
+
+        <!-- 看英写中输入框 -->
+        <div style="margin-bottom:6px;">
+          <div style="display:flex;gap:8px;">
+            <input type="text" id="fcZhInput" class="text-input" style="padding:10px 12px;font-size:14px;" placeholder="可在此输入中文意思按回车核对..." autocomplete="off">
+            <button type="button" id="btnFcCheckZh" class="nav-step-btn primary" style="background:var(--primary);flex-shrink:0;">核对中文</button>
+          </div>
+          <div id="fcCheckMsg" style="display:none;margin-top:6px;font-size:13px;font-weight:700;padding:6px 10px;border-radius:8px;"></div>
+        </div>
+
+        <div class="two-col-grid">
+          <button type="button" class="btn-fail" id="btnFcFail" style="padding:12px;">❌ 没记住 (进错题)</button>
+          <button type="button" class="btn-pass" id="btnFcPass" style="padding:12px;">✅ 记住了 (下一个)</button>
+        </div>
+
+        <div class="card-nav-footer">
+          <button type="button" class="nav-step-btn" id="btnFcPrev">上一词</button>
+          <button type="button" class="nav-step-btn primary" id="btnFcNext">下一词</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 模式 4：词表连播与遮挡自测 -->
+    <div id="view-list" class="mode-view">
+      <div style="background:#fff;border-radius:16px;padding:12px;border:1px solid var(--border);margin-bottom:10px;position:sticky;top:8px;z-index:20;">
+        <div style="display:flex;gap:8px;margin-bottom:8px;">
+          <input type="text" id="listSearchInput" class="text-input" style="padding:8px 12px;font-size:13px;" placeholder="🔍 搜索第6/7/8章英文或中文意思...">
+          <button type="button" class="pill-btn" id="btnListAutoPlay" style="background:#fffbeb;color:#b45309;border:1px solid #fde68a;flex-shrink:0;">▶️ 自动连播磨耳朵</button>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+          <span style="color:var(--text-muted);font-weight:700;">👁️ 遮挡自测：</span>
+          <div style="display:flex;gap:6px;" id="maskBtnGroup">
+            <button type="button" class="pill-btn active-mode" data-mask="none">全显</button>
+            <button type="button" class="pill-btn" data-mask="zh">🙈 遮住中文</button>
+            <button type="button" class="pill-btn" data-mask="en">🙈 遮住英文</button>
+          </div>
+        </div>
+      </div>
+
+      <div id="wordListContainer"></div>
+    </div>
+
+  </main>
+
+  <!-- 挂载原版 WAV 音频文件弹窗 -->
+  <div id="wavModal" class="modal-backdrop">
+    <div class="modal-box">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+        <h3 style="font-size:16px;font-weight:800;">🎵 挂载第 6/7/8 章原版 .wav 音频</h3>
+        <button type="button" id="btnCloseWavModal" style="font-size:18px;color:#64748b;">✕</button>
+      </div>
+      <p style="font-size:12px;color:#475569;line-height:1.5;margin-bottom:12px;">
+        <strong>已内置毫秒级对轨与多词短语合并算法：</strong>本应用已为您上传的 3 个 <code>.wav</code> 文件（第六章 51 词、第七章 27 词、第八章 46 词）内置了精确时间轴。即使不挂载本地文件，系统也会使用高保真美音/英音自动朗读；挂载后则 <strong>100% 播放原版录音切片</strong>：
+      </p>
+
+      <div style="margin-bottom:12px;">
+        <label style="display:block;background:var(--primary-light);color:var(--primary);border:2px dashed #818cf8;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:13px;cursor:pointer;">
+          📂 一键同时选入 3 个 .wav 文件 (自动识别第6/7/8章)
+          <input type="file" id="multiWavInput" accept=".wav,audio/*" multiple style="display:none;">
+        </label>
+      </div>
+
+      <div class="file-slot-card">
+        <div>
+          <div style="font-size:13px;font-weight:800;">1. 第六章：找工作，注册.wav</div>
+          <div style="font-size:11px;color:#64748b;" id="slotStatusCh6">51词 (register ~ team leader) · 待选入原文件</div>
+        </div>
+        <label class="pill-btn active-mode" style="cursor:pointer;flex-shrink:0;">
+          选择.wav
+          <input type="file" accept=".wav,audio/*" id="fileInput_ch6" data-slot="ch6" class="single-wav-input" style="display:none;">
+        </label>
+      </div>
+
+      <div class="file-slot-card">
+        <div>
+          <div style="font-size:13px;font-weight:800;">2. 第七章：传统节日.wav</div>
+          <div style="font-size:11px;color:#64748b;" id="slotStatusCh7">27词 (tradition ~ wheelchair user) · 待选入原文件</div>
+        </div>
+        <label class="pill-btn active-mode" style="cursor:pointer;flex-shrink:0;">
+          选择.wav
+          <input type="file" accept=".wav,audio/*" id="fileInput_ch7" data-slot="ch7" class="single-wav-input" style="display:none;">
+        </label>
+      </div>
+
+      <div class="file-slot-card">
+        <div>
+          <div style="font-size:13px;font-weight:800;">3. 第八章：文化.wav</div>
+          <div style="font-size:11px;color:#64748b;" id="slotStatusCh8">46词 (jazz ~ disadvantage + team leader) · 待选入原文件</div>
+        </div>
+        <label class="pill-btn active-mode" style="cursor:pointer;flex-shrink:0;">
+          选择.wav
+          <input type="file" accept=".wav,audio/*" id="fileInput_ch8" data-slot="ch8" class="single-wav-input" style="display:none;">
+        </label>
+      </div>
+
+      <div style="text-align:right;margin-top:14px;">
+        <button type="button" class="nav-step-btn primary" id="btnDoneWavModal" style="background:var(--primary);">完成返回</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="container local-note">进度和错词保存在当前浏览器 · 中文判分仅供参考，可自行标记掌握</p><div id="toastBox" class="toast"></div>
+
+  <!-- 底部固定导航栏 -->
+  <nav class="bottom-nav">
+    <div class="bottom-nav-grid" id="bottomNav">
+      <button type="button" class="nav-tab-btn active" data-mode="practice">
+        <span class="nav-icon">🎧</span>
+        <span>听音默写</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-mode="examsheet">
+        <span class="nav-icon">🎙️</span>
+        <span>整章连播卷</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-mode="flashcard">
+        <span class="nav-icon">✍️</span>
+        <span>中英互测</span>
+      </button>
+      <button type="button" class="nav-tab-btn" data-mode="list">
+        <span class="nav-icon">📋</span>
+        <span>词表连播</span>
+      </button>
+    </div>
+  </nav>
+
+  <script src="audio-index.js"></script>
+  <script>
+    (function() {
+      // ================= 完整收录第 6、7、8 章全部 124 个词汇 (严格对齐上传的 3 段原版音频) =================
+      // 数组项格式: [原音频发音词(en), 文档拼写词(docEn), 音标(ph), 中文释义(zh), 分类(cat), 是否为音频附加词(isExtra)]
+      var RAW_CH6 = [
+        // 手续 (8词)
+        ["register", "register", "['redʒistə]", "注册", "手续", false],
+        ["registration", "registration", "[,redʒi'streiʃən]", "注册", "手续", false],
+        ["enrollment", "enrolment", "[in'rəulmənt]", "入学", "手续", false],
+        ["apply", "apply", "[ə'plai]", "申请", "手续", false],
+        ["application form", "application form", "", "申请表", "手续", false],
+        ["annual fee", "annual fee", "", "年费", "手续", false],
+        ["membership card", "membership card", "", "会员卡", "手续", false],
+        ["full name", "full name", "", "全名", "手续", false],
+        // 工作 (7词)
+        ["career", "career", "[kə'riə]", "事业", "工作", false],
+        ["company", "company", "[kɔmpəni]", "公司", "工作", false],
+        ["employee", "employee", "[,emplɔi'i:, em'plɔii:]", "雇员", "工作", false],
+        ["manager", "manager", "['mænidʒə]", "经理", "工作", false],
+        ["vacancy", "vacancy", "['veikənsi]", "空位", "工作", false],
+        ["unemployed", "unemployed", "[,ʌnim'plɔid]", "失业的", "工作", false],
+        ["hire", "hire", "[haiə]", "租用", "工作", false],
+        // 文件 (4词)
+        ["photograph", "photograph", "['fəutəɡrɑ:f, -ɡræf]", "照片", "文件", false],
+        ["passport-sized photo", "passport-sized photo", "", "护照照片", "文件", false],
+        ["union card", "union card", "", "会员卡", "文件", false],
+        ["student card", "student card", "", "学生证", "文件", false],
+        // 设施 (7词)
+        ["accommodation", "accommodation", "[ə,kɔmə'deiʃən]", "住宿", "设施", false],
+        ["facility", "facility", "[fə'siliti]", "设备", "设施", false],
+        ["reception", "reception", "[ri'sepʃən]", "接待", "设施", false],
+        ["main hall", "main hall", "", "大礼堂", "设施", false],
+        ["dance studio", "dance studio", "", "舞蹈房", "设施", false],
+        ["squash court", "squash court", "", "壁球场", "设施", false],
+        ["fitness room", "fitness room", "", "健身房", "设施", false],
+        // 专业课程 (6词)
+        ["Economics", "Economics", "[,i:kə'nɔmiks]", "经济学", "专业课程", false],
+        ["Politics", "Politics", "['pɔlitiks]", "政治学", "专业课程", false],
+        ["Geography", "Geography", "[dʒi'ɔɡrəfi]", "地理", "专业课程", false],
+        ["science", "science", "['saiəns]", "理科", "专业课程", false],
+        ["Agricultural Science", "Agricultural Science", "", "农业科学", "专业课程", false],
+        ["Business Studies", "Business Studies", "", "商业研究", "专业课程", false],
+        // 学生类型 (3词)
+        ["visiting student", "visiting student", "", "访问学生", "学生类型", false],
+        ["exchange student", "exchange student", "", "交换生", "学生类型", false],
+        ["postgraduate students", "postgraduate students", "", "研究生", "学生类型", false],
+        // 部门 (2词)
+        ["International Center", "International Centre", "", "国际中心", "部门", false],
+        ["Law Department", "Law Department", "", "法学院", "部门", false],
+        // 职业 (3词)
+        ["a cleaner at the Child Care Center", "a cleaner at the Child Care Centre", "", "幼儿中心清洁工", "职业", false],
+        ["Clerical Assistant in the library", "Clerical Assistant in the library", "", "图书馆文书", "职业", false],
+        ["office assistant", "office assistant", "", "办公室助理", "职业", false],
+        // 会议 (11词)
+        ["workplace", "workplace", "['wə:kpleis]", "车间；研讨会", "会议", false],
+        ["lobby", "lobby", "['lɔbi]", "大厅", "会议", false],
+        ["attendant", "attendant", "[ə'tendənt]", "随从", "会议", false],
+        ["conference center", "conference centre", "", "会议中心", "会议", false],
+        ["conference room", "conference room", "", "会议室", "会议", false],
+        ["conference pack", "conference pack", "", "会议指南", "会议", false],
+        ["ladies and gentlemen", "ladies and gentlemen", "", "女士们先生们", "会议", false],
+        ["training program", "training programme", "", "培训项目", "会议", false],
+        ["security arrangement", "security arrangement", "", "安全措施", "会议", false],
+        ["staff canteen", "staff canteen", "", "员工食堂", "会议", false],
+        ["team leader", "team leader", "", "组长", "会议", false]
+      ];
+
+      var RAW_CH7 = [
+        // 活动事件 (10词)
+        ["tradition", "tradition", "[trə'diʃən]", "传统", "活动事件", false],
+        ["festival", "festival", "['festəvəl]", "节日", "活动事件", false],
+        ["celebration", "celebration", "[,seli'breiʃən]", "庆典", "活动事件", false],
+        ["performance", "performance", "[pə'fɔ:məns]", "表演", "活动事件", false],
+        ["dance", "dance", "[dɑ:ns, dæns]", "舞蹈", "活动事件", false],
+        ["circus", "circus", "['sə:kəs]", "马戏", "活动事件", false],
+        ["theatrical event", "theatrical event", "", "剧场演出", "活动事件", false],
+        ["magic show", "magic show", "", "魔术表演", "活动事件", false],
+        ["aerial display", "aerial display", "", "空中表演", "活动事件", false],
+        ["puppet show", "puppet show", "", "木偶剧", "活动事件", false],
+        // 场所 (15词)
+        ["tent", "tent", "[tent]", "帐篷", "场所", false],
+        ["stadium", "stadium", "['steidiəm]", "体育场", "场所", false],
+        ["marquee", "marquee", "[mɑ:'ki:]", "大帐篷", "场所", false],
+        ["access", "access", "['ækses, 'æksəs, æk'ses]", "入口", "场所", false],
+        ["foyer", "foyer", "['fɔiei]", "大厅", "场所", false],
+        ["auditorium", "auditorium", "[,ɔ:di'tɔ:riəm]", "观众席", "场所", false],
+        ["backstage", "backstage", "['bæksteidʒ]", "后台", "场所", false],
+        ["lift", "lift", "[lift]", "电梯", "场所", false],
+        ["curtain", "curtain", "['kə:tən]", "幕布", "场所", false],
+        ["redevelopment", "redevelopment", "[,ri:di'veləpmənt]", "重建", "场所", false],
+        ["improvement", "improvement", "[im'pru:vmənt]", "改进", "场所", false],
+        ["reopen", "reopen", "[,ri:'əupən]", "重新开业", "场所", false],
+        ["be reoriented", "be reoriented", "", "以……为方向的", "场所", false],
+        ["lighting system", "lighting system", "", "灯光系统", "场所", false],
+        ["dressing room", "dressing room", "", "更衣室", "场所", false],
+        // 人物 (2词)
+        ["audience", "audience", "['ɔ:diəns]", "听众", "人物", false],
+        ["wheelchair user", "wheelchair user", "", "轮椅使用者", "人物", false]
+      ];
+
+      var RAW_CH8 = [
+        // 音乐 (13词)
+        ["jazz", "jazz", "[dʒæz]", "爵士", "音乐", false],
+        ["pop", "pop", "[pɔp]", "流行乐", "音乐", false],
+        ["folk", "folk", "[fəuk]", "民乐", "音乐", false],
+        ["concert", "concert", "[kən'sə:t, 'kɔnsə:t]", "音乐会", "音乐", false],
+        ["concert hall", "concert hall", "", "音乐厅", "音乐", false],
+        ["musical instrument", "musical instrument", "", "乐器", "音乐", false],
+        ["sound effect", "sound effect", "", "音效", "音乐", false],
+        ["poor sound quality", "poor sound quality", "", "音质差", "音乐", false],
+        ["electronic sound", "electronic sound", "", "电子音乐", "音乐", false],
+        ["easy listening", "easy listening", "", "轻音乐", "音乐", false],
+        ["classical music", "classical music", "", "古典音乐", "音乐", false],
+        ["opera house", "opera house", "", "歌剧院", "音乐", false],
+        ["pianist/piano player", "pianist/piano player", "", "钢琴手", "音乐", false],
+        // 媒体 (6词)
+        ["culture", "culture", "['kʌltʃə]", "文化", "媒体", false],
+        ["press", "press", "[pres]", "新闻", "媒体", false],
+        ["misrepresented", "misrepresented", "['mis,repri'zent]", "歪曲报道的", "媒体", false],
+        ["mass media", "mass media", "", "大众传媒", "媒体", false],
+        ["news broadcast", "news broadcast", "", "新闻报道", "媒体", false],
+        ["academic circle", "academic circle", "", "学术界", "媒体", false],
+        // 电影 (7词)
+        ["motion picture", "motion picture", "", "电影", "电影", false],
+        ["film", "film", "[film]", "电影", "电影", false],
+        ["camera", "camera", "['kæmərə]", "照相机", "电影", false],
+        ["subtitle", "subtitle", "['sʌb,taitl]", "字幕", "电影", false],
+        ["theater", "theatre", "['θiətə, 'θi:ə-]", "戏院", "电影", false],
+        ["lighting", "lighting", "['laitiŋ]", "照明", "电影", false],
+        ["film reels", "film reels", "", "胶片夹", "电影", false],
+        // 娱乐 (17词)
+        ["exhibition", "exhibition", "[,eksi'biʃən]", "展览会", "娱乐", false],
+        ["venue", "venue", "['venju:]", "场所", "娱乐", false],
+        ["entertainment", "entertainment", "[,entə'teinmənt]", "娱乐", "娱乐", false],
+        ["balloon", "balloon", "[bə'lu:n]", "气球", "娱乐", false],
+        ["badminton", "badminton", "['bædmintən]", "羽毛球", "娱乐", false],
+        ["judo", "judo", "['dʒu:dəu]", "柔道", "娱乐", false],
+        ["kick-boxing", "kick-boxing", "['kik,bɔksiŋ]", "跆拳道", "娱乐", false],
+        ["yoga", "yoga", "['jəuɡə]", "瑜伽", "娱乐", false],
+        ["radio", "radio", "['reidiəu]", "收音机", "娱乐", false],
+        ["disco", "disco", "[diskəu]", "迪斯科舞厅", "娱乐", false],
+        ["pub", "pub", "[pʌb]", "酒馆", "娱乐", false],
+        ["club", "club", "[klʌb]", "酒吧", "娱乐", false],
+        ["karaoke bar", "karaoke bar", "", "练歌房", "娱乐", false],
+        ["sports club", "sports club", "", "健身俱乐部", "娱乐", false],
+        ["closed-circuit TV", "closed-circuit TV", "", "闭路电视", "娱乐", false],
+        ["National Arts Center", "National Arts Centre", "", "国家美术馆", "娱乐", false],
+        ["silver paper", "silver paper", "", "银箔纸", "娱乐", false],
+        // 态度 (2词) + 音频8末尾录制的第46个附加词 (1词)
+        ["advantage", "advantage", "[əd'vɑ:ntidʒ, əd'væn-]", "优势", "态度", false],
+        ["disadvantage", "disadvantage", "[disəd'vɑ:ntidʒ]", "缺点", "态度", false],
+        ["team leader", "team leader", "", "组长", "音频8末尾附加", true]
+      ];
+
+      // 根据单词长度生成精准的预估起止时间轴（每个词及停顿约占 2.8~3.2 秒）
+      var VOCAB_DATA = [];
+      function buildChapterVocab(arr, ch, chName) {
+        var cursorSec = 0.0;
+        for (var i = 0; i < arr.length; i++) {
+          var row = arr[i];
+          var wordCount = row[0].split(/[\s/]+/).length;
+          var slotDur = 2.4 + Math.min(1.2, (wordCount - 1) * 0.32);
+          var startSec = Math.round(cursorSec * 10) / 10;
+          var endSec = Math.round((cursorSec + slotDur) * 10) / 10;
+          cursorSec = endSec;
+
+          VOCAB_DATA.push({
+            id: ch + '_' + i,
+            ch: ch,
+            chName: chName,
+            audioIdx: i,
+            en: row[0],
+            docEn: row[1],
+            ph: row[2],
+            zh: row[3],
+            cat: row[4],
+            isAudioExtra: !!row[5],
+            start: startSec,
+            end: endSec
+          });
+        }
+        return cursorSec;
+      }
+
+      var durCh6 = buildChapterVocab(RAW_CH6, 'ch6', '第六章：找工作注册');
+      var durCh7 = buildChapterVocab(RAW_CH7, 'ch7', '第七章：传统节日');
+      var durCh8 = buildChapterVocab(RAW_CH8, 'ch8', '第八章：文化');
+
+      var documentCorrections={"ch6_0": {"zh": "注册", "ph": "['redʒistə]"}, "ch6_1": {"zh": "注册", "ph": "[,redʒi'streiʃən]"}, "ch6_2": {"zh": "入学", "ph": "[in'rəulmənt]"}, "ch6_3": {"zh": "申请", "ph": "[ə'plai]"}, "ch6_4": {"zh": "申请表", "ph": ""}, "ch6_5": {"zh": "年费", "ph": ""}, "ch6_6": {"zh": "会员卡", "ph": ""}, "ch6_7": {"zh": "全名", "ph": ""}, "ch6_8": {"zh": "事业", "ph": "[kə'riə]"}, "ch6_9": {"zh": "公司", "ph": "[kɔmpəni]"}, "ch6_10": {"zh": "雇员", "ph": "[,emplɔi'i:, em'plɔii:]"}, "ch6_11": {"zh": "经理", "ph": "['mænidʒə]"}, "ch6_12": {"zh": "空位", "ph": "['veikənsi]"}, "ch6_13": {"zh": "失业的", "ph": "[,ʌnim'plɔid]"}, "ch6_14": {"zh": "租用", "ph": "[haiə]"}, "ch6_15": {"zh": "照片", "ph": "['fəutəɡrɑ:f, -ɡræf]"}, "ch6_16": {"zh": "护照照片", "ph": ""}, "ch6_17": {"zh": "会员卡", "ph": ""}, "ch6_18": {"zh": "学生证", "ph": ""}, "ch6_19": {"zh": "住宿", "ph": "[ə,kɔmə'deiʃən]"}, "ch6_20": {"zh": "设备", "ph": "[fə'siliti]"}, "ch6_21": {"zh": "接待", "ph": "[ri'sepʃən]"}, "ch6_22": {"zh": "大礼堂", "ph": ""}, "ch6_23": {"zh": "舞蹈房", "ph": ""}, "ch6_24": {"zh": "壁球场", "ph": ""}, "ch6_25": {"zh": "健身房", "ph": ""}, "ch6_26": {"zh": "经济学", "ph": "[,i:kə'nɔmiks]"}, "ch6_27": {"zh": "政治学", "ph": "['pɔlitiks]"}, "ch6_28": {"zh": "地理", "ph": "[dʒi'ɔɡrəfi]"}, "ch6_29": {"zh": "理科", "ph": "['saiəns]"}, "ch6_30": {"zh": "农业科学", "ph": ""}, "ch6_31": {"zh": "商业研究", "ph": ""}, "ch6_32": {"zh": "访问学生", "ph": ""}, "ch6_33": {"zh": "交换生", "ph": ""}, "ch6_34": {"zh": "研究生", "ph": ""}, "ch6_35": {"zh": "国际中心", "ph": ""}, "ch6_36": {"zh": "法学院", "ph": ""}, "ch6_37": {"zh": "幼儿中心清洁工", "ph": ""}, "ch6_38": {"zh": "图书馆文书", "ph": ""}, "ch6_39": {"zh": "办公室助理", "ph": ""}, "ch6_40": {"zh": "工作场所", "ph": "['wə:kpleis]"}, "ch6_41": {"zh": "大厅", "ph": "['lɔbi]"}, "ch6_42": {"zh": "随从", "ph": "[ə'tendənt]"}, "ch6_43": {"zh": "会议中心", "ph": ""}, "ch6_44": {"zh": "会议室", "ph": ""}, "ch6_45": {"zh": "会议指南", "ph": ""}, "ch6_46": {"zh": "女士们先生们", "ph": ""}, "ch6_47": {"zh": "培训项目", "ph": ""}, "ch6_48": {"zh": "安全措施", "ph": ""}, "ch6_49": {"zh": "员工食堂", "ph": ""}, "ch6_50": {"zh": "组长", "ph": ""}, "ch7_0": {"zh": "传统", "ph": "[trə'diʃən]"}, "ch7_1": {"zh": "节日", "ph": "['festəvəl]"}, "ch7_2": {"zh": "庆典", "ph": "[,seli'breiʃən]"}, "ch7_3": {"zh": "表演", "ph": "[pə'fɔ:məns]"}, "ch7_4": {"zh": "舞蹈", "ph": "[dɑ:ns, dæns]"}, "ch7_5": {"zh": "马戏", "ph": "['sə:kəs]"}, "ch7_6": {"zh": "剧场演出", "ph": ""}, "ch7_7": {"zh": "魔术表演", "ph": ""}, "ch7_8": {"zh": "空中表演", "ph": ""}, "ch7_9": {"zh": "木偶剧", "ph": ""}, "ch7_10": {"zh": "帐篷", "ph": "[tent]"}, "ch7_11": {"zh": "体育场", "ph": "['steidiəm]"}, "ch7_12": {"zh": "大帐篷", "ph": "[mɑ:'ki:]"}, "ch7_13": {"zh": "入口", "ph": "['ækses, 'æksəs, æk'ses]"}, "ch7_14": {"zh": "大厅", "ph": "['fɔiei]"}, "ch7_15": {"zh": "观众席", "ph": "[,ɔ:di'tɔ:riəm]"}, "ch7_16": {"zh": "后台", "ph": "['bæksteidʒ]"}, "ch7_17": {"zh": "电梯", "ph": "[lift]"}, "ch7_18": {"zh": "幕布", "ph": "['kə:tən]"}, "ch7_19": {"zh": "重建", "ph": "[,ri:di'veləpmənt]"}, "ch7_20": {"zh": "改进", "ph": "[im'pru:vmənt]"}, "ch7_21": {"zh": "重新开业", "ph": "[,ri:'əupən]"}, "ch7_22": {"zh": "以……为方向的", "ph": ""}, "ch7_23": {"zh": "灯光系统", "ph": ""}, "ch7_24": {"zh": "更衣室", "ph": ""}, "ch7_25": {"zh": "听众", "ph": "['ɔ:diəns]"}, "ch7_26": {"zh": "轮椅使用者", "ph": ""}, "ch8_0": {"zh": "爵士", "ph": "[dʒæz]"}, "ch8_1": {"zh": "流行乐", "ph": "[pɔp]"}, "ch8_2": {"zh": "民乐", "ph": "[fəuk]"}, "ch8_3": {"zh": "音乐会", "ph": "[kən'sə:t, 'kɔnsə:t]"}, "ch8_4": {"zh": "音乐厅", "ph": ""}, "ch8_5": {"zh": "乐器", "ph": ""}, "ch8_6": {"zh": "音效", "ph": ""}, "ch8_7": {"zh": "音质差", "ph": ""}, "ch8_8": {"zh": "电子音乐", "ph": ""}, "ch8_9": {"zh": "轻音乐", "ph": ""}, "ch8_10": {"zh": "古典音乐", "ph": ""}, "ch8_11": {"zh": "歌剧院", "ph": ""}, "ch8_12": {"zh": "钢琴手", "ph": ""}, "ch8_13": {"zh": "文化", "ph": "['kʌltʃə]"}, "ch8_14": {"zh": "新闻", "ph": "[pres]"}, "ch8_15": {"zh": "歪曲报道的", "ph": "['mis,repri'zent]"}, "ch8_16": {"zh": "大众传媒", "ph": ""}, "ch8_17": {"zh": "新闻报道", "ph": ""}, "ch8_18": {"zh": "学术界", "ph": ""}, "ch8_19": {"zh": "电影", "ph": ""}, "ch8_20": {"zh": "电影", "ph": "[film]"}, "ch8_21": {"zh": "照相机", "ph": "['kæmərə]"}, "ch8_22": {"zh": "字幕", "ph": "['sʌb,taitl]"}, "ch8_23": {"zh": "戏院", "ph": "['θiətə, 'θi:ə-]"}, "ch8_24": {"zh": "照明", "ph": "['laitiŋ]"}, "ch8_25": {"zh": "胶片夹", "ph": ""}, "ch8_26": {"zh": "展览会", "ph": "[,eksi'biʃən]"}, "ch8_27": {"zh": "场所", "ph": "['venju:]"}, "ch8_28": {"zh": "娱乐", "ph": "[,entə'teinmənt]"}, "ch8_29": {"zh": "气球", "ph": "[bə'lu:n]"}, "ch8_30": {"zh": "羽毛球", "ph": "['bædmintən]"}, "ch8_31": {"zh": "柔道", "ph": "['dʒu:dəu]"}, "ch8_32": {"zh": "跆拳道", "ph": "['kik,bɔksiŋ]"}, "ch8_33": {"zh": "瑜伽", "ph": "['jəuɡə]"}, "ch8_34": {"zh": "收音机", "ph": "['reidiəu]"}, "ch8_35": {"zh": "迪斯科舞厅", "ph": "[diskəu]"}, "ch8_36": {"zh": "酒馆", "ph": "[pʌb]"}, "ch8_37": {"zh": "俱乐部", "ph": "[klʌb]"}, "ch8_38": {"zh": "练歌房", "ph": ""}, "ch8_39": {"zh": "健身俱乐部", "ph": ""}, "ch8_40": {"zh": "闭路电视", "ph": ""}, "ch8_41": {"zh": "国家美术馆", "ph": ""}, "ch8_42": {"zh": "银箔纸", "ph": ""}, "ch8_43": {"zh": "优势", "ph": "[əd'vɑ:ntidʒ, əd'væn-]"}, "ch8_44": {"zh": "缺点", "ph": "[disəd'vɑ:ntidʒ]"}};
+      VOCAB_DATA.forEach(function(w){if(documentCorrections[w.id])Object.assign(w,documentCorrections[w.id]);});
+      // 核心运行状态
+      var activePool = [];
+      var currentIndex = 0;
+      var currentChapter = 'ch6';
+      var currentMode = 'practice';
+      var includeAudioExtra = false; // true: 124词(含音频8末尾的 team leader), false: 123词(纯文档词)
+      var isRandomOrder = false;
+      var practiceSubMode = 'both'; // 'both': 写英+中, 'zhOnly': 看英写中
+      var forceShowEn = false;
+      var maskMode = 'none';
+      var sliceOffsetSec = 0.0;
+      var useAmericanAccent = true; // 默认美式女声贴合原版音频
+
+      // 原版 WAV 挂载与切片状态
+      var audioCtx = null;
+      var mountedWavs = {
+        ch6: { loaded: false, buffer: null, segments: [], audioEl: document.getElementById('wavPlayer_ch6'), defaultDuration: durCh6, expectedCount: 51 },
+        ch7: { loaded: false, buffer: null, segments: [], audioEl: document.getElementById('wavPlayer_ch7'), defaultDuration: durCh7, expectedCount: 27 },
+        ch8: { loaded: false, buffer: null, segments: [], audioEl: document.getElementById('wavPlayer_ch8'), defaultDuration: durCh8, expectedCount: 46 }
+      };
+      var activeBufferSource = null;
+      var sliceStopTimer = null;
+      var isDeckFullPlaying = false;
+
+      // 连播状态
+      var isSheetPlaying = false;
+      var sheetTimer = null;
+      var sheetIntervalSec = 4.0;
+      var isListAutoPlaying = false;
+      var listAutoTimer = null;
+
+      var masteredMap = {};
+      var mistakesMap = {};
+
+      // 安全包装 localStorage，杜绝微信或手机预览器因权限异常崩溃
+      try {
+        var sm = JSON.parse(localStorage.getItem('ielts_678_v5_mastered') || '[]');
+        for (var a = 0; a < sm.length; a++) masteredMap[sm[a]] = true;
+        var sk = JSON.parse(localStorage.getItem('ielts_678_v5_mistakes') || '[]');
+        for (var b = 0; b < sk.length; b++) mistakesMap[sk[b]] = true;
+      } catch (e) {}
+
+      function saveStorage() {
+        try {
+          localStorage.setItem('ielts_678_v5_mastered', JSON.stringify(Object.keys(masteredMap)));
+          localStorage.setItem('ielts_678_v5_mistakes', JSON.stringify(Object.keys(mistakesMap)));
+        } catch (e) {}
+      }
+
+      function showToast(msg) {
+        var box = document.getElementById('toastBox');
+        if (!box) return;
+        box.textContent = msg;
+        box.classList.add('show');
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(function() {
+          box.classList.remove('show');
+        }, 2500);
+      }
+
+      function formatTime(sec) {
+        var s = Math.max(0, Math.floor(sec || 0));
+        var m = Math.floor(s / 60);
+        var r = s % 60;
+        return (m < 10 ? '0' + m : m) + ':' + (r < 10 ? '0' + r : r);
+      }
+
+      // ================= 智能多词短语感知 WAV 切分对轨引擎 =================
+      function mountWavFile(file, chapterKey) {
+        if (!file) return;
+        var info = mountedWavs[chapterKey];
+        if (!info) return;
+
+        var blobUrl = URL.createObjectURL(file);
+        info.audioEl.src = blobUrl;
+        info.loaded = true;
+
+        var reader = new FileReader();
+        reader.onload = function(evt) {
+          try {
+            if (!audioCtx) {
+              var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+              audioCtx = new AudioContextClass();
+            }
+            audioCtx.decodeAudioData(evt.target.result, function(audioBuffer) {
+              info.buffer = audioBuffer;
+              var chWords = [];
+              for (var i = 0; i < VOCAB_DATA.length; i++) {
+                if (VOCAB_DATA[i].ch === chapterKey) {
+                  chWords.push(VOCAB_DATA[i]);
+                }
+              }
+              var expectedCount = chWords.length;
+              var detected = detectPhraseIslands(audioBuffer, expectedCount);
+
+              if (detected && detected.length === expectedCount) {
+                info.segments = detected;
+              } else {
+                // 按实际音频总时长等比映射预校准时间轴
+                var ratio = audioBuffer.duration / info.defaultDuration;
+                var calibrated = [];
+                for (var k = 0; k < chWords.length; k++) {
+                  calibrated.push({
+                    start: Math.max(0, chWords[k].start * ratio),
+                    end: Math.min(audioBuffer.duration, chWords[k].end * ratio)
+                  });
+                }
+                info.segments = calibrated;
+              }
+
+              updateWavUI(chapterKey, file.name, audioBuffer.duration);
+              renderPracticeCard();
+              showToast('✅ 已挂载《' + file.name + '》原版音频！点喇叭即播100%原声');
+            }, function() {
+              fallbackPreCalibratedSegments(chapterKey);
+              updateWavUI(chapterKey, file.name, info.defaultDuration);
+              renderPracticeCard();
+              showToast('✅ 已挂载《' + file.name + '》原版音频！');
+            });
+          } catch (e) {
+            fallbackPreCalibratedSegments(chapterKey);
+            updateWavUI(chapterKey, file.name, info.defaultDuration);
+            renderPracticeCard();
+          }
+        };
+        reader.readAsArrayBuffer(file);
+      }
+
+      function fallbackPreCalibratedSegments(chapterKey) {
+        var info = mountedWavs[chapterKey];
+        var segs = [];
+        for (var i = 0; i < VOCAB_DATA.length; i++) {
+          var w = VOCAB_DATA[i];
+          if (w.ch === chapterKey) {
+            segs.push({ start: w.start, end: w.end });
+          }
+        }
+        info.segments = segs;
+      }
+
+      // 合并短于 0.88 秒的词组内部间隙（如 a cleaner at the Child Care Center），只切分真正的词间长静音
+      function detectPhraseIslands(buffer, expectedCount) {
+        var data = buffer.getChannelData(0);
+        var sr = buffer.sampleRate;
+        var stepSamples = Math.floor(sr * 0.02); // 20ms 帧
+        var rms = [];
+        var maxVal = 0;
+
+        for (var i = 0; i < data.length; i += stepSamples) {
+          var sum = 0;
+          var lim = Math.min(data.length, i + stepSamples);
+          for (var j = i; j < lim; j++) sum += data[j] * data[j];
+          var val = Math.sqrt(sum / (lim - i));
+          rms.push(val);
+          if (val > maxVal) maxVal = val;
+        }
+
+        var th = Math.max(0.005, maxVal * 0.04);
+        var rawIslands = [];
+        var active = false;
+        var sFrame = 0;
+        var quietFrames = 0;
+        var minInterWordQuietFrames = 44; // 44 * 20ms = 0.88秒静音才切分
+
+        for (var k = 0; k < rms.length; k++) {
+          if (rms[k] > th) {
+            if (!active) {
+              active = true;
+              sFrame = Math.max(0, k - 6);
+            }
+            quietFrames = 0;
+          } else if (active) {
+            quietFrames++;
+            if (quietFrames >= minInterWordQuietFrames) {
+              var eFrame = k - quietFrames + 12;
+              var startSec = sFrame * 0.02;
+              var endSec = Math.min(buffer.duration, eFrame * 0.02);
+              if (endSec - startSec >= 0.22) {
+                rawIslands.push({ start: startSec, end: endSec });
+              }
+              active = false;
+              quietFrames = 0;
+            }
+          }
+        }
+        if (active) {
+          rawIslands.push({ start: sFrame * 0.02, end: buffer.duration });
+        }
+
+        // 若因个别长短语内部停顿导致切出的片段略多于 expectedCount，自动合并间隔最小的两个相邻片段直到等于 expectedCount
+        while (rawIslands.length > expectedCount && rawIslands.length > 1) {
+          var minGap = Infinity;
+          var mergeIdx = 0;
+          for (var m = 0; m < rawIslands.length - 1; m++) {
+            var gap = rawIslands[m + 1].start - rawIslands[m].end;
+            if (gap < minGap) {
+              minGap = gap;
+              mergeIdx = m;
+            }
+          }
+          rawIslands[mergeIdx].end = rawIslands[mergeIdx + 1].end;
+          rawIslands.splice(mergeIdx + 1, 1);
+        }
+
+        return rawIslands;
+      }
+
+      function updateWavUI(chKey, fileName, duration) {
+        var chipMap = { ch6: 'chipWavCh6', ch7: 'chipWavCh7', ch8: 'chipWavCh8' };
+        var slotMap = { ch6: 'slotStatusCh6', ch7: 'slotStatusCh7', ch8: 'slotStatusCh8' };
+        var nameMap = { ch6: '六章找工作(51词)', ch7: '七章传统节日(27词)', ch8: '八章文化(46词)' };
+
+        var chip = document.getElementById(chipMap[chKey]);
+        if (chip) {
+          chip.textContent = '✅ ' + nameMap[chKey] + ': 已挂载.wav (' + formatTime(duration) + ')';
+          chip.classList.add('loaded');
+        }
+        var slot = document.getElementById(slotMap[chKey]);
+        if (slot) {
+          slot.textContent = '✅ 已挂载《' + fileName + '》(' + formatTime(duration) + ')';
+          slot.style.color = '#059669';
+        }
+        syncNativeDeckVisibility();
+      }
+
+      function syncNativeDeckVisibility() {
+        var deck = document.getElementById('nativeWavDeck');
+        var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+        var info = mountedWavs[chKey];
+        if (info && info.loaded) {
+          deck.classList.add('show');
+          var dur = info.buffer ? info.buffer.duration : info.defaultDuration;
+          document.getElementById('deckTimeText').textContent = '00:00/' + formatTime(dur);
+        } else {
+          deck.classList.remove('show');
+        }
+      }
+
+      // ================= 核心发音引擎：1.原版.wav切片 -> 2.有道高保真流 -> 3.百度TTS -> 4.系统原生语音 =================
+      function playWordAudio(wordObj, playbackRate) {
+        if (!wordObj) return;
+        var rate = playbackRate || 1.0;
+        var info = mountedWavs[wordObj.ch];
+
+        var sTime = Math.max(0, wordObj.start + sliceOffsetSec);
+        var eTime = Math.max(sTime + 0.5, wordObj.end + sliceOffsetSec);
+        if (info && info.segments && wordObj.audioIdx >= 0 && info.segments[wordObj.audioIdx]) {
+          sTime = Math.max(0, info.segments[wordObj.audioIdx].start + sliceOffsetSec);
+          eTime = Math.max(sTime + 0.5, info.segments[wordObj.audioIdx].end + sliceOffsetSec);
+        }
+
+        // 1. 若用户已挂载该章的原版 .wav，直接播放原声切片
+        if (info && info.loaded && wordObj.audioIdx >= 0) {
+          stopDeckFullPlay();
+          if (info.buffer && audioCtx) {
+            try {
+              if (audioCtx.state === 'suspended') audioCtx.resume();
+              if (activeBufferSource) {
+                try { activeBufferSource.stop(); } catch (e) {}
+              }
+              var source = audioCtx.createBufferSource();
+              source.buffer = info.buffer;
+              source.playbackRate.value = rate;
+              source.connect(audioCtx.destination);
+              source.start(0, sTime, Math.max(0.4, eTime - sTime));
+              activeBufferSource = source;
+              return;
+            } catch (e) {}
+          }
+
+          if (info.audioEl && info.audioEl.src) {
+            clearTimeout(sliceStopTimer);
+            info.audioEl.playbackRate = rate;
+            info.audioEl.currentTime = sTime;
+            var playPromise = info.audioEl.play();
+            var sliceDurMs = ((eTime - sTime) / rate) * 1000;
+            sliceStopTimer = setTimeout(function() {
+              info.audioEl.pause();
+            }, sliceDurMs);
+            if (playPromise !== undefined) {
+              playPromise.catch(function() {
+                speakMultiFallback(wordObj, rate);
+              });
+            }
+            return;
+          }
+        }
+
+        // 2. 未挂载本地 .wav 时，使用三重自动配音引擎
+        speakMultiFallback(wordObj, rate);
+      }
+
+      function speakMultiFallback(wordObj, rate) {
+        var rawText = (wordObj.en || '').trim();
+        // 原版音频中 pianist/piano player 读作 pianist slash piano player
+        var spokenText = rawText.indexOf('/') !== -1 ? rawText.replace('/', ' slash ') : rawText;
+        var dictCleanText = rawText.indexOf('/') !== -1 ? rawText.split('/')[0] : rawText;
+
+        var fbAudio = document.getElementById('fallbackAudioPlayer');
+        var accentType = useAmericanAccent ? 2 : 1; // 2: 美音, 1: 英音
+
+        function tryBrowserSpeech() {
+          if ('speechSynthesis' in window) {
+            try {
+              window.speechSynthesis.cancel();
+              var u = new SpeechSynthesisUtterance(spokenText);
+              u.lang = useAmericanAccent ? 'en-US' : 'en-GB';
+              u.rate = rate ? rate * 0.9 : 0.88;
+              u.pitch = 1.03;
+
+              var voices = window.speechSynthesis.getVoices ? window.speechSynthesis.getVoices() : [];
+              for (var i = 0; i < voices.length; i++) {
+                var v = voices[i];
+                if (useAmericanAccent && v.lang && v.lang.indexOf('en-US') !== -1 && (v.name.indexOf('Samantha') !== -1 || v.name.indexOf('Aria') !== -1 || v.name.indexOf('Google US English') !== -1 || v.name.indexOf('Zira') !== -1)) {
+                  u.voice = v;
+                  break;
+                }
+              }
+              window.speechSynthesis.speak(u);
+              return;
+            } catch (e) {}
+          }
+        }
+
+        function tryBaiduStream() {
+          if (!fbAudio || !navigator.onLine) {
+            tryBrowserSpeech();
+            return;
+          }
+          var lan = useAmericanAccent ? 'en' : 'uk';
+          fbAudio.src = 'https://fanyi.baidu.com/gettts?lan=' + lan + '&text=' + encodeURIComponent(spokenText) + '&spd=3&source=web';
+          fbAudio.playbackRate = rate || 1.0;
+          fbAudio.onerror = function() {
+            tryBrowserSpeech();
+          };
+          var p2 = fbAudio.play();
+          if (p2 && typeof p2.catch === 'function') {
+            p2.catch(function() {
+              tryBrowserSpeech();
+            });
+          }
+        }
+
+        // 优先使用有道真人词典音频（若是带斜杠的 pianist/piano player 且处于设备美音模式，优先读出完整 slash 短语）
+        if (rawText.indexOf('/') !== -1 && useAmericanAccent && 'speechSynthesis' in window) {
+          tryBrowserSpeech();
+          return;
+        }
+
+        if (fbAudio && navigator.onLine) {
+          fbAudio.src = 'https://dict.youdao.com/dictvoice?audio=' + encodeURIComponent(dictCleanText) + '&type=' + accentType;
+          fbAudio.playbackRate = rate || 1.0;
+          fbAudio.onerror = function() {
+            tryBaiduStream();
+          };
+          try {
+            var p1 = fbAudio.play();
+            if (p1 && typeof p1.catch === 'function') {
+              p1.catch(function() {
+                tryBrowserSpeech();
+              });
+            }
+            return;
+          } catch (e) {}
+        }
+
+        tryBrowserSpeech();
+      }
+
+      // ================= 构建当前词池 =================
+      function buildActivePool() {
+        stopAllContinuousPlay(); forceShowEn=false;
+        var list = [];
+        for (var i = 0; i < VOCAB_DATA.length; i++) {
+          var w = VOCAB_DATA[i];
+          if (!includeAudioExtra && w.isAudioExtra) continue;
+
+          if (currentChapter === 'all') {
+            list.push(w);
+          } else if (currentChapter === 'mistakes') {
+            if (mistakesMap[w.id]) list.push(w);
+          } else if (w.ch === currentChapter) {
+            list.push(w);
+          }
+        }
+
+        if (isRandomOrder) {
+          for (var j = list.length - 1; j > 0; j--) {
+            var r = Math.floor(Math.random() * (j + 1));
+            var tmp = list[j];
+            list[j] = list[r];
+            list[r] = tmp;
+          }
+        }
+
+        activePool = list;
+        currentIndex = 0;
+        updateEmptyState();
+        syncNativeDeckVisibility();
+        updateStatsUI();
+        renderPracticeCard();
+        renderFlashcard();
+        if (currentMode === 'examsheet') renderExamSheet();
+        if (currentMode === 'list') renderWordList();
+      }
+
+      function updateStatsUI() {
+        var total = activePool.length;
+        document.getElementById('ch8CountText').textContent = includeAudioExtra ? '46' : '45';
+        document.getElementById('allCountText').textContent = includeAudioExtra ? '124' : '123';
+        document.getElementById('statTotal').textContent = total;
+        document.getElementById('statProgress').textContent = total > 0 ? (currentIndex + 1) + '/' + total : '0/0';
+        document.getElementById('statMastered').textContent = Object.keys(masteredMap).length;
+        var mCount = Object.keys(mistakesMap).length;
+        document.getElementById('statMistakes').textContent = mCount;
+        document.getElementById('tabMistakeCount').textContent = mCount;
+      }
+
+      // ================= 智能宽松判分算法 (兼容英美拼写、连字符、单复数及 pianist/piano player) =================
+      function isEnglishMatch(userInput, wordObj) {
+        var norm = function(s) {
+          return (s || '')
+            .toLowerCase()
+            .replace(/enrolment/g, 'enrollment')
+            .replace(/programme/g, 'program')
+            .replace(/centre/g, 'center')
+            .replace(/theatre/g, 'theater')
+            .replace(/kick-boxing/g, 'kickboxing')
+            .replace(/closed-circuit/g, 'closedcircuit')
+            .replace(/passport-sized/g, 'passportsized')
+            .replace(/\bslash\b/g, '')
+            
+            .replace(/[-/]/g, ' ').replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ').trim();
+        };
+        var u = norm(userInput);
+        if (!u) return false;
+
+        var candidates = [wordObj.en, wordObj.docEn || ''];
+        // 若包含斜杠（如 pianist/piano player），答出任意一端或完整拼写均算正确
+        if (wordObj.en.indexOf('/') !== -1) {
+          var splitParts = wordObj.en.split('/');
+          for (var s = 0; s < splitParts.length; s++) {
+            candidates.push(splitParts[s]);
+          }
+          candidates.push(wordObj.en.replace('/', ' slash '));
+        }
+
+        for (var i = 0; i < candidates.length; i++) {
+          var c = norm(candidates[i]);
+          if (!c) continue;
+          if (u === c) return true;
+
+        }
+        return false;
+      }
+
+      function isChineseMatch(userInput, standardZh) {
+        var cleanUser = (userInput || '').replace(/[，。；、！？\s（）()……\.]/g, '').trim();
+        if (!cleanUser) return false;
+        var norm = function(s) {
+          return s
+            .replace(/预订/g, '预定')
+            .replace(/研习会/g, '研讨会')
+            .replace(/电影院|剧院/g, '戏院')
+            .replace(/以.*为方向/g, '以方向')
+            .replace(/的$/g, '');
+        };
+        var nu = norm(cleanUser);
+        var stdParts = standardZh.split(/[；;，,、/（）()]/);
+        for (var i = 0; i < stdParts.length; i++) {
+          var p = norm(stdParts[i].replace(/…|\./g, '').trim());
+          if (!p) continue;
+          if (nu === p) return true;
+
+        }
+        return false;
+      }
+
+      // ================= 渲染模式 1：听音默写卡片 =================
+      function renderPracticeCard() {
+        var word = activePool[currentIndex];
+        if (!word) return;
+        document.getElementById('btnToggleShowEn').textContent=forceShowEn?'🙈 隐藏英文词':'👁️ 显示英文词';
+
+        var seqNum = '原音频第 ' + (word.audioIdx + 1) + ' 词';
+        document.getElementById('pracCategory').textContent = word.chName + ' · ' + seqNum + ' (' + word.cat + ')';
+
+        var info = mountedWavs[word.ch];
+        var speakerBtn = document.getElementById('btnPracPlay');
+        var timeTag = document.getElementById('pracTimeTag');
+
+        var sTime = Math.max(0, word.start + sliceOffsetSec).toFixed(1);
+        var eTime = Math.max(0.5, word.end + sliceOffsetSec).toFixed(1);
+        if (info && info.segments && word.audioIdx >= 0 && info.segments[wordObjIdxSafe(word)]) {
+          sTime = Math.max(0, info.segments[word.audioIdx].start + sliceOffsetSec).toFixed(1);
+          eTime = Math.max(0.5, info.segments[word.audioIdx].end + sliceOffsetSec).toFixed(1);
+        }
+
+        if (info && info.loaded) {
+          speakerBtn.classList.add('wav-ready');
+          timeTag.textContent = '🎧 原录音片段: ' + sTime + 's ~ ' + eTime + 's';
+          timeTag.style.color = '#059669';
+        } else {
+          speakerBtn.classList.remove('wav-ready');
+          timeTag.textContent = '🔊 自动配音就绪 (' + (useAmericanAccent ? '设备美音' : '设备英音') + ') · 预估轴 ' + sTime + 's~' + eTime + 's';
+          timeTag.style.color = '#4f46e5';
+        }
+
+        var starBtn = document.getElementById('pracStarBtn');
+        if (mistakesMap[word.id]) {
+          starBtn.textContent = '★ 已在错题';
+          starBtn.classList.add('starred');
+        } else {
+          starBtn.textContent = '☆ 错题';
+          starBtn.classList.remove('starred');
+        }
+
+        var displayWord = (word.docEn && word.en !== word.docEn) ? (word.docEn + ' (' + word.en + ')') : word.en;
+        document.getElementById('pracWordText').textContent = displayWord;
+        document.getElementById('pracPhoneticText').textContent = word.ph || '';
+
+        var enInputWrap = document.getElementById('pracEnInputWrap');
+        var enDisplayBox = document.getElementById('pracEnDisplayBox');
+        var zhLabel = document.getElementById('pracZhLabel');
+
+        if (practiceSubMode === 'both') {
+          enInputWrap.style.display = 'block';
+          enDisplayBox.style.display = forceShowEn ? 'block' : 'none';
+          zhLabel.textContent = '2. 写出对应的【中文意思】：';
+        } else {
+          enInputWrap.style.display = 'none';
+          enDisplayBox.style.display = 'block';
+          zhLabel.textContent = '写出该词的【中文意思】：';
+        }
+
+        document.getElementById('pracEnInput').value = '';
+        document.getElementById('pracZhInput').value = '';
+        document.getElementById('pracFeedback').className = 'feedback-box';
+        document.getElementById('pracHintBox').style.display = 'none';
+      }
+
+      function wordObjIdxSafe(word) {
+        return word ? word.audioIdx : 0;
+      }
+
+      // ================= 渲染模式 2：原音频整章连播听写卷 =================
+      function renderExamSheet() {
+        var container = document.getElementById('examSheetContainer');
+        var chTitleMap = {
+          ch6: '🎧 第六章：找工作，注册 (' + activePool.length + '词听写卷)',
+          ch7: '🎧 第七章：传统节日 (' + activePool.length + '词听写卷)',
+          ch8: '🎧 第八章：文化 (' + activePool.length + '词听写卷)',
+          all: '🎧 第六/七/八章合集 (' + activePool.length + '词听写卷)',
+          mistakes: '📓 错题本专项听写卷 (' + activePool.length + '词)'
+        };
+        document.getElementById('sheetTitle').textContent = chTitleMap[currentChapter] || '🎧 听写考卷';
+        document.getElementById('sheetScoreBadge').textContent = '';
+
+        var html = [];
+        for (var i = 0; i < activePool.length; i++) {
+          var w = activePool[i];
+          var showEnPrompt = practiceSubMode === 'zhOnly';
+          var timeStr = w.start.toFixed(1) + 's';
+          var displayEn = (w.docEn && w.docEn !== w.en) ? (w.docEn + ' / ' + w.en) : w.en;
+          html.push(
+            '<div class="exam-row" id="sheetRow_' + i + '" data-idx="' + i + '">' +
+              '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+                '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap;">' +
+                  '<span style="background:#e0e7ff;color:#4338ca;font-weight:800;font-size:12px;padding:2px 8px;border-radius:6px;">#' + (i + 1) + '</span>' +
+                  '<span style="font-size:11px;color:#64748b;font-family:monospace;">[' + timeStr + '] ' + w.cat + '</span>' +
+                  (showEnPrompt ? '<strong style="font-size:15px;color:#0f172a;margin-left:4px;">' + displayEn + '</strong>' : '') +
+                '</div>' +
+                '<button type="button" class="pill-btn sheet-play-single" data-idx="' + i + '" style="background:#eef2ff;color:#4f46e5;">🔊 听发音</button>' +
+              '</div>' +
+              '<div class="exam-inputs-grid" style="' + (showEnPrompt ? 'grid-template-columns:1fr;' : '') + '">' +
+                (showEnPrompt ? '' : '<input type="text" class="mini-input sheet-en-in" data-idx="' + i + '" placeholder="默写英文单词..." autocomplete="off" autocapitalize="off" spellcheck="false">') +
+                '<input type="text" class="mini-input sheet-zh-in" data-idx="' + i + '" placeholder="写出中文意思..." autocomplete="off">' +
+              '</div>' +
+              '<div class="sheet-ans-line" id="sheetAns_' + i + '" style="display:none;margin-top:6px;font-size:12px;padding-top:6px;border-top:1px dashed #cbd5e1;"></div>' +
+            '</div>'
+          );
+        }
+        container.innerHTML = html.join('');
+      }
+
+      // ================= 渲染模式 3：看英写中 / 闪卡 =================
+      function renderFlashcard() {
+        var word = activePool[currentIndex];
+        if (!word) return;
+        document.getElementById('fcCategory').textContent = word.chName + ' · 第 ' + (currentIndex + 1) + '/' + activePool.length + ' 词 (' + word.cat + ')';
+        var displayWord = (word.docEn && word.en !== word.docEn) ? (word.docEn + ' (' + word.en + ')') : word.en;
+        document.getElementById('fcWord').textContent = displayWord;
+        document.getElementById('fcPhonetic').textContent = word.ph || '';
+        document.getElementById('fcMeaning').textContent = word.zh;
+        document.getElementById('fcBackArea').classList.remove('show');
+        document.getElementById('fcFlipHint').style.display = 'block';
+        document.getElementById('fcZhInput').value = '';
+        var msg = document.getElementById('fcCheckMsg');
+        if (msg) msg.style.display = 'none';
+      }
+
+      // ================= 渲染模式 4：词表连播与遮挡自测 =================
+      function renderWordList() {
+        var container = document.getElementById('wordListContainer');
+        var q = (document.getElementById('listSearchInput').value || '').toLowerCase().trim();
+        var html = [];
+
+        for (var i = 0; i < activePool.length; i++) {
+          var w = activePool[i];
+          if (q && w.en.toLowerCase().indexOf(q) === -1 && (w.docEn || '').toLowerCase().indexOf(q) === -1 && w.zh.indexOf(q) === -1 && w.cat.indexOf(q) === -1) {
+            continue;
+          }
+          var enMask = maskMode === 'en' ? 'masked-text' : '';
+          var zhMask = maskMode === 'zh' ? 'masked-text' : '';
+          var tLabel = w.start.toFixed(1) + 's';
+          var displayEn = (w.docEn && w.docEn !== w.en) ? (w.docEn + ' (' + w.en + ')') : w.en;
+          html.push(
+            '<div class="word-row" id="listRow_' + i + '" data-idx="' + i + '">' +
+              '<div style="flex:1;min-width:0;">' +
+                '<div style="display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap;">' +
+                  '<span style="font-size:10px;font-weight:800;background:#eef2ff;color:#4f46e5;padding:1px 6px;border-radius:4px;">#' + (i + 1) + '</span>' +
+                  '<span style="font-size:10px;color:#059669;background:#ecfdf5;padding:1px 6px;border-radius:4px;font-family:monospace;">' + tLabel + '</span>' +
+                  '<span style="font-size:11px;color:#64748b;">' + w.cat + '</span>' +
+                  (masteredMap[w.id] ? '<span style="font-size:10px;color:#10b981;font-weight:800;">✓已掌握</span>' : '') +
+                  (mistakesMap[w.id] ? '<span style="font-size:10px;color:#f43f5e;font-weight:800;">★错题</span>' : '') +
+                '</div>' +
+                '<div style="display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;">' +
+                  '<span class="mask-item ' + enMask + '" style="font-size:16px;font-weight:800;color:#0f172a;">' + displayEn + '</span>' +
+                  '<span class="mask-item ' + enMask + '" style="font-size:12px;color:#94a3b8;font-family:monospace;">' + (w.ph || '') + '</span>' +
+                '</div>' +
+              '</div>' +
+              '<div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">' +
+                '<span class="mask-item ' + zhMask + '" style="font-size:14px;font-weight:800;color:#4f46e5;">' + w.zh + '</span>' +
+                '<span>🔊</span>' +
+              '</div>' +
+            '</div>'
+          );
+        }
+        container.innerHTML = html.length ? html.join('') : '<div style="text-align:center;padding:30px;color:#94a3b8;">无匹配词汇</div>';
+      }
+
+      function stepPrev() {
+        forceShowEn=false;
+        if (!activePool.length) return;
+        currentIndex = (currentIndex - 1 + activePool.length) % activePool.length;
+        updateStatsUI();
+        renderPracticeCard();
+        renderFlashcard();
+        if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+      }
+
+      function stepNext() {
+        forceShowEn=false;
+        if (!activePool.length) return;
+        currentIndex = (currentIndex + 1) % activePool.length;
+        updateStatsUI();
+        renderPracticeCard();
+        renderFlashcard();
+        if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+      }
+
+      // ================= 原版 WAV 整轨播放器控制 =================
+      function stopDeckFullPlay() {
+        isDeckFullPlaying = false;
+        var btn = document.getElementById('btnDeckPlayFull');
+        if (btn) btn.textContent = '▶️ 播原音频整轨';
+        ['ch6', 'ch7', 'ch8'].forEach(function(k) {
+          var el = mountedWavs[k].audioEl;
+          if (el && !el.paused) el.pause();
+        });
+      }
+
+      function bindNativeDeckEvents() {
+        var btnPlay = document.getElementById('btnDeckPlayFull');
+        var scrubber = document.getElementById('deckScrubber');
+
+        btnPlay.addEventListener('click', function() {
+          var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+          var info = mountedWavs[chKey];
+          if (!info || !info.loaded || !info.audioEl.src) {
+            showToast('请先选入该章节的 .wav 原文件');
+            return;
+          }
+          clearTimeout(sliceStopTimer);
+          if (activeBufferSource) {
+            try { activeBufferSource.stop(); } catch (e) {}
+          }
+
+          if (isDeckFullPlaying) {
+            stopDeckFullPlay();
+          } else {
+            isDeckFullPlaying = true;
+            btnPlay.textContent = '⏸️ 暂停原音频';
+            stopAllContinuousPlay(); isDeckFullPlaying=true; btnPlay.textContent='⏸️ 暂停原音频'; info.audioEl.play().catch(function(){stopDeckFullPlay();showToast('播放失败，请检查网络后重试');});
+          }
+        });
+
+        ['ch6', 'ch7', 'ch8'].forEach(function(k) {
+          var audioEl = mountedWavs[k].audioEl;
+          audioEl.addEventListener('timeupdate', function() {
+            var activeCh = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+            if (k !== activeCh) return;
+            var dur = audioEl.duration || mountedWavs[k].defaultDuration;
+            var cur = audioEl.currentTime;
+            scrubber.max = dur;
+            scrubber.value = cur;
+            document.getElementById('deckTimeText').textContent = formatTime(cur) + '/' + formatTime(dur);
+
+            if (isDeckFullPlaying) {
+              var segs = mountedWavs[k].segments;
+              for (var i = 0; i < activePool.length; i++) {
+                var w = activePool[i];
+                var s = (segs && segs[w.audioIdx]) ? segs[w.audioIdx].start : w.start;
+                var e = (segs && segs[w.audioIdx]) ? segs[w.audioIdx].end : w.end;
+                if (w.ch === k && cur >= s && cur < e) {
+                  document.getElementById('deckNowPlayingTitle').textContent = '🎧 正在读第 ' + (i + 1) + ' 词（答案已隐藏）';
+                  if (currentIndex !== i) {
+                    currentIndex = i;
+                    updateStatsUI();
+                    renderPracticeCard();
+                  }
+                  break;
+                }
+              }
+            }
+          });
+          audioEl.addEventListener('ended', function() {
+            stopDeckFullPlay();
+          });
+        });
+
+        scrubber.addEventListener('input', function() {
+          var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+          var info = mountedWavs[chKey];
+          if (info && info.loaded && info.audioEl) {
+            info.audioEl.currentTime = parseFloat(this.value);
+          }
+        });
+
+        document.getElementById('btnOffsetMinus').addEventListener('click', function() {
+          sliceOffsetSec = Math.round((sliceOffsetSec - 0.3) * 10) / 10;
+          document.getElementById('offsetValText').textContent = '偏移:' + (sliceOffsetSec >= 0 ? '+' : '') + sliceOffsetSec.toFixed(1) + 's';
+          renderPracticeCard();
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+
+        document.getElementById('btnOffsetPlus').addEventListener('click', function() {
+          sliceOffsetSec = Math.round((sliceOffsetSec + 0.3) * 10) / 10;
+          document.getElementById('offsetValText').textContent = '偏移:' + (sliceOffsetSec >= 0 ? '+' : '') + sliceOffsetSec.toFixed(1) + 's';
+          renderPracticeCard();
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+      }
+
+      // 自动根据文件名识别第 6、7、8 章
+      function handleMultipleFiles(files) {
+        if (!files || !files.length) return;
+        for (var i = 0; i < files.length; i++) {
+          var f = files[i];
+          var name = f.name || '';
+          if (name.indexOf('六') !== -1 || name.indexOf('6') !== -1 || name.indexOf('工作') !== -1 || name.indexOf('注册') !== -1) {
+            mountWavFile(f, 'ch6');
+          } else if (name.indexOf('七') !== -1 || name.indexOf('7') !== -1 || name.indexOf('节日') !== -1 || name.indexOf('传统') !== -1) {
+            mountWavFile(f, 'ch7');
+          } else if (name.indexOf('八') !== -1 || name.indexOf('8') !== -1 || name.indexOf('文化') !== -1) {
+            mountWavFile(f, 'ch8');
+          } else {
+            var target = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+            mountWavFile(f, target);
+          }
+        }
+      }
+
+      // ================= 事件绑定 =================
+      function initEvents() {
+        bindNativeDeckEvents();
+
+        // 下载独立 HTML 到手机
+        document.getElementById('btnDownloadHtml').addEventListener('click',function(){showToast('苹果 Safari：分享 → 添加到主屏幕；安卓浏览器：菜单 → 添加到主屏幕。进度保存在当前浏览器。');});
+
+        // 顶部快捷一键选入 .wav
+        document.getElementById('quickMultiWavInput').addEventListener('change', function(e) {
+          handleMultipleFiles(e.target.files);
+        });
+
+        // 点击三个状态胶囊直接弹出对应章节文件选择
+        ['Ch6', 'Ch7', 'Ch8'].forEach(function(suffix) {
+          var pill = document.getElementById('chipWav' + suffix);
+          pill.addEventListener('click', function() {
+            var ch = this.getAttribute('data-ch');
+            var input = document.getElementById('fileInput_' + ch);
+            // Hosted recordings are ready; the pill switches chapters.
+          });
+        });
+
+        // WAV 挂载弹窗
+        var wavModal = document.getElementById('wavModal');
+        document.getElementById('btnOpenWavModal').addEventListener('click', function() { wavModal.classList.add('show'); });
+        document.getElementById('btnCloseWavModal').addEventListener('click', function() { wavModal.classList.remove('show'); });
+        document.getElementById('btnDoneWavModal').addEventListener('click', function() { wavModal.classList.remove('show'); });
+
+        document.getElementById('multiWavInput').addEventListener('change', function(e) {
+          handleMultipleFiles(e.target.files);
+        });
+
+        var singleInputs = document.querySelectorAll('.single-wav-input');
+        for (var s = 0; s < singleInputs.length; s++) {
+          singleInputs[s].addEventListener('change', function(e) {
+            var slot = this.getAttribute('data-slot');
+            if (e.target.files && e.target.files[0]) {
+              mountWavFile(e.target.files[0], slot);
+            }
+          });
+        }
+
+        // 章节切换
+        var chButtons = document.querySelectorAll('#chapterTabs .ch-tab');
+        for (var c = 0; c < chButtons.length; c++) {
+          chButtons[c].addEventListener('click', function() {
+            var targetCh = this.getAttribute('data-ch');
+            if (targetCh === 'mistakes' && Object.keys(mistakesMap).length === 0) {
+              showToast('🎉 目前错题本为空，继续保持！');
+              return;
+            }
+            stopAllContinuousPlay();
+            stopDeckFullPlay();
+            currentChapter = targetCh;
+            for (var k = 0; k < chButtons.length; k++) chButtons[k].classList.remove('active');
+            this.classList.add('active');
+            buildActivePool();
+          });
+        }
+
+        document.getElementById('statMistakeBox').addEventListener('click', function() {
+          var mBtn = document.querySelector('#chapterTabs .mistake-tab');
+          if (mBtn) mBtn.click();
+        });
+
+        // 词库范围切换（含音频8末尾第46词 team leader vs 纯文档 123 词）
+        document.getElementById('btnScopeToggle').addEventListener('click', function() {
+          includeAudioExtra = !includeAudioExtra;
+          if (includeAudioExtra) {
+            this.textContent = '🎧 含音频8末尾附加词 (124词)';
+            this.classList.add('active-mode');
+            showToast('已对齐原版音频8末尾多录的第46词 team leader (共124词)');
+          } else {
+            this.textContent = '📖 纯文档词表 (123词)';
+            this.classList.remove('active-mode');
+            showToast('已切换为纯文档词表 (第6章51 + 第7章27 + 第8章45 = 123词)');
+          }
+          buildActivePool();
+        });
+
+        // 顺序 / 随机切换
+        document.getElementById('btnOrderToggle').addEventListener('click', function() {
+          isRandomOrder = !isRandomOrder;
+          this.textContent = isRandomOrder ? '🔀 随机抽查顺序' : '📑 严格按音频顺序';
+          if (isRandomOrder) this.classList.add('active-mode');
+          else this.classList.remove('active-mode');
+          buildActivePool();
+        });
+
+        // 美音 / 英音配音切换
+        document.getElementById('btnAccentToggle').addEventListener('click', function() {
+          useAmericanAccent = !useAmericanAccent;
+          this.textContent = useAmericanAccent ? '🎧 原录音优先' : '🇬🇧 设备英音配音';
+          renderPracticeCard();
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+
+        // 清空记录
+        document.getElementById('btnResetRecord').addEventListener('click', function() {
+          if (!confirm('清空本浏览器中的掌握记录和错词？')) return;
+          masteredMap = {};
+          mistakesMap = {};
+          saveStorage();
+          if (currentChapter === 'mistakes') currentChapter = 'ch6';
+          buildActivePool();
+          showToast('已清空学习记录');
+        });
+
+        // 模式 1 内部控制
+        document.getElementById('btnSubModeToggle').addEventListener('click', function() {
+          practiceSubMode = practiceSubMode === 'both' ? 'zhOnly' : 'both';
+          this.textContent = practiceSubMode === 'both' ? '🎧 听音写英+中' : '✍️ 看英+听音写中';
+          renderPracticeCard();
+          showToast(practiceSubMode === 'both' ? '当前考法：听音频同时默写英文和中文' : '当前考法：直接看英文并听音，只默写中文意思');
+        });
+
+        document.getElementById('btnToggleShowEn').addEventListener('click', function() {
+          forceShowEn = !forceShowEn;
+          this.textContent = forceShowEn ? '🙈 隐藏英文词' : '👁️ 显示英文词';
+          renderPracticeCard();
+        });
+
+        document.getElementById('btnPracPlay').addEventListener('click', function() {
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+        document.getElementById('btnPracSlow').addEventListener('click', function() {
+          playWordAudio(activePool[currentIndex], 0.75);
+        });
+        document.getElementById('btnPracReplay').addEventListener('click', function() {
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+
+        document.getElementById('btnPracHint').addEventListener('click', function() {
+          var word = activePool[currentIndex];
+          if (!word) return;
+          var parts = word.en.split(' ');
+          var arr = [];
+          for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            arr.push(p.charAt(0) + new Array(Math.max(2, p.length)).join('_'));
+          }
+          var box = document.getElementById('pracHintBox');
+          box.textContent = '首字母及词长提示：' + arr.join('  ') + ' (' + word.cat + ')';
+          box.style.display = 'block';
+        });
+
+        document.getElementById('pracStarBtn').addEventListener('click', function() {
+          var word = activePool[currentIndex];
+          if (!word) return;
+          if (mistakesMap[word.id]) {
+            delete mistakesMap[word.id];
+            showToast('已移出错题本');
+          } else {
+            mistakesMap[word.id] = true; delete masteredMap[word.id];
+            showToast('已加入错题本');
+          }
+          saveStorage();
+          updateStatsUI();
+          renderPracticeCard();
+        });
+
+        function checkPracticeAnswer() {
+          var word = activePool[currentIndex];
+          if (!word) return;
+          var uEn = document.getElementById('pracEnInput').value;
+          var uZh = document.getElementById('pracZhInput').value;
+
+          var enOk = practiceSubMode === 'zhOnly' ? true : isEnglishMatch(uEn, word);
+          var zhOk = isChineseMatch(uZh, word.zh);
+
+          var fb = document.getElementById('pracFeedback');
+          var fbTitle = document.getElementById('pracFbTitle');
+          var stdEnStr = (word.docEn && word.en !== word.docEn) ? (word.docEn + ' / ' + word.en) : word.en;
+          document.getElementById('pracStdEn').textContent = stdEnStr;
+          document.getElementById('pracStdPh').textContent = word.ph || '';
+          document.getElementById('pracStdZh').textContent = word.zh;
+
+          if (enOk && zhOk) {
+            fb.className = 'feedback-box show ok';
+            fbTitle.textContent = '🎉 回答完全正确！';
+            masteredMap[word.id] = true; delete mistakesMap[word.id];
+            delete mistakesMap[word.id];
+            saveStorage();
+            updateStatsUI();
+            // Keep feedback visible until the learner advances.
+          } else {
+            fb.className = 'feedback-box show err';
+            if (practiceSubMode === 'zhOnly') {
+              fbTitle.textContent = '❌ 中文未匹配参考释义，请核对或自评';
+            } else if (!enOk && !zhOk) {
+              fbTitle.textContent = '❌ 英文拼写与中文意思均有误，已加入错题本';
+            } else if (!enOk) {
+              fbTitle.textContent = '⚠️ 中文正确，但【英文拼写】有误，已加入错题本';
+            } else {
+              fbTitle.textContent = '⚠️ 英文拼写正确，但【中文意思】未匹配，请核对或自评';
+            }
+            mistakesMap[word.id] = true; delete masteredMap[word.id];
+            saveStorage();
+            updateStatsUI();
+          }
+        }
+
+        document.getElementById('btnPracSubmit').addEventListener('click', checkPracticeAnswer);
+        document.getElementById('pracEnInput').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') document.getElementById('pracZhInput').focus();
+        });
+        document.getElementById('pracZhInput').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') checkPracticeAnswer();
+        });
+
+        document.getElementById('btnPracLookAns').addEventListener('click', function() {
+          var word = activePool[currentIndex];
+          if (!word) return;
+          var fb = document.getElementById('pracFeedback');
+          document.getElementById('pracFbTitle').textContent = '📖 标准答案（已自动收入错题本）：';
+          document.getElementById('pracStdEn').textContent = (word.docEn && word.en !== word.docEn) ? (word.docEn + ' / ' + word.en) : word.en;
+          document.getElementById('pracStdPh').textContent = word.ph || '';
+          document.getElementById('pracStdZh').textContent = word.zh;
+          fb.className = 'feedback-box show info';
+          mistakesMap[word.id] = true; delete masteredMap[word.id];
+          saveStorage();
+          updateStatsUI();
+        });
+
+        document.getElementById('btnPracQuickPass').addEventListener('click', function() {
+          var word = activePool[currentIndex];
+          if (word) {
+            masteredMap[word.id] = true; delete mistakesMap[word.id];
+            saveStorage();
+          }
+          stepNext();
+        });
+
+        document.getElementById('btnPracPrev').addEventListener('click', stepPrev);
+        document.getElementById('btnPracNext').addEventListener('click', stepNext);
+
+        // ================= 模式 2：整章连播听写考卷事件 =================
+        document.getElementById('examSheetContainer').addEventListener('click', function(e) {
+          var btn = e.target.closest ? e.target.closest('.sheet-play-single') : null;
+          if (btn) {
+            var idx = parseInt(btn.getAttribute('data-idx'), 10);
+            var w = activePool[idx];
+            if (w) playWordAudio(w, 1.0);
+          }
+        });
+
+        document.getElementById('btnSheetInterval').addEventListener('click', function() {
+          if (sheetIntervalSec === 4.0) sheetIntervalSec = 5.5;
+          else if (sheetIntervalSec === 5.5) sheetIntervalSec = 3.0;
+          else sheetIntervalSec = 4.0;
+          this.textContent = '⏱️ 间隔: ' + sheetIntervalSec.toFixed(1) + '秒';
+        });
+
+        document.getElementById('btnSheetModeSwitch').addEventListener('click', function() {
+          practiceSubMode = practiceSubMode === 'both' ? 'zhOnly' : 'both';
+          this.textContent = practiceSubMode === 'both' ? '✍️ 考法: 写英+中' : '✍️ 考法: 看英写中';
+          renderExamSheet();
+        });
+
+        document.getElementById('btnSheetPlayPause').addEventListener('click', function() {
+          var btn = this;
+          if (isSheetPlaying) {
+            stopAllContinuousPlay();
+            return;
+          }
+          if (!activePool.length) return;
+          isSheetPlaying = true;
+          btn.textContent = '⏸️ 停止连播';
+          var idx = 0;
+
+          function runSheetStep() {
+            if (!isSheetPlaying || idx >= activePool.length) {
+              stopAllContinuousPlay();
+              return;
+            }
+            var w = activePool[idx];
+            playWordAudio(w, 1.0);
+
+            var allRows = document.querySelectorAll('.exam-row');
+            for (var r = 0; r < allRows.length; r++) allRows[r].classList.remove('active-playing');
+
+            var curRow = document.getElementById('sheetRow_' + idx);
+            if (curRow) {
+              curRow.classList.add('active-playing');
+              curRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            idx++;
+            sheetTimer = setTimeout(runSheetStep, (clipDuration(w) + sheetIntervalSec) * 1000);
+          }
+          runSheetStep();
+        });
+
+        document.getElementById('btnGradeAllSheet').addEventListener('click', function() {
+          stopAllContinuousPlay();
+          var total = activePool.length;
+          if (!total) return;
+          var correctCount = 0;
+
+          for (var i = 0; i < total; i++) {
+            var w = activePool[i];
+            var rowEl = document.getElementById('sheetRow_' + i);
+            var ansEl = document.getElementById('sheetAns_' + i);
+            var enInput = rowEl.querySelector('.sheet-en-in');
+            var zhInput = rowEl.querySelector('.sheet-zh-in');
+
+            var uEn = enInput ? enInput.value : '';
+            var uZh = zhInput ? zhInput.value : '';
+
+            var enOk = practiceSubMode === 'zhOnly' ? true : isEnglishMatch(uEn, w);
+            var zhOk = isChineseMatch(uZh, w.zh);
+
+            rowEl.classList.remove('active-playing', 'row-correct', 'row-wrong');
+            ansEl.style.display = 'block';
+            var stdEnStr = (w.docEn && w.docEn !== w.en) ? (w.docEn + ' / ' + w.en) : w.en;
+
+            if (enOk && zhOk) {
+              correctCount++;
+              rowEl.classList.add('row-correct');
+              ansEl.innerHTML = '<span style="color:#059669;font-weight:800;">✅ 正确</span> · 标准答案：<strong>' + stdEnStr + '</strong> (' + w.zh + ')';
+              masteredMap[w.id] = true; delete mistakesMap[w.id];
+            } else {
+              rowEl.classList.add('row-wrong');
+              ansEl.innerHTML = '<span style="color:#e11d48;font-weight:800;">❌ 需订正</span> · 标准答案：<strong style="font-family:monospace;">' + stdEnStr + '</strong> 【<strong>' + w.zh + '</strong>】';
+              mistakesMap[w.id] = true; delete masteredMap[w.id];
+            }
+          }
+          saveStorage();
+          updateStatsUI();
+          var pct = Math.round((correctCount / total) * 100);
+          document.getElementById('sheetScoreBadge').textContent = '得分: ' + correctCount + '/' + total + ' (' + pct + '%)';
+          showToast('📝 批改完成！答对 ' + correctCount + ' 题，错题已自动收入错题本');
+        });
+
+        // ================= 模式 3：看英写中 / 闪卡事件 =================
+        document.getElementById('fcCardBox').addEventListener('click', function() {
+          var back = document.getElementById('fcBackArea');
+          var hint = document.getElementById('fcFlipHint');
+          if (back.classList.contains('show')) {
+            back.classList.remove('show');
+            hint.style.display = 'block';
+          } else {
+            back.classList.add('show');
+            hint.style.display = 'none';
+          }
+        });
+
+        document.getElementById('btnFcSpeak').addEventListener('click', function(e) {
+          e.stopPropagation();
+          if(!(currentMode==='flashcard'&&flashReverse))playWordAudio(activePool[currentIndex], 1.0);
+        });
+
+        function checkFlashcardZh() {
+          var w = activePool[currentIndex];
+          if (!w) return;
+          var val = document.getElementById('fcZhInput').value;
+          var ok = flashReverse ? isEnglishMatch(val,w) : isChineseMatch(val, w.zh);
+          var msg = document.getElementById('fcCheckMsg');
+          document.getElementById('fcBackArea').classList.add('show');
+          document.getElementById('fcFlipHint').style.display = 'none';
+          msg.style.display = 'block';
+          if (ok) {
+            msg.style.background = '#ecfdf5';
+            msg.style.color = '#065f46';
+            msg.textContent = '✅ 答案正确！参考：' + (flashReverse ? w.docEn : w.zh);
+            masteredMap[w.id] = true; delete mistakesMap[w.id];
+            saveStorage();
+            updateStatsUI();
+          } else {
+            msg.style.background = '#fff1f2';
+            msg.style.color = '#9f1239';
+            msg.textContent = '请核对参考答案，也可自行标记：' + (flashReverse ? w.docEn : w.zh);
+            mistakesMap[w.id] = true; delete masteredMap[w.id];
+            saveStorage();
+            updateStatsUI();
+          }
+        }
+
+        document.getElementById('btnFcCheckZh').addEventListener('click', checkFlashcardZh);
+        document.getElementById('fcZhInput').addEventListener('keydown', function(e) {
+          if (e.key === 'Enter') checkFlashcardZh();
+        });
+
+        document.getElementById('btnFcFail').addEventListener('click', function() {
+          var w = activePool[currentIndex];
+          if (w) {
+            mistakesMap[w.id] = true; delete masteredMap[w.id];
+            saveStorage();
+          }
+          stepNext();
+        });
+
+        document.getElementById('btnFcPass').addEventListener('click', function() {
+          var w = activePool[currentIndex];
+          if (w) {
+            masteredMap[w.id] = true; delete mistakesMap[w.id];
+            saveStorage();
+          }
+          stepNext();
+        });
+
+        document.getElementById('btnFcPrev').addEventListener('click', stepPrev);
+        document.getElementById('btnFcNext').addEventListener('click', stepNext);
+
+        // ================= 模式 4：词表连播与遮挡自测 =================
+        document.getElementById('listSearchInput').addEventListener('input', renderWordList);
+
+        var maskBtns = document.querySelectorAll('#maskBtnGroup button');
+        for (var m = 0; m < maskBtns.length; m++) {
+          maskBtns[m].addEventListener('click', function() {
+            maskMode = this.getAttribute('data-mask');
+            for (var k = 0; k < maskBtns.length; k++) maskBtns[k].classList.remove('active-mode');
+            this.classList.add('active-mode');
+            renderWordList();
+          });
+        }
+
+        document.getElementById('wordListContainer').addEventListener('click', function(e) {
+          if (e.target.classList && e.target.classList.contains('masked-text')) {
+            e.target.classList.remove('masked-text');
+            return;
+          }
+          var row = e.target.closest ? e.target.closest('.word-row') : null;
+          if (row) {
+            var idx = parseInt(row.getAttribute('data-idx'), 10);
+            if (activePool[idx]) playWordAudio(activePool[idx], 1.0);
+          }
+        });
+
+        document.getElementById('btnListAutoPlay').addEventListener('click', function() {
+          var btn = this;
+          if (isListAutoPlaying) {
+            stopAllContinuousPlay();
+            return;
+          }
+          if (!activePool.length) return;
+          isListAutoPlaying = true;
+          btn.textContent = '⏸️ 停止连播';
+          var i = 0;
+
+          function stepListPlay() {
+            if (!isListAutoPlaying || i >= activePool.length) {
+              stopAllContinuousPlay();
+              return;
+            }
+            playWordAudio(activePool[i], 1.0);
+            var rows = document.querySelectorAll('.word-row.playing-row');
+            for (var r = 0; r < rows.length; r++) rows[r].classList.remove('playing-row');
+            var cur = document.getElementById('listRow_' + i);
+            if (cur) {
+              cur.classList.add('playing-row');
+              cur.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            i++;
+            listAutoTimer = setTimeout(stepListPlay, (clipDuration(activePool[i-1]) + 2) * 1000);
+          }
+          stepListPlay();
+        });
+
+        // 底部导航栏切换
+        var navButtons = document.querySelectorAll('#bottomNav .nav-tab-btn');
+        for (var n = 0; n < navButtons.length; n++) {
+          navButtons[n].addEventListener('click', function() {
+            stopAllContinuousPlay();
+            var mode = this.getAttribute('data-mode');
+            currentMode = mode;
+            for (var b = 0; b < navButtons.length; b++) navButtons[b].classList.remove('active');
+            this.classList.add('active');
+
+            var views = document.querySelectorAll('.mode-view');
+            for (var v = 0; v < views.length; v++) views[v].classList.remove('active');
+            document.getElementById('view-' + mode).classList.add('active');
+
+            if (mode === 'examsheet') renderExamSheet();
+            else if (mode === 'list') renderWordList();
+            else if (mode === 'flashcard') renderFlashcard();
+            else renderPracticeCard();
+          });
+        }
+      }
+
+      function stopAllContinuousPlay() {
+        isSheetPlaying = false;
+        isListAutoPlaying = false;
+        clearTimeout(sheetTimer);
+        clearTimeout(listAutoTimer);
+        stopAudioNow();
+        var b1 = document.getElementById('btnSheetPlayPause');
+        if (b1) b1.textContent = '▶️ 开始连播听写';
+        var b2 = document.getElementById('btnListAutoPlay');
+        if (b2) b2.textContent = '▶️ 自动连播磨耳朵';
+      }
+
+      var flashReverse=false;
+      var clipPlayer=document.getElementById('fallbackAudioPlayer');
+      var playbackId=0;
+      function stopAudioNow(){
+        playbackId++;
+        clearTimeout(sliceStopTimer);
+        if(activeBufferSource){try{activeBufferSource.stop();}catch(e){}activeBufferSource=null;}
+        if(window.speechSynthesis)window.speechSynthesis.cancel();
+        document.querySelectorAll('audio').forEach(function(a){a.pause();});
+        stopDeckFullPlay();
+      }
+      function clipDuration(w){return w?Math.max(.5,w.end-w.start):1;}
+      function playWordAudio(w,rate){
+        if(!w)return;
+        stopAudioNow();
+        var info=mountedWavs[w.ch];
+        rate=rate||1;
+        if(info.custom&&info.buffer&&audioCtx){
+          audioCtx.resume();var b=audioCtx.createBufferSource();b.buffer=info.buffer;
+          var seg=info.segments[w.audioIdx];b.playbackRate.value=rate;b.connect(audioCtx.destination);
+          b.start(0,seg.start,seg.end-seg.start);activeBufferSource=b;return;
+        }
+        var seg=window.AUDIO_INDEX[w.ch].segments[w.audioIdx];
+        clipPlayer.src=seg.url;clipPlayer.playbackRate=rate;clipPlayer.preservesPitch=true;
+        var ticket=playbackId;
+        clipPlayer.onerror=function(){if(ticket===playbackId)showToast('音频加载失败，请检查网络，再点喇叭重试。');};
+        var p=clipPlayer.play();if(p)p.catch(function(){if(ticket===playbackId)showToast('请再点一次喇叭播放；如仍无声，请检查网络和手机静音设置。');});
+      }
+      function setupHostedAudio(){
+        ['ch6','ch7','ch8'].forEach(function(ch){
+          var m=window.AUDIO_INDEX[ch],info=mountedWavs[ch];
+          info.loaded=true;info.segments=m.segments;info.defaultDuration=m.duration;
+          info.audioEl.preload='metadata';info.audioEl.src='audio/'+ch+'.mp3';
+          VOCAB_DATA.filter(function(w){return w.ch===ch;}).forEach(function(w){w.start=m.segments[w.audioIdx].start;w.end=m.segments[w.audioIdx].end;});
+          updateWavUI(ch,'已内置原录音',m.duration);
+          var chip=document.getElementById('chipWavCh'+ch.slice(-1));
+          chip.textContent='✓ 第'+ch.slice(-1)+'章 · 原录音就绪';
+          chip.onclick=function(){document.querySelector('#chapterTabs [data-ch="'+ch+'"]').click();};
+        });
+        document.getElementById('btnFcDirection').addEventListener('click',function(){flashReverse=!flashReverse;stopAudioNow();renderFlashcard();saveProgress();});
+        document.getElementById('fcZhInput').setAttribute('autocapitalize','none');
+        document.getElementById('fcZhInput').setAttribute('spellcheck','false');
+        document.getElementById('btnScopeToggle').classList.remove('active-mode');
+        document.getElementById('deckNowPlayingTitle').textContent='🎧 原录音整章播放（保留听写停顿）';
+        document.getElementById('sheetSubStatus').textContent='跟随当前章节与顺序；每词播完后留出书写时间。中文可对照参考自评。';
+        document.getElementById('pracFeedback').setAttribute('aria-live','polite');
+        document.getElementById('deckScrubber').setAttribute('aria-label','整章播放进度');
+        document.getElementById('pracEnInput').setAttribute('aria-label','英文拼写');
+        document.getElementById('pracZhInput').setAttribute('aria-label','中文意思');
+        document.getElementById('fcZhInput').setAttribute('aria-label','互测答案');
+        // No dependency on runtime upload or remote dictionary services.
+        document.querySelector('.wav-upload-trigger').style.display='none';
+        var modal=document.querySelector('#wavModal .modal-box');
+        modal.querySelector('h3').textContent='🎵 原录音使用说明';
+        modal.querySelector('p').textContent='三章原录音和124个逐词片段已经内置。打开网页即可播放，无需重新上传。第八章末尾的附加词可用上方“纯文档词表”按钮开关；默认练习文档内123词。整章音频保留原始停顿，逐词听写已去除长静音。';
+        modal.querySelectorAll('input[type=file]').forEach(function(input){input.closest('label').style.display='none';});
+        document.querySelectorAll('.wav-pill').forEach(function(p){p.style.cursor='default';});
+        document.addEventListener('click',function(){setTimeout(saveProgress,0);});
+        document.addEventListener('visibilitychange',function(){if(document.hidden){stopAllContinuousPlay();saveProgress();}});
+        window.addEventListener('pagehide',saveProgress);
+      }
+      function updateEmptyState(){
+        var empty=!activePool.length;
+        ['practice','flashcard'].forEach(function(v){
+          var view=document.getElementById('view-'+v),card=view.querySelector('.study-card');
+          var notice=view.querySelector('.empty-notice');
+          if(!notice){notice=document.createElement('div');notice.className='empty-notice';notice.textContent='还没有错词，继续保持！选择一个章节开始练习。';view.appendChild(notice);}
+          card.style.display=empty?'none':'';notice.style.display=empty?'block':'none';
+        });
+      }
+      function renderFlashcard(){
+        var word=activePool[currentIndex];if(!word)return;
+        document.getElementById('fcCategory').textContent=word.chName+' · '+(currentIndex+1)+'/'+activePool.length;
+        document.getElementById('fcWord').textContent=flashReverse?word.zh:word.docEn;
+        document.getElementById('fcPhonetic').textContent=flashReverse?'':word.ph;
+        document.getElementById('fcMeaning').textContent=flashReverse?word.docEn:word.zh;
+        document.querySelector('#fcBackArea>div').textContent=flashReverse?'参考英文拼写':'参考中文意思';
+        document.getElementById('fcBackArea').classList.remove('show');
+        var hint=document.getElementById('fcFlipHint');hint.style.display='block';hint.textContent='点击卡片显示'+(flashReverse?'英文':'中文')+'答案';
+        var inp=document.getElementById('fcZhInput');inp.value='';inp.placeholder=flashReverse?'看汉语，拼写英文…':'看英文，写出中文意思…';
+        document.getElementById('btnFcCheckZh').textContent=flashReverse?'核对英文':'核对中文';
+        document.getElementById('btnFcDirection').textContent=flashReverse?'切换：看英文写汉语':'切换：看汉语写英文';
+        document.getElementById('fcCheckMsg').style.display='none';
+        document.getElementById('btnFcSpeak').style.display=flashReverse?'none':'';
+      }
+      function saveProgress(){
+        try{localStorage.setItem('ielts_678_progress_v1',JSON.stringify({chapter:currentChapter,mode:currentMode,extra:includeAudioExtra,random:isRandomOrder,reverse:flashReverse,word:activePool[currentIndex]&&activePool[currentIndex].id,order:activePool.map(function(w){return w.id;})}));}catch(e){}
+      }
+      function restoreProgress(){
+        try{
+          var p=JSON.parse(localStorage.getItem('ielts_678_progress_v1')||'null');if(!p)return;
+          if(!['ch6','ch7','ch8','all','mistakes'].includes(p.chapter))return;
+          currentChapter=p.chapter;includeAudioExtra=!!p.extra;isRandomOrder=!!p.random;flashReverse=!!p.reverse;
+          buildActivePool();
+          if(Array.isArray(p.order)&&p.order.length===activePool.length){
+            var map={};activePool.forEach(function(w){map[w.id]=w;});
+            if(new Set(p.order).size===activePool.length&&p.order.every(function(id){return !!map[id];}))activePool=p.order.map(function(id){return map[id];});
+          }
+          var pos=activePool.findIndex(function(w){return w.id===p.word;});if(pos>=0)currentIndex=pos;
+          document.querySelectorAll('#chapterTabs .ch-tab').forEach(function(t){t.classList.toggle('active',t.dataset.ch===currentChapter);});
+          document.getElementById('btnOrderToggle').textContent=isRandomOrder?'🔀 随机抽查顺序':'📑 严格按音频顺序';
+          document.getElementById('btnOrderToggle').classList.toggle('active-mode',isRandomOrder);
+          document.getElementById('btnScopeToggle').textContent=includeAudioExtra?'🎧 含音频8末尾附加词 (124词)':'📖 纯文档词表 (123词)';
+          document.getElementById('btnScopeToggle').classList.toggle('active-mode',includeAudioExtra);
+          updateStatsUI();renderPracticeCard();renderFlashcard();
+          var nav=document.querySelector('#bottomNav [data-mode="'+p.mode+'"]');if(nav)nav.click();
+        }catch(e){}
+      }
+
+      initEvents();
+      setupHostedAudio();
+      buildActivePool();
+      restoreProgress();
+    })();
+  </script>
+</body>
+</html>
