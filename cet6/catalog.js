@@ -35,7 +35,7 @@ document.addEventListener('click',e=>{
   if(!b?.dataset.openPaper)return;
   legacyPractice=false;activeSprintTask=null;currentPaperId=b.dataset.openPaper;
   paperReviewId=null;paperShowAnswers=false;
-  paperIndex=b.dataset.paperRoute==='reading'?Math.min(2,currentPaper().pages.length-1):b.dataset.paperRoute==='translation'?currentPaper().pages.length-1:0;
+  room.signature='';
   navigate(b.dataset.paperRoute);
 });
 document.addEventListener('click',e=>{

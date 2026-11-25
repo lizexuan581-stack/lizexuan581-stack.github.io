@@ -2,7 +2,7 @@
 
 function paperSources(paper) {
   const web = window.CET_ONLINE_SOURCES?.[paper.id] || {};
-  const useLocal = !web.editionId || !libraryImportMode() || libraryReadyPaper(paper);
+  const useLocal = !libraryImportMode() || libraryReadyPaper(paper);
   const url = (path, external) => (useLocal && libraryURL(path)) || (external && onlineOfflineURL(external)) || '';
   const byPage = (paths, remote) => {
     if (useLocal && paths?.length && paths.every(path => libraryURL(path))) return paths.map(libraryURL);
@@ -14,6 +14,7 @@ function paperSources(paper) {
     pdf: url(paper.pdf, web.pdf),
     answerPdf: url(paper.answers, web.answers),
     audio: url(paper.audio, web.audio),
+    usesLocalAudio: !!(useLocal && libraryURL(paper.audio)),
     audioArchive: web.audioArchive || '',
     web
   };

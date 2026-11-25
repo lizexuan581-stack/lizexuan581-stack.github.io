@@ -33,7 +33,8 @@ window.CET_ONLINE_SOURCES = {
       "https://guonei-cos.koocdn.com/common/fd1baa8101e1430daaa092b4a8210910.jpg?imageMogr2/crop/!1587x2291a0a13434",
       "https://guonei-cos.koocdn.com/common/fd1baa8101e1430daaa092b4a8210910.jpg?imageMogr2/crop/!1587x2267a0a15677"
     ],
-    "audio": "https://www.cettong.cn/library/cet6/2024_06_1/listening.mp3"
+    "audio": "https://www.cettong.cn/library/cet6/2024_06_1/listening.mp3",
+    "audioMime": "audio/mp4"
   },
   "202506-1": {
     "pages": [
@@ -69,12 +70,14 @@ window.CET_ONLINE_SOURCES = {
       "https://guonei-cos.koocdn.com/common/196372b9a1d34343b48c7fd41e2b893d.png?imageMogr2/crop/!686x1052a0a18047",
       "https://guonei-cos.koocdn.com/common/196372b9a1d34343b48c7fd41e2b893d.png?imageMogr2/crop/!686x1028a0a19051"
     ],
-    "audio": "https://www.cettong.cn/library/cet6/2025_06_1/listening.mp3"
+    "audio": "https://www.cettong.cn/library/cet6/2025_06_1/listening.mp3",
+    "audioMime": "audio/mp4"
   },
   "202106-1": {
     "pdf": "https://raw.githubusercontent.com/OyamaMeek/CET-question-bank/58f5d29997a32a75f35d8704d5f58691ae89e09e/CET/6/2021/06/2021.06%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E7%AC%AC1%E5%A5%97__2.pdf",
     "answers": "https://raw.githubusercontent.com/OyamaMeek/CET-question-bank/58f5d29997a32a75f35d8704d5f58691ae89e09e/CET/6/2021/06/2021.06%E8%8B%B1%E8%AF%AD%E5%85%AD%E7%BA%A7%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90%E7%AC%AC1%E5%A5%97__2.pdf",
     "audio": "https://www.cettong.cn/library/cet6/2021_06_1/listening.mp3",
+    "audioMime": "audio/mp4",
     "pageCount": 8,
     "answerPageCount": 15
   },
