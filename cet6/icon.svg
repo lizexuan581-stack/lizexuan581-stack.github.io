@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" role="img" aria-labelledby="title">
+  <title id="title">知六：打开的书本</title>
+  <rect width="192" height="192" rx="42" fill="#245c49"/>
+  <path d="M96 60C79 48 57 48 38 54v78c20-6 40-5 58 7 18-12 38-13 58-7V54c-19-6-41-6-58 6Z" fill="#f5f7fb"/>
+  <path d="M96 62v73" fill="none" stroke="#245c49" stroke-width="5" stroke-linecap="round"/>
+  <path d="M54 76c9-1 17 1 25 5m-25 14c9-1 17 1 25 5m34-19c8-4 16-6 25-5m-25 24c8-4 16-6 25-5" fill="none" stroke="#79a88c" stroke-width="5" stroke-linecap="round"/>
+</svg>
