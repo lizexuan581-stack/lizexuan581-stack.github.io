@@ -90,6 +90,11 @@ function offlineDescription(paper) {
   if (summary?.error) return { text: summary.error, label: '重试离线保存', disabled: false };
   if (summary?.count && summary.count === summary.total)
     return { text: '本卷题面、解析及已收录的录音已保存在本机。', label: '检查离线资料', disabled: false };
+  if (summary && onlineOfflineAssets(paper).some(asset=>{
+    const old=asset.url.replace(/imageMogr2\/cut\/(\d+)x(\d+)x0x(\d+)/,'imageMogr2/crop/!$1x$2a0a$3');
+    return old!==asset.url && offlineLocations.has(old);
+  }))
+    return { text:'本机保存过旧版题图。联网更新本卷后，可离线使用校正后的题图与解析。', label:'更新本卷离线题图', disabled:false };
   if (summary?.count)
     return { text: '本机已保存 ' + summary.count + ' / ' + summary.total + ' 项。', label: '继续保存本卷', disabled: false };
   return { text: '', label: '保存本卷供离线练习', disabled: false };

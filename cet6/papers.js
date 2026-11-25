@@ -97,7 +97,7 @@ function sourceBlock(p,area=currentRange(p)) {
   const [first,last]=range;
   return `<div class="original-pages">${Array.from({length:last-first+1},(_,i)=>{
     const page=first+i;
-    return `<div class="original-sheet"><div class="folio">原卷第 ${page+1} 页</div>${frameSlice(p,doc,page,i===0?start:0,page===last?end:1)}</div>`;
+    return `<div class="original-sheet"><div class="folio">原卷第 ${page+1} 页</div><div class="sheet-scroll"><div class="${room.enlarge?'large-print':''}">${frameSlice(p,doc,page,i===0?start:0,page===last?end:1)}</div></div></div>`;
   }).join('')}</div>`;
 }
 function answerBook(p) {
@@ -128,12 +128,13 @@ function questionDeck(p,nums) {
   return `<div class="room-grid"><section class="question-sheet card"><div class="room-heading"><h2>第 ${n} 题</h2><span>${sectionTitles[sectionKey(n)]}</span></div>
     <div class="actions sheet-modes"><button class="btn tiny ${room.mode==='question'&&!paperShowAnswers?'primary':''}" data-room-mode="question">看本题</button>
     ${material?`<button class="btn tiny ${room.mode==='material'&&!paperShowAnswers?'primary':''}" data-room-mode="material">${n<36?'文章与词库':'阅读原文'}</button>`:''}
+    <button class="btn tiny" data-action="paper-zoom" aria-pressed="${!!room.enlarge}">${room.enlarge?'恢复字号':'放大题文'}</button>
     <button class="btn tiny" data-action="paper-expand" aria-pressed="${room.full}">${room.full?'收起整页':'展开整页'}</button></div>
     ${paperShowAnswers?answerBook(p):sourceBlock(p)}${bank}
     <div class="answer-area"><b>第 ${n} 题 · 选择答案</b><div class="answer-buttons">${[...optionsFor(p,n)].map(v=>`<button class="q-option ${v===selected?'picked':''}" aria-label="第${n}题选${v}" aria-pressed="${v===selected}" data-room-choice="${v}" data-for-question="${n}" ${graded?'disabled':''}>${v}</button>`).join('')}</div>
     ${graded&&key?`<p class="question-result ${key===selected?'good':'bad'}">第 ${n} 题${key===selected?'答对了':'答错了'} · 你的答案 ${esc(selected)} · 参考答案 ${esc(key)}</p>`:''}
     <div class="actions"><button class="btn" data-question-number="${nums[idx-1]||n}" ${idx===0?'disabled':''}>上一题</button>
-    ${!activeSprintTask&&!paperReviewId&&key&&!graded?button('核对本题','paper-check-one','tiny'):''}
+    ${!activeSprintTask&&!paperReviewId&&key?graded?button('重答本题','paper-retry-one','tiny'):button('核对本题','paper-check-one','tiny'):''}
     ${idx<nums.length-1?`<button class="btn primary" data-question-number="${nums[idx+1]}">下一题</button>`:button('提交本组','paper-submit','primary')}</div></div>
     </section><aside><section class="card"><div class="section-head"><h2>本组题号</h2><span class="small">${occupied} / ${nums.length} 已选</span></div>
     <div class="question-numbers">${links}</div><div class="actions">${done?button('重新练习','paper-retry'):button(key?'提交本组':'保存并对照解析','paper-submit','primary')}${button('翻阅解析册','paper-answers','tiny')}</div></section>
@@ -154,6 +155,12 @@ function cueTime(cue,questionOnly=false) {
   if(questionOnly)return (local?cue.localQuestions:cue.questions)?.[room.question]??null;
   return (local?cue.localStart:cue.start)??null;
 }
+function cueEnd(cue,single=false) {
+  if(!cue)return null;
+  const local=paperSources(currentPaper()).usesLocalAudio;
+  const questions=local?cue.localQuestions:cue.questions;
+  return (single?questions?.[room.question+1]:null)??(local?cue.localEnd:cue.end);
+}
 function audioCaption(p) {
   const cue=cueFor(p,room.question);
   return cue?`第 ${cue.from}–${cue.to} 题 · ${esc(cue.label)}`:'本卷听力录音';
@@ -166,7 +173,7 @@ function recording(p) {
   if(route!=='listening')return '';
   const audio=paperSources(p).audio, cue=cueFor(p,room.question);
   return `<section class="card recording"><div class="room-heading"><h2 id="cue-heading">${audioCaption(p)}</h2><label>语速 <select id="paper-speed" aria-label="播放语速">${[.75,1,1.25,1.5].map(v=>`<option ${v===1?'selected':''} value="${v}">${v}×</option>`).join('')}</select></label></div>
-    <audio id="paper-audio" preload="metadata" controls src="${esc(audio)}" data-start="${cueTime(cue)??''}"></audio>
+    <audio id="paper-audio" preload="metadata" controls src="${esc(audio)}" data-start="${cueTime(cue)??''}" data-end="${cueEnd(cue)??''}"></audio>
     <div class="actions"><span class="cue-buttons" id="cue-buttons">${cueButtons(p)}</span>${button('后退 10 秒','paper-back','tiny')}${button('前进 10 秒','paper-forward','tiny')}</div></section>`;
 }
 function paperPage() {
@@ -197,6 +204,10 @@ document.addEventListener('loadedmetadata',e=>{
   const a=e.target;
   if(a.id==='paper-audio'&&a.dataset.start!=='')a.currentTime=Number(a.dataset.start);
 },true);
+document.addEventListener('timeupdate',e=>{
+  const a=e.target;
+  if(a.id==='paper-audio'&&!a.paused&&a.dataset.end&&a.currentTime>=Number(a.dataset.end))a.pause();
+},true);
 function showQuestion(n) {
   const p=currentPaper();
   if(!paperNumbers(p).includes(n))return;
@@ -206,6 +217,8 @@ function showQuestion(n) {
   if(!sessionSuffix()&&window.history?.replaceState)window.history.replaceState(null,'','#'+route+'/'+currentPaperId+'/'+n);
   if(route==='listening'){
     const cue=cueFor(p,n);
+    const audio=document.querySelector('#paper-audio');
+    if(audio)audio.dataset.end=String(cueEnd(cue)??'');
     if(old!==cue)seekRecording(cueTime(cue));
     const head=document.querySelector('#cue-heading'),buttons=document.querySelector('#cue-buttons');
     if(head)head.textContent=audioCaption(p);if(buttons)buttons.innerHTML=cueButtons(p);
@@ -250,12 +263,14 @@ document.addEventListener('click',e=>{
   if(!action?.startsWith('paper-'))return;
   const p=currentPaper(),n=room.question, audio=document.querySelector('#paper-audio'), cue=cueFor(p,n);
   switch(action){
+    case 'paper-zoom':room.enlarge=!room.enlarge;redrawRoom();break;
     case 'paper-expand': room.full=!room.full;paperShowAnswers=false;redrawRoom();break;
     case 'paper-answers': paperShowAnswers=true;paperIndex=0;redrawRoom();break;
     case 'paper-close-book': paperShowAnswers=false;redrawRoom();break;
     case 'paper-back':case 'paper-forward': if(audio)seekRecording(Math.min(audio.duration||Infinity,Math.max(0,audio.currentTime+(action==='paper-back'?-10:10))));break;
-    case 'paper-play-group':seekRecording(cueTime(cue),true);break;
-    case 'paper-play-question':seekRecording(cueTime(cue,true),true);break;
+    case 'paper-play-group':if(audio)audio.dataset.end=String(cueEnd(cue)??'');seekRecording(cueTime(cue),true);break;
+    case 'paper-play-question':if(audio)audio.dataset.end=String(cueEnd(cue,true)??'');seekRecording(cueTime(cue,true),true);break;
+    case 'paper-retry-one':if(!activeSprintTask&&!paperReviewId){delete state.drafts['checked-'+responseKey(n)];delete state.drafts[responseKey(n)];delete state.drafts[paperMarkKey(sectionName())];save();redrawRoom();}break;
     case 'paper-check-one':if(!state.drafts[responseKey(n)])return toast('先为第 '+n+' 题选择答案');if(p.answerKey?.[n]){recordChoice(p,n);save();redrawRoom();}break;
     case 'paper-submit':submitRoom();break;
     case 'paper-retry':{const nums=paperNumbers(p);clearPaperSession(nums);save();showQuestion(nums[0]);break;}

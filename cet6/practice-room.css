@@ -5,6 +5,7 @@
 .sheet-modes{margin:14px 0}.room-tabs{margin-bottom:16px}
 .original-pages{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:white}
 .original-sheet+.original-sheet{border-top:1px solid var(--line)}.folio{background:#f4f7f4;padding:6px 12px}
+.sheet-scroll{overflow-x:auto}.large-print{width:155%;min-width:760px}.word-bank{margin-top:12px}.word-bank summary{cursor:pointer;padding:8px 0}
 cet-crop,.crop-content{display:block;min-width:0}
 cet-crop{overflow:hidden}.crop-content>img,.original-pages img,.original-pages canvas{display:block;width:100%;height:auto}
 .original-pages cet-pdf {min-height:0}.original-pages cet-pdf:empty{min-height:100px}
