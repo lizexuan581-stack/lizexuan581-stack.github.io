@@ -80,7 +80,7 @@ async function offlineInspect(paper) {
 
 function offlineDescription(paper) {
   const summary = offlineSummaries.get(paper.id);
-  if (typeof libraryReadyPaper === 'function' && libraryReadyPaper(paper))
+  if (typeof libraryReadyPaper === 'function' && libraryReadyPaper(paper) && (!window.CET_ONLINE_SOURCES?.[paper.id]?.audio || paper.audio))
     return { text: '本机资料已就绪，可离线练习。', disabled: true, label: '已导入本卷' };
   if (!onlineOfflineAssets(paper).length) return { text: '', disabled: true, label: '' };
   if (!('caches' in window) || !navigator.serviceWorker)
@@ -247,7 +247,7 @@ function sprintOfflinePapers() {
 }
 
 function sprintOfflineImported(paper) {
-  return typeof libraryReadyPaper === 'function' && libraryReadyPaper(paper);
+  return typeof libraryReadyPaper === 'function' && libraryReadyPaper(paper) && (!window.CET_ONLINE_SOURCES?.[paper.id]?.audio || !!paper.audio);
 }
 
 function sprintOfflineState() {

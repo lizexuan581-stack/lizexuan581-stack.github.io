@@ -2,7 +2,7 @@
 
 function paperSources(paper) {
   const web = window.CET_ONLINE_SOURCES?.[paper.id] || {};
-  const useLocal = !libraryImportMode() || libraryReadyPaper(paper);
+  const useLocal = !paper.remoteOnly && (!libraryImportMode() || libraryReadyPaper(paper));
   const url = (path, external) => (useLocal && libraryURL(path)) || (external && onlineOfflineURL(external)) || '';
   const byPage = (paths, remote) => {
     if (useLocal && paths?.length && paths.every(path => libraryURL(path))) return paths.map(libraryURL);
@@ -23,7 +23,7 @@ function paperSources(paper) {
 function readerDocument(p, sources, showAnswers) {
   const pages = showAnswers ? sources.answers : sources.pages;
   const pdf = showAnswers ? sources.answerPdf : sources.pdf;
-  const count = pages.length || (showAnswers ? sources.web.answerPageCount || p.answerPages.length : sources.web.pageCount || p.pages.length);
+  const count = pages.length || (showAnswers ? sources.web.answerPageCount || p.answerPageCount || p.answerPages?.length : sources.web.pageCount || p.pageCount || p.pages?.length) || 1;
   return {pages, pdf, count: Math.max(1, count)};
 }
 

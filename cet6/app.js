@@ -37,12 +37,14 @@ function home() {
   const date = new Date().toLocaleDateString('zh-CN', { month:'long', day:'numeric', weekday:'long' });
   const examDays = Math.ceil((Date.parse(state.exam + 'T12:00:00') - Date.parse(today() + 'T12:00:00')) / DAY);
   const correct = combinedAccuracy();
-  const otherSection = section === 'reading' && paper?.audio ? 'listening' : 'reading';
+  const web = paper && onlineEdition(paper);
+  const hasAudio = paper && !!paperSources(paper).audio;
+  const otherSection = section === 'reading' && hasAudio ? 'listening' : 'reading';
   const direct = paper ? `<div class="desk-paper">
     <div class="desk-paper-content">
       <div class="desk-kicker">${recent?'最近打开的试卷':'从这套真题开始'}</div>
       <h2>${Number(paper.id.slice(0,4))} 年 ${Number(paper.id.slice(4,6))} 月六级真题 <span>第 ${Number(paper.id.split('-')[1])} 套</span></h2>
-      <p>${paper.pages.length} 页题卷 · ${paper.answerPages?.length||0} 页参考解析${paper.audio?' · 配套听力':''}</p>
+      <p>${web?.pageCount||paper.pages.length} 页题卷 · ${web?.answerPageCount||paper.answerPages?.length||0} 页参考解析${hasAudio?' · 配套听力':''}</p>
       <div class="desk-actions">${openSection(section, (recent?'继续':'开始') + freeSections[section] + ' →', 'light')}
         ${section!==otherSection?openSection(otherSection, '做'+freeSections[otherSection], 'desk-outline'):''}
         <button class="desk-library" data-route="catalog">换一套试卷</button></div>
@@ -160,7 +162,21 @@ function validateImport(s){
   const nonnegative=v=>Number.isFinite(v)&&v>=0;
   const integer=v=>nonnegative(v)&&Number.isInteger(v);
   const date=v=>typeof v==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(v)&&Number.isFinite(Date.parse(v))&&new Date(v).toISOString().slice(0,10)===v;
-  const known=(type,id)=>typeof id==='string'&&(type==='vocab'?C.words.some(w=>w.id===id):['reading','listening'].includes(type)&&(C[type].some(it=>it.questions.some(q=>q.id===id))||(allPapers().some(p=>id.startsWith('paper-'+p.id+'-'))&&/^paper-\d{6}-\d+-([1-9]|[1-4][0-9]|5[0-5])$/.test(id)&&((type==='listening'&&Number(id.split('-').pop())<=25)||(type==='reading'&&Number(id.split('-').pop())>=26)))));
+  const paperScopes=new Set();
+  for(const p of allPapers()){
+    paperScopes.add('paper-'+p.id);
+    const edition=window.CET_ONLINE_SOURCES?.[p.id]?.editionId;
+    if(edition)paperScopes.add('paper-'+p.id+'-'+edition);
+  }
+  const known=(type,id)=>{
+    if(typeof id!=='string')return false;
+    if(type==='vocab')return C.words.some(w=>w.id===id);
+    if(!['reading','listening'].includes(type))return false;
+    if(C[type].some(it=>it.questions.some(q=>q.id===id)))return true;
+    const split=id.lastIndexOf('-'),number=id.slice(split+1);
+    return paperScopes.has(id.slice(0,split))&&/^([1-9]|[1-4][0-9]|5[0-5])$/.test(number)&&
+      (type==='listening'?Number(number)<=25:Number(number)>=26);
+  };
   if(!record(s)||s.version!==1||!Array.isArray(s.attempts)||!Array.isArray(s.saved)||!['words','errors','days','drafts'].every(k=>record(s[k]))||!date(s.exam)||![20,35,50,70].includes(s.minutes))return false;
   if(s.attempts.length>5000||new Set(s.saved).size!==s.saved.length||s.saved.some(id=>!known('vocab',id)))return false;
   if(s.attempts.some(a=>!record(a)||!known(a.type,a.id)||typeof a.correct!=='boolean'||!nonnegative(a.at)))return false;

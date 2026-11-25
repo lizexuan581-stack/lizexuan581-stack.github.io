@@ -17,4 +17,14 @@ cet-crop{overflow:hidden}.crop-content>img,.original-pages img,.original-pages c
 .question-numbers{margin:14px 0}.question-result{padding:10px 13px;border-radius:6px;background:#edf4ee}.question-result.bad{background:#fff2e9}
 .recording{margin:0 0 16px}.recording audio{display:block;width:100%;margin:10px 0}.room-notes summary{cursor:pointer}
 .answer-book select,.recording select{min-height:40px;border:1px solid var(--line);border-radius:6px;padding:0 6px}
+.catalog-filters{display:grid;gap:6px;margin-bottom:18px}
+.catalog-filters .tabs{margin:0;flex-wrap:wrap}
+.q-number.flagged{position:relative}
+.q-number.flagged::after{content:"";position:absolute;top:3px;right:3px;width:7px;height:7px;background:#c48424;border:1px solid #fff;border-radius:50%}
+.room-keys{margin:0 0 14px;color:var(--muted);font-size:13px}.room-keys summary{cursor:pointer}
+.room-grid.parallel-mode{grid-template-columns:minmax(0,1fr)}
+.parallel-reading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:18px}
+.parallel-reading h3{margin:0 0 8px}.parallel-passage{max-height:64vh;overflow:auto;overscroll-behavior:contain}
+@media(max-width:700px){.parallel-reading{grid-template-columns:minmax(0,1fr)}.parallel-passage{max-height:38vh}}
+@media (hover:none) and (pointer:coarse){.room-keys{display:none}}
 @media(max-width:820px){.room-grid{grid-template-columns:1fr}.question-sheet{padding:16px}.original-sheet .folio{font-size:12px}.q-number{min-height:44px}.room-heading h2{font-size:20px}}
