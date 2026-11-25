@@ -6,3 +6,55 @@
 .answer-cell select{min-height:44px}.paper-view .btn{min-height:44px}.paper-image{max-height:70vh;overscroll-behavior:contain}.paper-view{position:sticky;top:12px}.answer-grid{gap:8px}@media(max-width:979px){.paper-view{position:static}}
 
 .sprint-calendar{display:grid;grid-template-columns:repeat(14,1fr);gap:7px;margin:0 0 25px}.sprint-day{border:1px solid var(--line);background:white;border-radius:9px;padding:12px 4px;color:var(--muted);display:grid;gap:5px;text-align:center}.sprint-day small{font-size:10px;letter-spacing:1px}.sprint-day b{font-size:22px}.sprint-day span{font-size:11px}.sprint-day.selected{border-color:var(--green);background:#e8f1e8;color:var(--green)}.sprint-day.complete{background:var(--green);color:white}.sprint-banner{margin-bottom:22px}.sprint-banner .input{margin-top:6px}.tasks .task p{font-size:13px;line-height:1.75}.sprint-banner .flex{align-items:start}.task-body{min-width:0}.task>.btn{flex-shrink:0}@media(max-width:1000px){.sprint-calendar{grid-template-columns:repeat(7,1fr)}}@media(max-width:650px){.sprint-calendar{gap:5px}.sprint-day{padding:9px 2px}.sprint-day b{font-size:18px}.task{align-items:start}.task-icon{display:none}.task>.btn{padding:8px}.tasks .task p{font-size:12px}}
+
+/* Learning workbench */
+.desk-feature { display:grid; grid-template-columns:minmax(0,2.15fr) minmax(220px,.85fr); gap:18px; }
+.desk-paper,.desk-plan { position:relative; overflow:hidden; border-radius:15px; padding:clamp(22px,3vw,38px); }
+.desk-paper { isolation:isolate; display:flex; align-items:center; background:#194d3f; color:white; }
+.desk-paper-content { flex:1; min-width:0; }
+.desk-kicker { font-size:13px; line-height:1.55; font-weight:600; }
+.desk-paper .desk-kicker { color:#c5dcd0; }
+.desk-paper h2 { margin:16px 0 0; font-size:clamp(23px,2.4vw,36px); font-weight:650; letter-spacing:-.7px; line-height:1.35; }
+.desk-paper h2 span { display:block; font-size:19px; font-weight:500; letter-spacing:0; margin-top:6px; }
+.desk-paper p { color:#c8ddd3; font-size:13px; margin:11px 0 20px; }
+.desk-actions { display:flex; align-items:center; flex-wrap:wrap; gap:9px; }
+.desk-actions .btn { min-height:44px; }
+.btn.desk-outline,.desk-library { color:white; background:transparent; }
+.btn.desk-outline { border:1px solid #74a08d; }
+.desk-library { border:0; padding:10px 6px; font-size:13px; text-decoration:underline; text-underline-offset:4px; }
+.desk-sheet { flex:none; padding:17px 10px; margin:0 7px 0 19px; width:85px; height:120px; background:#f1edda; color:#344f3d; border-left:6px solid #b5bc9e; box-shadow:4px 4px #b7bea3,8px 8px #728e78; transform:rotate(8deg); }
+.desk-sheet b { font-family:Georgia,serif; font-size:18px; }
+.desk-sheet small { display:block; font-size:9px; margin:5px 0 14px; }
+.desk-sheet i { display:block; height:2px; margin:5px 0; background:#c3cbb4; }
+.desk-sheet i:last-child { width:55%; }
+.desk-plan { display:flex; flex-direction:column; align-items:flex-start; justify-content:center; background:#f5efdd; border:1px solid #e2dcc8; color:#4f472d; }
+.desk-plan .desk-kicker { color:#7a704b; }
+.desk-plan h2 { font-size:clamp(23px,2vw,30px); margin:13px 0 6px; }
+.desk-plan p { font-size:14px; margin:0; }
+.desk-plan small { color:#6e674f; font-size:12px; margin:5px 0 18px; }
+.desk-plan .btn { background:#fffaf0; color:#514b36; border-color:#c7bfa3; min-height:44px; }
+.desk-section { margin:26px 0 13px; }
+.desk-modules { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; }
+.desk-module { display:flex; gap:12px; align-items:center; min-height:86px; padding:15px; border:1px solid var(--line); background:white; border-radius:12px; text-align:left; color:inherit; }
+.desk-module:hover,.desk-records button:hover { background:#f3f8f3; border-color:#c1d1c5; }
+.desk-symbol { display:grid; flex:none; place-items:center; width:39px; height:41px; border-radius:9px; background:#edf3ee; color:#397557; }
+.desk-symbol svg { width:21px; height:21px; }
+.desk-module:nth-child(3n+2) .desk-symbol { background:#f5eee4; color:#926a46; }
+.desk-module:nth-child(3n) .desk-symbol { background:#edf1f6; color:#627790; }
+.desk-module strong,.desk-module small { display:block; }
+.desk-module strong { font-size:16px; }
+.desk-module small { font-size:12px; line-height:1.55; margin-top:5px; color:#687770; }
+.desk-chevron { margin-left:auto; color:#9baaa2; font-size:20px; }
+.desk-records { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); background:white; padding:12px 0; border:1px solid var(--line); border-radius:12px; }
+.desk-records button { display:grid; gap:8px; text-align:left; padding:7px 20px; background:transparent; border:0; border-right:1px solid var(--line); color:inherit; }
+.desk-records button:last-child { border-right:0; }
+.desk-records small { font-size:12px; color:#687770; }
+.desk-records strong { font-size:24px; font-weight:600; }
+.desk-records em { font-style:normal; font-size:12px; color:#687770; font-weight:400; }
+@media(min-width:1281px){.sidebar{overflow-y:auto;}}
+@media(max-width:980px){.desk-sheet{display:none}.desk-feature{grid-template-columns:minmax(0,1.65fr) minmax(210px,.85fr)} .desk-module{padding:12px;gap:8px}.desk-symbol{width:33px;height:35px}}
+@media(max-width:700px){.desk-feature{grid-template-columns:1fr;gap:12px}.desk-paper{min-height:220px}.desk-plan{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:10px;padding:16px 19px}.desk-plan .desk-kicker,.desk-plan small{display:none}.desk-plan h2{font-size:20px;margin:0 0 4px}.desk-plan p{grid-column:1;font-size:12px}.desk-plan .btn{grid-column:2;grid-row:1/3;align-self:center;font-size:12px;padding:8px 11px}.desk-modules,.desk-records{grid-template-columns:repeat(2,minmax(0,1fr))}.desk-modules{gap:9px}.desk-module{min-height:77px}.desk-module small{font-size:11px}.desk-module strong{font-size:14px}.desk-chevron{display:none}.desk-records{row-gap:10px}.desk-records button:nth-child(even){border-right:0}.desk-records strong{font-size:21px}.desk-section{margin:22px 0 11px}}
+@media(max-width:390px){.desk-symbol{display:none}.desk-module{padding:12px}.desk-actions{gap:7px}.desk-actions .btn{padding:9px 12px}}
+
+cet-pdf {display:block;min-height:120px;background:white}
+.paper-image.zoomed cet-pdf {width:1250px;max-width:none}

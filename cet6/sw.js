@@ -1,8 +1,10 @@
 'use strict';
 
-const CACHE_PREFIX = 'zhiliu-';
-const CACHE_NAME = 'zhiliu-cet6-50a36b2bab87';
-const PRECACHE_PATHS = ["./", "./app.js", "./audio.json", "./catalog.js", "./content.js", "./icon-192.png", "./icon-512.png", "./icon.svg", "./index.html", "./library.js", "./manifest.webmanifest", "./paper-data.js", "./paper-extra.js", "./paper-history.js", "./papers.js", "./README.md", "./sprint-data.js", "./sprint.js", "./styles.css"];
+const CACHE_PREFIX = 'zhiliu-cet6-';
+const PAPER_CACHE_NAME = 'cet6-personal-paper-assets-v1';
+const PAPER_CACHE_PATH = new URL('./__paper_cache__/asset', self.registration.scope).pathname;
+const CACHE_NAME = 'zhiliu-cet6-6046b697e239';
+const PRECACHE_PATHS = ["./", "./Adobe-GB1-5.bcmap", "./Adobe-GB1-UCS2.bcmap", "./app.js?v=d3bbc1201b88", "./audio.json", "./catalog.js?v=f9fa47eff29d", "./content.js?v=e2acf5d75225", "./FoxitDingbats.pfb", "./FoxitFixed.pfb", "./FoxitFixedBold.pfb", "./FoxitFixedBoldItalic.pfb", "./FoxitFixedItalic.pfb", "./FoxitSerif.pfb", "./FoxitSerifBold.pfb", "./FoxitSerifBoldItalic.pfb", "./FoxitSerifItalic.pfb", "./FoxitSymbol.pfb", "./GBK-EUC-H.bcmap", "./icon-192.png", "./icon-512.png", "./icon.svg", "./index.html", "./LiberationSans-Bold.ttf", "./LiberationSans-BoldItalic.ttf", "./LiberationSans-Italic.ttf", "./LiberationSans-Regular.ttf", "./library.js?v=17049d9fa14b", "./LICENSE_FOXIT", "./LICENSE_LIBERATION", "./manifest.webmanifest", "./online-offline.js?v=d8a997868cb9", "./online-sources.js?v=33da98cc4838", "./paper-data.js?v=e936756304c7", "./paper-extra.js?v=4ea988aadd34", "./paper-history.js?v=7914a0ab3c75", "./paper-reader.js?v=8b686b885313", "./papers.js?v=492bfab94c98", "./PDFJS-CMAP-LICENSE.txt", "./PDFJS-LICENSE.txt", "./pdfjs.mjs", "./pdfworker.mjs", "./README.md", "./sprint-data.js?v=f8bce4f7f2ff", "./sprint.js?v=32839b68f765", "./styles.css?v=25f02f95ca98", "./UniGB-UCS2-H.bcmap", "./UniGB-UTF16-H.bcmap"];
 const PRECACHE_URLS = PRECACHE_PATHS.map(path => new URL(path, self.registration.scope).href);
 const INDEX_URL = new URL('./index.html', self.registration.scope).href;
 
@@ -69,7 +71,36 @@ async function staticResource(request) {
 
 self.addEventListener('fetch', event => {
   const request = event.request;
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) {
+    const media = ['image', 'audio', 'video'].includes(request.destination);
+    if (media || (!request.destination && request.mode === 'cors')) {
+      event.respondWith((async () => {
+        const cache = await caches.open(PAPER_CACHE_NAME);
+        const localAsset = new URL('./__paper_cache__/asset', self.registration.scope);
+        localAsset.searchParams.set('source', request.url);
+        // The already-open player still uses the original URL after the student saves the paper.
+        const saved = await cache.match(localAsset.href);
+        if (saved) return request.headers.has('range') ? makeRangeResponse(saved, request.headers.get('range')) : saved;
+        if (request.destination === 'image' && request.mode === 'no-cors') {
+          const opaqueImage = await cache.match(request.url);
+          if (opaqueImage) return opaqueImage;
+        }
+        return fetch(request);
+      })());
+    }
+    return;
+  }
+  if (url.pathname === PAPER_CACHE_PATH) {
+    event.respondWith((async () => {
+      const cache = await caches.open(PAPER_CACHE_NAME);
+      const file = await cache.match(request.url);
+      if (!file) return new Response('本卷缓存已移除，请联网重新保存。', { status: 404 });
+      return request.headers.has('range') ? makeRangeResponse(file, request.headers.get('range')) : file;
+    })());
+    return;
+  }
   // A partial response cannot safely stand in for the complete cached resource.
   if (request.headers.has('range')) { event.respondWith(rangeResponse(request)); return; }
   event.respondWith(request.mode === 'navigate' ? navigate(request) : staticResource(request));
@@ -94,11 +125,21 @@ async function rangeResponse(request) {
   const cache=await caches.open(CACHE_NAME);
   const response=await cache.match(request.url);
   if(!response) return fetch(request);
-  const buffer=await response.arrayBuffer(), size=buffer.byteLength;
-  const match=/^bytes=(\d*)-(\d*)$/.exec(request.headers.get('range')||'');
-  if(!match) return new Response(null,{status:416,headers:{'Content-Range':`bytes */${size}`}});
-  let start=match[1]?Number(match[1]):Math.max(0,size-Number(match[2]));
-  let end=match[1]?(match[2]?Math.min(Number(match[2]),size-1):size-1):size-1;
-  if(start>=size||start>end)return new Response(null,{status:416,headers:{'Content-Range':`bytes */${size}`}});
-  return new Response(buffer.slice(start,end+1),{status:206,headers:{'Content-Type':response.headers.get('Content-Type')||'audio/mpeg','Content-Range':`bytes ${start}-${end}/${size}`,'Content-Length':String(end-start+1),'Accept-Ranges':'bytes'}});
+  return makeRangeResponse(response, request.headers.get('range'));
+}
+
+async function makeRangeResponse(response, range) {
+  const file = await response.blob();
+  const size = file.size;
+  const match = /^bytes=(\d*)-(\d*)$/i.exec(range || '');
+  const unsatisfiable = () => new Response(null, { status: 416, headers: { 'Content-Range': 'bytes */' + size } });
+  if (!match || (!match[1] && !match[2])) return unsatisfiable();
+  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+  const end = match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+  if (!Number.isSafeInteger(start) || start >= size || start > end) return unsatisfiable();
+  const headers = new Headers(response.headers);
+  headers.set('Content-Range', 'bytes ' + start + '-' + end + '/' + size);
+  headers.set('Content-Length', String(end - start + 1));
+  headers.set('Accept-Ranges', 'bytes');
+  return new Response(file.slice(start, end + 1), { status: 206, headers });
 }
