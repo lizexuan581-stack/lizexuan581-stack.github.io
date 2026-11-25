@@ -1,7 +1,7 @@
 'use strict';
 
 const CACHE_PREFIX = 'zhiliu-';
-const CACHE_NAME = 'zhiliu-cet6-e4ae9836088f';
+const CACHE_NAME = 'zhiliu-cet6-50a36b2bab87';
 const PRECACHE_PATHS = ["./", "./app.js", "./audio.json", "./catalog.js", "./content.js", "./icon-192.png", "./icon-512.png", "./icon.svg", "./index.html", "./library.js", "./manifest.webmanifest", "./paper-data.js", "./paper-extra.js", "./paper-history.js", "./papers.js", "./README.md", "./sprint-data.js", "./sprint.js", "./styles.css"];
 const PRECACHE_URLS = PRECACHE_PATHS.map(path => new URL(path, self.registration.scope).href);
 const INDEX_URL = new URL('./index.html', self.registration.scope).href;

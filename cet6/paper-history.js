@@ -1084,8 +1084,64 @@ window.CET_HISTORY = [
       "papers/202306-1/answer-14.jpg",
       "papers/202306-1/answer-15.jpg"
     ],
-    "answerKey": {},
-    "answerStatus": "原版解析已收录，客观题答案键尚未逐项核验；仅对照练习，不自动判分。",
+    "answerKey": {
+      "1": "B",
+      "2": "B",
+      "3": "C",
+      "4": "A",
+      "5": "D",
+      "6": "C",
+      "7": "A",
+      "8": "D",
+      "9": "A",
+      "10": "B",
+      "11": "D",
+      "12": "C",
+      "13": "D",
+      "14": "B",
+      "15": "C",
+      "16": "A",
+      "17": "C",
+      "18": "B",
+      "19": "D",
+      "20": "C",
+      "21": "B",
+      "22": "D",
+      "23": "A",
+      "24": "D",
+      "25": "A",
+      "26": "N",
+      "27": "K",
+      "28": "O",
+      "29": "M",
+      "30": "A",
+      "31": "G",
+      "32": "D",
+      "33": "E",
+      "34": "C",
+      "35": "I",
+      "36": "C",
+      "37": "G",
+      "38": "A",
+      "39": "I",
+      "40": "F",
+      "41": "K",
+      "42": "D",
+      "43": "M",
+      "44": "B",
+      "45": "H",
+      "46": "D",
+      "47": "A",
+      "48": "A",
+      "49": "C",
+      "50": "B",
+      "51": "A",
+      "52": "B",
+      "53": "B",
+      "54": "C",
+      "55": "D"
+    },
+    "answerStatus": "55道客观题已逐项核对原版参考解析图及本卷题号、选项顺序，可自动判分；配套录音尚未收录。",
     "answerSources": [
       "https://eol.nju.edu.cn/courses/m/cet-zhenti/%E5%8E%86%E5%B9%B4%E8%8B%B1%E8%AF%AD%E5%9B%9B%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%2B%E8%A7%A3%E6%9E%90%E5%90%88%E9%9B%86%E3%80%902015-2023.6%E3%80%91/2023%E5%B9%B46%E6%9C%88%E5%9B%9B%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90/2023%E5%B9%B46%E6%9C%88%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%92%8C%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90/2023.6%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%8F%8A%E8%A7%A3%E6%9E%90/2023.06%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E7%AC%AC1%E5%A5%97%E8%AF%A6%E8%A7%A3.pdf"
     ],
@@ -1119,8 +1175,8 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
-    "choiceRangeStatus": "按原卷阅读Section B段落字母提取；最终以图版为准。",
-    "totalLocalBytes": 22854790,
+    "choiceRangeStatus": "已核对原卷题面：听力和仔细阅读A-D，选词填空A-O，长篇匹配按本卷实际段落范围。",
+    "totalLocalBytes": 22856488,
     "sectionsAvailable": [
       "writing",
       "listening",
@@ -1138,7 +1194,17 @@ window.CET_HISTORY = [
       "reading": 2,
       "matching": 3,
       "listening": 0
-    }
+    },
+    "answerVerification": {
+      "verifiedAt": "2026-11-25",
+      "method": "逐页目读参考解析PDF答案字母，逐题比对本卷题号、选项文字/字母及匹配段落；复看题卷首、中、末页图版。",
+      "verifiedQuestions": 55,
+      "referenceType": "高校公开附件中的出版机构参考解析，非考试院官方答案",
+      "answerPdfSha256": "174e04771601f7d08cd0bfb264f9170b40bd1e28ac69c86177174b0ddcbea051",
+      "paperPdfSha256": "c2b5cd177d15ee6b1398599fa96f45c322d80e641193d1ee1b9cb5e1b0705acb",
+      "audioVerified": false
+    },
+    "sourceQualityNote": "题卷是整理排版版。听力Section A/B的通用Directions模板存在题型文字错置；具体1-25题及选项已与参考解析逐题匹配。"
   },
   {
     "id": "202306-2",
@@ -1179,8 +1245,64 @@ window.CET_HISTORY = [
       "papers/202306-2/answer-14.jpg",
       "papers/202306-2/answer-15.jpg"
     ],
-    "answerKey": {},
-    "answerStatus": "原版解析已收录，客观题答案键尚未逐项核验；仅对照练习，不自动判分。",
+    "answerKey": {
+      "1": "D",
+      "2": "A",
+      "3": "B",
+      "4": "C",
+      "5": "C",
+      "6": "A",
+      "7": "D",
+      "8": "B",
+      "9": "D",
+      "10": "C",
+      "11": "B",
+      "12": "C",
+      "13": "B",
+      "14": "A",
+      "15": "A",
+      "16": "D",
+      "17": "B",
+      "18": "A",
+      "19": "C",
+      "20": "D",
+      "21": "B",
+      "22": "D",
+      "23": "A",
+      "24": "A",
+      "25": "C",
+      "26": "H",
+      "27": "I",
+      "28": "J",
+      "29": "A",
+      "30": "K",
+      "31": "M",
+      "32": "G",
+      "33": "N",
+      "34": "E",
+      "35": "B",
+      "36": "E",
+      "37": "A",
+      "38": "F",
+      "39": "C",
+      "40": "H",
+      "41": "B",
+      "42": "I",
+      "43": "E",
+      "44": "K",
+      "45": "G",
+      "46": "A",
+      "47": "B",
+      "48": "A",
+      "49": "A",
+      "50": "D",
+      "51": "A",
+      "52": "D",
+      "53": "B",
+      "54": "D",
+      "55": "C"
+    },
+    "answerStatus": "55道客观题已逐项核对原版参考解析图及本卷题号、选项顺序，可自动判分；配套录音尚未收录。",
     "answerSources": [
       "https://eol.nju.edu.cn/courses/m/cet-zhenti/%E5%8E%86%E5%B9%B4%E8%8B%B1%E8%AF%AD%E5%9B%9B%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%2B%E8%A7%A3%E6%9E%90%E5%90%88%E9%9B%86%E3%80%902015-2023.6%E3%80%91/2023%E5%B9%B46%E6%9C%88%E5%9B%9B%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%8F%8A%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90/2023%E5%B9%B46%E6%9C%88%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%92%8C%E7%AD%94%E6%A1%88%E8%A7%A3%E6%9E%90/2023.6%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E5%8F%8A%E8%A7%A3%E6%9E%90/2023.06%E5%85%AD%E7%BA%A7%E7%9C%9F%E9%A2%98%E7%AC%AC2%E5%A5%97%E8%AF%A6%E8%A7%A3.pdf"
     ],
@@ -1214,8 +1336,8 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
-    "choiceRangeStatus": "按原卷阅读Section B段落字母提取；最终以图版为准。",
-    "totalLocalBytes": 23252664,
+    "choiceRangeStatus": "已核对原卷题面：听力和仔细阅读A-D，选词填空A-O，长篇匹配按本卷实际段落范围。",
+    "totalLocalBytes": 23254362,
     "sectionsAvailable": [
       "writing",
       "listening",
@@ -1233,7 +1355,17 @@ window.CET_HISTORY = [
       "reading": 2,
       "matching": 3,
       "listening": 0
-    }
+    },
+    "answerVerification": {
+      "verifiedAt": "2026-11-25",
+      "method": "逐页目读参考解析PDF答案字母，逐题比对本卷题号、选项文字/字母及匹配段落；复看题卷首、中、末页图版。",
+      "verifiedQuestions": 55,
+      "referenceType": "高校公开附件中的出版机构参考解析，非考试院官方答案",
+      "answerPdfSha256": "d826ce2ebc76abecd52de18d54595403c5c60276b44f766189ff869929d6480f",
+      "paperPdfSha256": "7f6d5d59a54e6f11267a7892d443f8f1a83a672f7d470a20b9a42acec9d34112",
+      "audioVerified": false
+    },
+    "sourceQualityNote": "题卷是整理排版版。听力Section A/B的通用Directions模板存在题型文字错置；具体1-25题及选项已与参考解析逐题匹配。"
   },
   {
     "id": "202312-1",
@@ -1363,11 +1495,67 @@ window.CET_HISTORY = [
       "papers/202312-2/answer-18.jpg",
       "papers/202312-2/answer-19.jpg"
     ],
-    "answerKey": {},
-    "answerStatus": "已收录配套解析原图，未逐项复核答案字母；仅支持查看原解析，不自动猜测批改。",
-    "audio": null,
-    "hasListening": false,
-    "audioStatus": "尚未核验配套音频，当前不提供听力播放。",
+    "answerKey": {
+      "1": "D",
+      "2": "A",
+      "3": "D",
+      "4": "B",
+      "5": "B",
+      "6": "C",
+      "7": "A",
+      "8": "C",
+      "9": "B",
+      "10": "D",
+      "11": "D",
+      "12": "B",
+      "13": "C",
+      "14": "C",
+      "15": "A",
+      "16": "A",
+      "17": "C",
+      "18": "D",
+      "19": "B",
+      "20": "A",
+      "21": "D",
+      "22": "A",
+      "23": "B",
+      "24": "C",
+      "25": "D",
+      "26": "E",
+      "27": "D",
+      "28": "B",
+      "29": "M",
+      "30": "G",
+      "31": "O",
+      "32": "C",
+      "33": "L",
+      "34": "A",
+      "35": "F",
+      "36": "F",
+      "37": "B",
+      "38": "I",
+      "39": "D",
+      "40": "G",
+      "41": "L",
+      "42": "C",
+      "43": "J",
+      "44": "E",
+      "45": "K",
+      "46": "C",
+      "47": "C",
+      "48": "D",
+      "49": "B",
+      "50": "A",
+      "51": "D",
+      "52": "D",
+      "53": "C",
+      "54": "B",
+      "55": "D"
+    },
+    "answerStatus": "已依据本套原解析逐项核验全部55题答案，并核对当前原卷选项顺序；可自动批改客观题。",
+    "audio": "papers/202312-2/listening.mp3",
+    "hasListening": true,
+    "audioStatus": "已核对首段会话与本卷题目匹配；离线音频已压缩为64kbps单声道MP3。",
     "imageSourceUrls": [
       "https://daxueui-cos.koocdn.com/images/fe_upload/2024/2/2024-2-29-1709172235358.jpg",
       "https://daxueui-cos.koocdn.com/images/fe_upload/2024/2/2024-2-29-1709172378506.jpg",
@@ -1379,16 +1567,18 @@ window.CET_HISTORY = [
     "sectionPageIndex": {
       "writing": 0,
       "reading": 2,
-      "translation": 8
+      "translation": 8,
+      "listening": 0
     },
     "preparation": "保留发布原图；按原分页切分，灰度JPEG最长宽1150px、quality82。PDF按原图比例封装A4；2024年12月解析保留下载的原PDF。",
     "availableSections": [
       "writing",
+      "listening",
       "reading",
       "translation"
     ],
     "questionRange": {
-      "from": 26,
+      "from": 1,
       "to": 55
     },
     "choiceRanges": [
@@ -1408,7 +1598,37 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
-    "totalLocalBytes": 18654817
+    "audioSources": [
+      "https://daxueui-cos.koocdn.com/images/fe_upload/2024/2/2024-2-29-1709172203210.mp3"
+    ],
+    "audioVerification": "首段会话为租露营车旅行，与原卷第1–4题相符。",
+    "audioDuration": "00:27:57.48",
+    "bytes": 32075373,
+    "fileCount": 31,
+    "answerVerifiedAt": "2026-11-25",
+    "answerVerification": {
+      "method": "本套未附集中速查表；逐项读取原解析第22–38印刷页的答案标注与说明，核对当前卷选项顺序。",
+      "pages": [
+        "papers/202312-2/answer-02.jpg",
+        "papers/202312-2/answer-03.jpg",
+        "papers/202312-2/answer-04.jpg",
+        "papers/202312-2/answer-05.jpg",
+        "papers/202312-2/answer-06.jpg",
+        "papers/202312-2/answer-07.jpg",
+        "papers/202312-2/answer-08.jpg",
+        "papers/202312-2/answer-09.jpg",
+        "papers/202312-2/answer-10.jpg",
+        "papers/202312-2/answer-11.jpg",
+        "papers/202312-2/answer-12.jpg",
+        "papers/202312-2/answer-13.jpg",
+        "papers/202312-2/answer-14.jpg",
+        "papers/202312-2/answer-16.jpg",
+        "papers/202312-2/answer-17.jpg",
+        "papers/202312-2/answer-18.jpg"
+      ],
+      "notes": "全部55题均有清晰原解析依据；48=D、49=B、52=D。"
+    },
+    "totalLocalBytes": 32075373
   },
   {
     "id": "202312-3",
@@ -1475,11 +1695,6 @@ window.CET_HISTORY = [
     },
     "choiceRanges": [
       {
-        "from": 1,
-        "to": 25,
-        "choices": "ABCD"
-      },
-      {
         "from": 26,
         "to": 45,
         "choices": "ABCDEFGHIJKLMNO"
@@ -1490,6 +1705,9 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
+    "audioSources": [],
+    "bytes": 11926755,
+    "fileCount": 20,
     "totalLocalBytes": 11926755
   },
   {
@@ -1539,11 +1757,67 @@ window.CET_HISTORY = [
       "papers/202406-2/answer-19.jpg",
       "papers/202406-2/answer-20.jpg"
     ],
-    "answerKey": {},
-    "answerStatus": "已收录配套解析原图，未逐项复核答案字母；仅支持查看原解析，不自动猜测批改。",
-    "audio": null,
-    "hasListening": false,
-    "audioStatus": "尚未核验配套音频，当前不提供听力播放。",
+    "answerKey": {
+      "1": "A",
+      "2": "B",
+      "3": "D",
+      "4": "A",
+      "5": "D",
+      "6": "C",
+      "7": "D",
+      "8": "A",
+      "9": "A",
+      "10": "D",
+      "11": "B",
+      "12": "B",
+      "13": "C",
+      "14": "D",
+      "15": "C",
+      "16": "D",
+      "17": "A",
+      "18": "C",
+      "19": "C",
+      "20": "B",
+      "21": "C",
+      "22": "B",
+      "23": "B",
+      "24": "A",
+      "25": "D",
+      "26": "I",
+      "27": "O",
+      "28": "H",
+      "29": "E",
+      "30": "G",
+      "31": "N",
+      "32": "A",
+      "33": "F",
+      "34": "J",
+      "35": "D",
+      "36": "D",
+      "37": "I",
+      "38": "A",
+      "39": "K",
+      "40": "H",
+      "41": "F",
+      "42": "J",
+      "43": "L",
+      "44": "G",
+      "45": "K",
+      "46": "B",
+      "47": "C",
+      "48": "A",
+      "49": "A",
+      "50": "D",
+      "51": "C",
+      "52": "D",
+      "53": "B",
+      "54": "D",
+      "55": "A"
+    },
+    "answerStatus": "已依据本套原解析逐项核验全部55题答案，并核对当前原卷选项顺序；可自动批改客观题。",
+    "audio": "papers/202406-2/listening.mp3",
+    "hasListening": true,
+    "audioStatus": "已核对首段会话与本卷题目匹配；离线音频已压缩为64kbps单声道MP3。",
     "imageSourceUrls": [
       "https://guonei-cos.koocdn.com/common/4989285cc0ae40c7b020311fd8cec6e4.jpg",
       "https://guonei-cos.koocdn.com/common/58c266018c074113b256c8f732442705.jpg",
@@ -1555,16 +1829,18 @@ window.CET_HISTORY = [
     "sectionPageIndex": {
       "writing": 0,
       "reading": 2,
-      "translation": 8
+      "translation": 8,
+      "listening": 0
     },
     "preparation": "保留发布原图；按原分页切分，灰度JPEG最长宽1150px、quality82。PDF按原图比例封装A4；2024年12月解析保留下载的原PDF。",
     "availableSections": [
       "writing",
+      "listening",
       "reading",
       "translation"
     ],
     "questionRange": {
-      "from": 26,
+      "from": 1,
       "to": 55
     },
     "choiceRanges": [
@@ -1584,6 +1860,21 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
+    "audioSources": [
+      "https://guonei-cos.koocdn.com/common/6e4d4399c6934d05bfde183c39528ef5.mp3"
+    ],
+    "audioVerification": "首段会话为购买搅拌机，与原卷第1–4题相符。",
+    "audioDuration": "00:26:05.73",
+    "bytes": 30618478,
+    "fileCount": 32,
+    "answerVerifiedAt": "2026-11-25",
+    "answerVerification": {
+      "method": "逐项复读原解析末页答案速查表，另对照当前卷题面及分题解析抽查选项顺序。",
+      "pages": [
+        "papers/202406-2/answer-20.jpg"
+      ],
+      "notes": "长篇匹配39与45均为K，原表明确如此；49=A、52=D。"
+    },
     "totalLocalBytes": 30618478
   },
   {
@@ -1651,11 +1942,6 @@ window.CET_HISTORY = [
     },
     "choiceRanges": [
       {
-        "from": 1,
-        "to": 25,
-        "choices": "ABCD"
-      },
-      {
         "from": 26,
         "to": 45,
         "choices": "ABCDEFGHIJKLMNO"
@@ -1666,6 +1952,9 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
+    "audioSources": [],
+    "bytes": 11232326,
+    "fileCount": 20,
     "totalLocalBytes": 11232326
   },
   {
@@ -1712,9 +2001,9 @@ window.CET_HISTORY = [
     ],
     "answerKey": {},
     "answerStatus": "已收录配套解析原图，未逐项复核答案字母；仅支持查看原解析，不自动猜测批改。",
-    "audio": null,
-    "hasListening": false,
-    "audioStatus": "尚未核验配套音频，当前不提供听力播放。",
+    "audio": "papers/202412-1/listening.mp3",
+    "hasListening": true,
+    "audioStatus": "已核对首段会话与本卷题目匹配；离线音频已压缩为64kbps单声道MP3。",
     "imageSourceUrls": [
       "https://guonei-cos.koocdn.com/common/1a4186a494b64a1582c788ae75d291b5.jpg"
     ],
@@ -1725,16 +2014,18 @@ window.CET_HISTORY = [
     "sectionPageIndex": {
       "writing": 0,
       "reading": 2,
-      "translation": 8
+      "translation": 8,
+      "listening": 0
     },
     "preparation": "保留发布原图；按原分页切分，灰度JPEG最长宽1150px、quality82。PDF按原图比例封装A4；2024年12月解析保留下载的原PDF。",
     "availableSections": [
       "writing",
+      "listening",
       "reading",
       "translation"
     ],
     "questionRange": {
-      "from": 26,
+      "from": 1,
       "to": 55
     },
     "choiceRanges": [
@@ -1755,7 +2046,14 @@ window.CET_HISTORY = [
       }
     ],
     "answerPdfSource": "https://www.cettong.cn/library/cet6/2024_12_1/answer.pdf",
-    "totalLocalBytes": 14814292
+    "audioSources": [
+      "https://guonei-cos.koocdn.com/common/20292df3fc014173b682eb29410dfa9c.mp3"
+    ],
+    "audioVerification": "首段会话为年度绩效评估，与原卷第1–4题相符。",
+    "audioDuration": "00:29:31.36",
+    "bytes": 28985952,
+    "fileCount": 27,
+    "totalLocalBytes": 28985952
   },
   {
     "id": "202412-2",
@@ -1801,9 +2099,9 @@ window.CET_HISTORY = [
     ],
     "answerKey": {},
     "answerStatus": "已收录配套解析原图，未逐项复核答案字母；仅支持查看原解析，不自动猜测批改。",
-    "audio": null,
-    "hasListening": false,
-    "audioStatus": "尚未核验配套音频，当前不提供听力播放。",
+    "audio": "papers/202412-2/listening.mp3",
+    "hasListening": true,
+    "audioStatus": "已核对首段会话与本卷题目匹配；离线音频已压缩为64kbps单声道MP3。",
     "imageSourceUrls": [
       "https://guonei-cos.koocdn.com/common/bc361c2db79140a28e8c64815d39c5a1.jpg"
     ],
@@ -1814,16 +2112,18 @@ window.CET_HISTORY = [
     "sectionPageIndex": {
       "writing": 0,
       "reading": 2,
-      "translation": 8
+      "translation": 8,
+      "listening": 0
     },
     "preparation": "保留发布原图；按原分页切分，灰度JPEG最长宽1150px、quality82。PDF按原图比例封装A4；2024年12月解析保留下载的原PDF。",
     "availableSections": [
       "writing",
+      "listening",
       "reading",
       "translation"
     ],
     "questionRange": {
-      "from": 26,
+      "from": 1,
       "to": 55
     },
     "choiceRanges": [
@@ -1844,7 +2144,14 @@ window.CET_HISTORY = [
       }
     ],
     "answerPdfSource": "https://www.cettong.cn/library/cet6/2024_12_2/answer.pdf",
-    "totalLocalBytes": 14642573
+    "audioSources": [
+      "https://guonei-cos.koocdn.com/common/88ff4a9c2da64127bc657a3d7636dc7c.mp3"
+    ],
+    "audioVerification": "首段会话为艺术史专业与职业选择，与原卷第1–4题相符。",
+    "audioDuration": "00:29:07.23",
+    "bytes": 28621273,
+    "fileCount": 27,
+    "totalLocalBytes": 28621273
   },
   {
     "id": "202412-3",
@@ -1909,11 +2216,6 @@ window.CET_HISTORY = [
     },
     "choiceRanges": [
       {
-        "from": 1,
-        "to": 25,
-        "choices": "ABCD"
-      },
-      {
         "from": 26,
         "to": 45,
         "choices": "ABCDEFGHIJKLMNO"
@@ -1925,6 +2227,9 @@ window.CET_HISTORY = [
       }
     ],
     "answerPdfSource": "https://www.cettong.cn/library/cet6/2024_12_3/answer.pdf",
+    "audioSources": [],
+    "bytes": 10242705,
+    "fileCount": 18,
     "totalLocalBytes": 10242705
   },
   {
@@ -1976,9 +2281,9 @@ window.CET_HISTORY = [
     ],
     "answerKey": {},
     "answerStatus": "已收录配套解析原图，未逐项复核答案字母；仅支持查看原解析，不自动猜测批改。",
-    "audio": null,
-    "hasListening": false,
-    "audioStatus": "尚未核验配套音频，当前不提供听力播放。",
+    "audio": "papers/202506-2/listening.mp3",
+    "hasListening": true,
+    "audioStatus": "已核对首段会话与本卷题目匹配；离线音频已压缩为64kbps单声道MP3。",
     "imageSourceUrls": [
       "https://guonei-cos.koocdn.com/common/6bfdb35ca9d54daea5f51f0dfd854f98.png",
       "https://guonei-cos.koocdn.com/common/fe176b936e2c486a929df3d158e2f2af.png"
@@ -1989,16 +2294,18 @@ window.CET_HISTORY = [
     "sectionPageIndex": {
       "writing": 0,
       "reading": 2,
-      "translation": 8
+      "translation": 8,
+      "listening": 0
     },
     "preparation": "保留发布原图；按原分页切分，灰度JPEG最长宽1150px、quality82。PDF按原图比例封装A4；2024年12月解析保留下载的原PDF。",
     "availableSections": [
       "writing",
+      "listening",
       "reading",
       "translation"
     ],
     "questionRange": {
-      "from": 26,
+      "from": 1,
       "to": 55
     },
     "choiceRanges": [
@@ -2018,6 +2325,13 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
+    "audioSources": [
+      "https://guonei-cos.koocdn.com/common/be06a285315b4dfd9e2d22102a96712c.mp3"
+    ],
+    "audioVerification": "首段会话为比较 Rachel 与 Peter 两位应聘者，与原卷第1–4题相符。来源站第一、二套音频链接交叉，已按实际内容纠正配对。",
+    "audioDuration": "00:26:20.63",
+    "bytes": 21751395,
+    "fileCount": 32,
     "totalLocalBytes": 21751395
   },
   {
@@ -2085,11 +2399,6 @@ window.CET_HISTORY = [
     },
     "choiceRanges": [
       {
-        "from": 1,
-        "to": 25,
-        "choices": "ABCD"
-      },
-      {
         "from": 26,
         "to": 45,
         "choices": "ABCDEFGHIJKLMNO"
@@ -2100,6 +2409,9 @@ window.CET_HISTORY = [
         "choices": "ABCD"
       }
     ],
+    "audioSources": [],
+    "bytes": 6187803,
+    "fileCount": 20,
     "totalLocalBytes": 6187803
   },
   {
