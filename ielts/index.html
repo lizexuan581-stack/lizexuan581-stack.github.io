@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>单词背诵强化 - 第6/7/8章 (原音频随身练习)</title>
+  <title>单词背诵强化 - 第6—10章 (原音频随身练习)</title>
   <style>
     :root {
       --primary: #4f46e5;
@@ -490,7 +490,7 @@
 
     .feedback-box.err {
       background: var(--danger-light);
-      color: #9f1239;
+      color: #9f3049;
       border: 1px solid #fecdd3;
     }
 
@@ -793,6 +793,7 @@
   <audio id="wavPlayer_ch6" preload="auto" playsinline></audio>
   <audio id="wavPlayer_ch7" preload="auto" playsinline></audio>
   <audio id="wavPlayer_ch8" preload="auto" playsinline></audio>
+  <audio id="wavPlayer_ch9" preload="metadata" playsinline></audio><audio id="wavPlayer_ch10" preload="metadata" playsinline></audio>
   <audio id="fallbackAudioPlayer" preload="none" playsinline></audio>
 
   <!-- 顶部栏 -->
@@ -802,9 +803,9 @@
         <div>
           <div class="app-title">
             <span>🎯 单词背诵强化</span>
-            <span class="badge-tag">第6/7/8章 · 原音频已内置</span>
+            <span class="badge-tag">第6—10章 · 新增两章合成朗读</span>
           </div>
-          <div class="app-subtitle">文档 123 词 + 录音附加 1 词 · 打开就能听，无需上传</div>
+          <div class="app-subtitle">新增第九、十章 181 词 · 原音频 + 合成英语朗读</div>
         </div>
         <div class="header-actions">
           <button type="button" class="btn-glass" id="btnDownloadHtml">📲 添加到主屏幕</button>
@@ -816,7 +817,7 @@
       <div class="wav-console-card">
         <div class="wav-console-top">
           <div style="font-size:12px;line-height:1.4;">
-            <strong style="color:#fde047;">🎵 三章原录音已内置：</strong> 点击喇叭逐词听写，或播放整章。支持随机顺序、三章混合和错题重练。
+            <strong style="color:#fde047;">🎵 第六至十章音频已内置：</strong> 点击喇叭逐词听写，或播放整章。支持随机顺序、五章混合和错题重练。
           </div>
           <label class="wav-upload-trigger">
             📂 可选：替换本机录音
@@ -824,7 +825,7 @@
           </label>
         </div>
 
-        <div class="wav-status-pills">
+        <div class="wav-status-pills"><span class="wav-pill" id="chipWavCh9" data-ch="ch9"></span><span class="wav-pill" id="chipWavCh10" data-ch="ch10"></span>
           <span class="wav-pill" id="chipWavCh6" data-ch="ch6">六章找工作(51词): 未挂载.wav (点此选文件)</span>
           <span class="wav-pill" id="chipWavCh7" data-ch="ch7">七章传统节日(27词): 未挂载.wav (点此选文件)</span>
           <span class="wav-pill" id="chipWavCh8" data-ch="ch8">八章文化(46词): 未挂载.wav (点此选文件)</span>
@@ -841,7 +842,7 @@
             </div>
           </div>
           <div class="deck-controls">
-            <button type="button" id="btnDeckPlayFull" style="background:#10b981;color:#fff;padding:4px 10px;border-radius:6px;font-weight:800;">▶️ 播原音频整轨</button>
+            <button type="button" id="btnDeckPlayFull" style="background:#10b981;color:#fff;padding:4px 10px;border-radius:6px;font-weight:800;">▶️ 播放整章音频</button>
             <input type="range" id="deckScrubber" class="deck-range" min="0" max="100" step="0.1" value="0">
             <span id="deckTimeText" style="font-family:monospace;">00:00/02:30</span>
           </div>
@@ -872,16 +873,17 @@
   <!-- 章节切换与音频对齐过滤 -->
   <section class="toolbar-section container">
     <div class="chapter-tabs" id="chapterTabs">
-      <button type="button" class="ch-tab active" data-ch="ch6">第六章：找工作注册 (51)</button>
+      <button type="button" class="ch-tab" data-ch="ch6">第六章：找工作注册 (51)</button>
       <button type="button" class="ch-tab" data-ch="ch7">第七章：传统节日 (27)</button>
       <button type="button" class="ch-tab" data-ch="ch8">第八章：文化 (<span id="ch8CountText">46</span>)</button>
-      <button type="button" class="ch-tab" data-ch="all">三章合集 (<span id="allCountText">124</span>)</button>
+      <button type="button" class="ch-tab active" data-ch="ch9">第九章：课业讨论 (88)</button><button type="button" class="ch-tab" data-ch="ch10">第十章：图书馆 (93)</button>
+      <button type="button" class="ch-tab" data-ch="all">五章合集 (<span id="allCountText">305</span>)</button>
       <button type="button" class="ch-tab mistake-tab" data-ch="mistakes">📓 错题本 (<span id="tabMistakeCount">0</span>)</button>
     </div>
 
     <div class="sub-toolbar">
       <div class="tool-group">
-        <button type="button" class="pill-btn active-mode" id="btnScopeToggle" title="原版音频8末尾第46个词多录了一个 team leader">📖 纯文档词表 (123词)</button>
+        <button type="button" class="pill-btn active-mode" id="btnScopeToggle" title="原版音频8末尾第46个词多录了一个 team leader">📖 纯文档词表 (304词)</button>
         <button type="button" class="pill-btn" id="btnOrderToggle">📑 严格按音频顺序</button>
         <button type="button" class="pill-btn active-mode" id="btnAccentToggle">🎧 原录音优先</button>
       </div>
@@ -1032,7 +1034,7 @@
     <div id="view-list" class="mode-view">
       <div style="background:#fff;border-radius:16px;padding:12px;border:1px solid var(--border);margin-bottom:10px;position:sticky;top:8px;z-index:20;">
         <div style="display:flex;gap:8px;margin-bottom:8px;">
-          <input type="text" id="listSearchInput" class="text-input" style="padding:8px 12px;font-size:13px;" placeholder="🔍 搜索第6/7/8章英文或中文意思...">
+          <input type="text" id="listSearchInput" class="text-input" style="padding:8px 12px;font-size:13px;" placeholder="🔍 搜索第6—10章英文或中文意思...">
           <button type="button" class="pill-btn" id="btnListAutoPlay" style="background:#fffbeb;color:#b45309;border:1px solid #fde68a;flex-shrink:0;">▶️ 自动连播磨耳朵</button>
         </div>
         <div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;">
@@ -1063,7 +1065,7 @@
 
       <div style="margin-bottom:12px;">
         <label style="display:block;background:var(--primary-light);color:var(--primary);border:2px dashed #818cf8;border-radius:14px;padding:12px;text-align:center;font-weight:800;font-size:13px;cursor:pointer;">
-          📂 一键同时选入 3 个 .wav 文件 (自动识别第6/7/8章)
+          📂 一键同时选入 3 个 .wav 文件 (自动识别第6—10章)
           <input type="file" id="multiWavInput" accept=".wav,audio/*" multiple style="display:none;">
         </label>
       </div>
@@ -1131,10 +1133,10 @@
     </div>
   </nav>
 
-  <script src="audio-index.js"></script>
+  <script src="audio-index.js?v=910"></script>
   <script>
     (function() {
-      // ================= 完整收录第 6、7、8 章全部 124 个词汇 (严格对齐上传的 3 段原版音频) =================
+      // ================= 完整收录第 6、7、8 章全部 305 个词汇 (严格对齐上传的 3 段原版音频) =================
       // 数组项格式: [原音频发音词(en), 文档拼写词(docEn), 音标(ph), 中文释义(zh), 分类(cat), 是否为音频附加词(isExtra)]
       var RAW_CH6 = [
         // 手续 (8词)
@@ -1322,12 +1324,13 @@
 
       var documentCorrections={"ch6_0": {"zh": "注册", "ph": "['redʒistə]"}, "ch6_1": {"zh": "注册", "ph": "[,redʒi'streiʃən]"}, "ch6_2": {"zh": "入学", "ph": "[in'rəulmənt]"}, "ch6_3": {"zh": "申请", "ph": "[ə'plai]"}, "ch6_4": {"zh": "申请表", "ph": ""}, "ch6_5": {"zh": "年费", "ph": ""}, "ch6_6": {"zh": "会员卡", "ph": ""}, "ch6_7": {"zh": "全名", "ph": ""}, "ch6_8": {"zh": "事业", "ph": "[kə'riə]"}, "ch6_9": {"zh": "公司", "ph": "[kɔmpəni]"}, "ch6_10": {"zh": "雇员", "ph": "[,emplɔi'i:, em'plɔii:]"}, "ch6_11": {"zh": "经理", "ph": "['mænidʒə]"}, "ch6_12": {"zh": "空位", "ph": "['veikənsi]"}, "ch6_13": {"zh": "失业的", "ph": "[,ʌnim'plɔid]"}, "ch6_14": {"zh": "租用", "ph": "[haiə]"}, "ch6_15": {"zh": "照片", "ph": "['fəutəɡrɑ:f, -ɡræf]"}, "ch6_16": {"zh": "护照照片", "ph": ""}, "ch6_17": {"zh": "会员卡", "ph": ""}, "ch6_18": {"zh": "学生证", "ph": ""}, "ch6_19": {"zh": "住宿", "ph": "[ə,kɔmə'deiʃən]"}, "ch6_20": {"zh": "设备", "ph": "[fə'siliti]"}, "ch6_21": {"zh": "接待", "ph": "[ri'sepʃən]"}, "ch6_22": {"zh": "大礼堂", "ph": ""}, "ch6_23": {"zh": "舞蹈房", "ph": ""}, "ch6_24": {"zh": "壁球场", "ph": ""}, "ch6_25": {"zh": "健身房", "ph": ""}, "ch6_26": {"zh": "经济学", "ph": "[,i:kə'nɔmiks]"}, "ch6_27": {"zh": "政治学", "ph": "['pɔlitiks]"}, "ch6_28": {"zh": "地理", "ph": "[dʒi'ɔɡrəfi]"}, "ch6_29": {"zh": "理科", "ph": "['saiəns]"}, "ch6_30": {"zh": "农业科学", "ph": ""}, "ch6_31": {"zh": "商业研究", "ph": ""}, "ch6_32": {"zh": "访问学生", "ph": ""}, "ch6_33": {"zh": "交换生", "ph": ""}, "ch6_34": {"zh": "研究生", "ph": ""}, "ch6_35": {"zh": "国际中心", "ph": ""}, "ch6_36": {"zh": "法学院", "ph": ""}, "ch6_37": {"zh": "幼儿中心清洁工", "ph": ""}, "ch6_38": {"zh": "图书馆文书", "ph": ""}, "ch6_39": {"zh": "办公室助理", "ph": ""}, "ch6_40": {"zh": "工作场所", "ph": "['wə:kpleis]"}, "ch6_41": {"zh": "大厅", "ph": "['lɔbi]"}, "ch6_42": {"zh": "随从", "ph": "[ə'tendənt]"}, "ch6_43": {"zh": "会议中心", "ph": ""}, "ch6_44": {"zh": "会议室", "ph": ""}, "ch6_45": {"zh": "会议指南", "ph": ""}, "ch6_46": {"zh": "女士们先生们", "ph": ""}, "ch6_47": {"zh": "培训项目", "ph": ""}, "ch6_48": {"zh": "安全措施", "ph": ""}, "ch6_49": {"zh": "员工食堂", "ph": ""}, "ch6_50": {"zh": "组长", "ph": ""}, "ch7_0": {"zh": "传统", "ph": "[trə'diʃən]"}, "ch7_1": {"zh": "节日", "ph": "['festəvəl]"}, "ch7_2": {"zh": "庆典", "ph": "[,seli'breiʃən]"}, "ch7_3": {"zh": "表演", "ph": "[pə'fɔ:məns]"}, "ch7_4": {"zh": "舞蹈", "ph": "[dɑ:ns, dæns]"}, "ch7_5": {"zh": "马戏", "ph": "['sə:kəs]"}, "ch7_6": {"zh": "剧场演出", "ph": ""}, "ch7_7": {"zh": "魔术表演", "ph": ""}, "ch7_8": {"zh": "空中表演", "ph": ""}, "ch7_9": {"zh": "木偶剧", "ph": ""}, "ch7_10": {"zh": "帐篷", "ph": "[tent]"}, "ch7_11": {"zh": "体育场", "ph": "['steidiəm]"}, "ch7_12": {"zh": "大帐篷", "ph": "[mɑ:'ki:]"}, "ch7_13": {"zh": "入口", "ph": "['ækses, 'æksəs, æk'ses]"}, "ch7_14": {"zh": "大厅", "ph": "['fɔiei]"}, "ch7_15": {"zh": "观众席", "ph": "[,ɔ:di'tɔ:riəm]"}, "ch7_16": {"zh": "后台", "ph": "['bæksteidʒ]"}, "ch7_17": {"zh": "电梯", "ph": "[lift]"}, "ch7_18": {"zh": "幕布", "ph": "['kə:tən]"}, "ch7_19": {"zh": "重建", "ph": "[,ri:di'veləpmənt]"}, "ch7_20": {"zh": "改进", "ph": "[im'pru:vmənt]"}, "ch7_21": {"zh": "重新开业", "ph": "[,ri:'əupən]"}, "ch7_22": {"zh": "以……为方向的", "ph": ""}, "ch7_23": {"zh": "灯光系统", "ph": ""}, "ch7_24": {"zh": "更衣室", "ph": ""}, "ch7_25": {"zh": "听众", "ph": "['ɔ:diəns]"}, "ch7_26": {"zh": "轮椅使用者", "ph": ""}, "ch8_0": {"zh": "爵士", "ph": "[dʒæz]"}, "ch8_1": {"zh": "流行乐", "ph": "[pɔp]"}, "ch8_2": {"zh": "民乐", "ph": "[fəuk]"}, "ch8_3": {"zh": "音乐会", "ph": "[kən'sə:t, 'kɔnsə:t]"}, "ch8_4": {"zh": "音乐厅", "ph": ""}, "ch8_5": {"zh": "乐器", "ph": ""}, "ch8_6": {"zh": "音效", "ph": ""}, "ch8_7": {"zh": "音质差", "ph": ""}, "ch8_8": {"zh": "电子音乐", "ph": ""}, "ch8_9": {"zh": "轻音乐", "ph": ""}, "ch8_10": {"zh": "古典音乐", "ph": ""}, "ch8_11": {"zh": "歌剧院", "ph": ""}, "ch8_12": {"zh": "钢琴手", "ph": ""}, "ch8_13": {"zh": "文化", "ph": "['kʌltʃə]"}, "ch8_14": {"zh": "新闻", "ph": "[pres]"}, "ch8_15": {"zh": "歪曲报道的", "ph": "['mis,repri'zent]"}, "ch8_16": {"zh": "大众传媒", "ph": ""}, "ch8_17": {"zh": "新闻报道", "ph": ""}, "ch8_18": {"zh": "学术界", "ph": ""}, "ch8_19": {"zh": "电影", "ph": ""}, "ch8_20": {"zh": "电影", "ph": "[film]"}, "ch8_21": {"zh": "照相机", "ph": "['kæmərə]"}, "ch8_22": {"zh": "字幕", "ph": "['sʌb,taitl]"}, "ch8_23": {"zh": "戏院", "ph": "['θiətə, 'θi:ə-]"}, "ch8_24": {"zh": "照明", "ph": "['laitiŋ]"}, "ch8_25": {"zh": "胶片夹", "ph": ""}, "ch8_26": {"zh": "展览会", "ph": "[,eksi'biʃən]"}, "ch8_27": {"zh": "场所", "ph": "['venju:]"}, "ch8_28": {"zh": "娱乐", "ph": "[,entə'teinmənt]"}, "ch8_29": {"zh": "气球", "ph": "[bə'lu:n]"}, "ch8_30": {"zh": "羽毛球", "ph": "['bædmintən]"}, "ch8_31": {"zh": "柔道", "ph": "['dʒu:dəu]"}, "ch8_32": {"zh": "跆拳道", "ph": "['kik,bɔksiŋ]"}, "ch8_33": {"zh": "瑜伽", "ph": "['jəuɡə]"}, "ch8_34": {"zh": "收音机", "ph": "['reidiəu]"}, "ch8_35": {"zh": "迪斯科舞厅", "ph": "[diskəu]"}, "ch8_36": {"zh": "酒馆", "ph": "[pʌb]"}, "ch8_37": {"zh": "俱乐部", "ph": "[klʌb]"}, "ch8_38": {"zh": "练歌房", "ph": ""}, "ch8_39": {"zh": "健身俱乐部", "ph": ""}, "ch8_40": {"zh": "闭路电视", "ph": ""}, "ch8_41": {"zh": "国家美术馆", "ph": ""}, "ch8_42": {"zh": "银箔纸", "ph": ""}, "ch8_43": {"zh": "优势", "ph": "[əd'vɑ:ntidʒ, əd'væn-]"}, "ch8_44": {"zh": "缺点", "ph": "[disəd'vɑ:ntidʒ]"}};
       VOCAB_DATA.forEach(function(w){if(documentCorrections[w.id])Object.assign(w,documentCorrections[w.id]);});
+      VOCAB_DATA=VOCAB_DATA.concat([{"ch": "ch9", "id": "ch9_0", "en": "course", "docEn": "course", "ph": "[kɔ:s]", "zh": "课程", "cat": "课程专业", "audioIdx": 0, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 0, "end": 1.499}, {"ch": "ch9", "id": "ch9_1", "en": "degree", "docEn": "degree", "ph": "[di'ɡri:]", "zh": "学位", "cat": "课程专业", "audioIdx": 1, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 5.499, "end": 6.944}, {"ch": "ch9", "id": "ch9_2", "en": "subject", "docEn": "subject", "ph": "['sʌbdʒikt, -dʒe-, səb'dʒekt]", "zh": "科目", "cat": "课程专业", "audioIdx": 2, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 10.944, "end": 12.673}, {"ch": "ch9", "id": "ch9_3", "en": "lecture", "docEn": "lecture", "ph": "['lektʃə]", "zh": "演讲", "cat": "课程专业", "audioIdx": 3, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 16.673, "end": 18.222}, {"ch": "ch9", "id": "ch9_4", "en": "education", "docEn": "education", "ph": "[,edju:'keiʃən]", "zh": "教育", "cat": "课程专业", "audioIdx": 4, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 22.222, "end": 24.107}, {"ch": "ch9", "id": "ch9_5", "en": "research programme", "docEn": "research programme", "ph": "", "zh": "研究项目", "cat": "课程专业", "audioIdx": 5, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 28.107, "end": 30.236}, {"ch": "ch9", "id": "ch9_6", "en": "department", "docEn": "department", "ph": "[di'pɑ:tmənt]", "zh": "院系", "cat": "课程专业", "audioIdx": 6, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 34.236, "end": 35.985}, {"ch": "ch9", "id": "ch9_7", "en": "management", "docEn": "management", "ph": "['mænidʒmənt]", "zh": "管理", "cat": "课程专业", "audioIdx": 7, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 39.985, "end": 41.715}, {"ch": "ch9", "id": "ch9_8", "en": "computing", "docEn": "computing", "ph": "[kəm'pju:tiŋ]", "zh": "计算处理", "cat": "课程专业", "audioIdx": 8, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 45.715, "end": 47.424}, {"ch": "ch9", "id": "ch9_9", "en": "sociology", "docEn": "sociology", "ph": "[,səusi'ɔlədʒi, -ʃi-]", "zh": "社会学", "cat": "课程专业", "audioIdx": 9, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 51.424, "end": 53.353}, {"ch": "ch9", "id": "ch9_10", "en": "anthropology", "docEn": "anthropology", "ph": "[,ænθrə'pɔlədʒi]", "zh": "人类学", "cat": "课程专业", "audioIdx": 10, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 57.353, "end": 59.313}, {"ch": "ch9", "id": "ch9_11", "en": "engineering", "docEn": "engineering", "ph": "[,endʒi'niəriŋ]", "zh": "工程", "cat": "课程专业", "audioIdx": 11, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 63.313, "end": 65.077}, {"ch": "ch9", "id": "ch9_12", "en": "Communication in Business", "docEn": "Communication in Business", "ph": "", "zh": "商务交际", "cat": "课程专业", "audioIdx": 12, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 69.077, "end": 71.646}, {"ch": "ch9", "id": "ch9_13", "en": "Population studies", "docEn": "Population studies", "ph": "", "zh": "人口学", "cat": "课程专业", "audioIdx": 13, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 75.646, "end": 78.03}, {"ch": "ch9", "id": "ch9_14", "en": "specialist knowledge", "docEn": "specialist knowledge", "ph": "", "zh": "专业知识", "cat": "课程专业", "audioIdx": 14, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 82.03, "end": 84.319}, {"ch": "ch9", "id": "ch9_15", "en": "seminar", "docEn": "seminar", "ph": "['seminɑ:]", "zh": "研讨班", "cat": "课程内容", "audioIdx": 15, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 88.319, "end": 89.944}, {"ch": "ch9", "id": "ch9_16", "en": "booklet", "docEn": "booklet", "ph": "['buklit]", "zh": "小册子", "cat": "课程内容", "audioIdx": 16, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 93.944, "end": 95.528}, {"ch": "ch9", "id": "ch9_17", "en": "handout", "docEn": "handout", "ph": "['hændaut]", "zh": "讲义", "cat": "课程内容", "audioIdx": 17, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 99.528, "end": 101.108}, {"ch": "ch9", "id": "ch9_18", "en": "copies", "docEn": "copies", "ph": "['kɔpi]", "zh": "复印件", "cat": "课程内容", "audioIdx": 18, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 105.108, "end": 106.782}, {"ch": "ch9", "id": "ch9_19", "en": "key texts", "docEn": "key texts", "ph": "", "zh": "关键文本", "cat": "课程内容", "audioIdx": 19, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 110.782, "end": 112.646}, {"ch": "ch9", "id": "ch9_20", "en": "criteria", "docEn": "criteria", "ph": "[krai'tiəriə]", "zh": "标准", "cat": "课程内容", "audioIdx": 20, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 116.646, "end": 118.426}, {"ch": "ch9", "id": "ch9_21", "en": "feedback", "docEn": "feedback", "ph": "['fi:dbæk]", "zh": "反馈", "cat": "课程内容", "audioIdx": 21, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 122.426, "end": 305.08}, {"ch": "ch9", "id": "ch9_22", "en": "bibliography", "docEn": "bibliography", "ph": "[,bibli'ɔɡrəfi]", "zh": "参考书目", "cat": "课程内容", "audioIdx": 22, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 128.08, "end": 129.974}, {"ch": "ch9", "id": "ch9_23", "en": "extension", "docEn": "extension", "ph": "[ik'stenʃən]", "zh": "延期", "cat": "课程内容", "audioIdx": 23, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 133.974, "end": 135.803}, {"ch": "ch9", "id": "ch9_24", "en": "reference", "docEn": "reference", "ph": "['refərəns]", "zh": "参考书目", "cat": "课程内容", "audioIdx": 24, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 139.803, "end": 141.658}, {"ch": "ch9", "id": "ch9_25", "en": "article", "docEn": "article", "ph": "['ɑ:tikəl]", "zh": "文章", "cat": "课程内容", "audioIdx": 25, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 145.658, "end": 147.197}, {"ch": "ch9", "id": "ch9_26", "en": "graph", "docEn": "graph", "ph": "[ɡrɑ:f, ɡræf]", "zh": "图表", "cat": "课程内容", "audioIdx": 26, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 151.197, "end": 152.737}, {"ch": "ch9", "id": "ch9_27", "en": "task", "docEn": "task", "ph": "[tɑ:sk, tæsk]", "zh": "任务", "cat": "课程内容", "audioIdx": 27, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 156.737, "end": 158.326}, {"ch": "ch9", "id": "ch9_28", "en": "essay", "docEn": "essay", "ph": "['esei, e'sei]", "zh": "文章", "cat": "课程内容", "audioIdx": 28, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 162.326, "end": 163.775}, {"ch": "ch9", "id": "ch9_29", "en": "questionnaire", "docEn": "questionnaire", "ph": "[,kwestʃə'nεə, ,kes-]", "zh": "问卷", "cat": "课程内容", "audioIdx": 29, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 167.775, "end": 169.55}, {"ch": "ch9", "id": "ch9_30", "en": "interview", "docEn": "interview", "ph": "['intəvju:]", "zh": "采访", "cat": "课程内容", "audioIdx": 30, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 173.55, "end": 175.119}, {"ch": "ch9", "id": "ch9_31", "en": "survey", "docEn": "survey", "ph": "[sə:'vei, 'sə:vei, sə-]", "zh": "调查", "cat": "课程内容", "audioIdx": 31, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 179.119, "end": 180.599}, {"ch": "ch9", "id": "ch9_32", "en": "vocabulary", "docEn": "vocabulary", "ph": "[vəu'kæbjuləri]", "zh": "词汇", "cat": "课程内容", "audioIdx": 32, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 184.599, "end": 186.478}, {"ch": "ch9", "id": "ch9_33", "en": "key point", "docEn": "key point", "ph": "", "zh": "要点", "cat": "课程内容", "audioIdx": 33, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 190.478, "end": 192.127}, {"ch": "ch9", "id": "ch9_34", "en": "response", "docEn": "response", "ph": "[ri'spɔns]", "zh": "回复", "cat": "课程内容", "audioIdx": 34, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 196.127, "end": 198.032}, {"ch": "ch9", "id": "ch9_35", "en": "finding", "docEn": "finding", "ph": "['faindiŋ]", "zh": "发现", "cat": "课程内容", "audioIdx": 35, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 202.032, "end": 203.776}, {"ch": "ch9", "id": "ch9_36", "en": "mistake", "docEn": "mistake", "ph": "[mi'steik]", "zh": "错误", "cat": "课程内容", "audioIdx": 36, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 207.776, "end": 209.5}, {"ch": "ch9", "id": "ch9_37", "en": "figure", "docEn": "figure", "ph": "['fiɡə]", "zh": "数据", "cat": "课程内容", "audioIdx": 37, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 213.5, "end": 215.03}, {"ch": "ch9", "id": "ch9_38", "en": "sample", "docEn": "sample", "ph": "['sɑ:mpl, 'sæ-]", "zh": "样本", "cat": "课程内容", "audioIdx": 38, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 219.03, "end": 220.614}, {"ch": "ch9", "id": "ch9_39", "en": "experiment", "docEn": "experiment", "ph": "[ik'speriment, ek's-]", "zh": "实验", "cat": "课程内容", "audioIdx": 39, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 224.614, "end": 226.418}, {"ch": "ch9", "id": "ch9_40", "en": "measurement", "docEn": "measurement", "ph": "['meʒəmənt]", "zh": "测量", "cat": "课程内容", "audioIdx": 40, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 230.418, "end": 232.093}, {"ch": "ch9", "id": "ch9_41", "en": "assessment", "docEn": "assessment", "ph": "[ə'sesmənt]", "zh": "评估", "cat": "课程内容", "audioIdx": 41, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 236.093, "end": 237.897}, {"ch": "ch9", "id": "ch9_42", "en": "dissertation", "docEn": "dissertation", "ph": "[,disə'teiʃən]", "zh": "论文", "cat": "课程内容", "audioIdx": 42, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 241.897, "end": 243.841}, {"ch": "ch9", "id": "ch9_43", "en": "checklist", "docEn": "checklist", "ph": "['tʃeklist]", "zh": "清单", "cat": "课程内容", "audioIdx": 43, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 247.841, "end": 249.78}, {"ch": "ch9", "id": "ch9_44", "en": "statistics", "docEn": "statistics", "ph": "[stə'tistiks]", "zh": "统计学", "cat": "课程内容", "audioIdx": 44, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 253.78, "end": 255.785}, {"ch": "ch9", "id": "ch9_45", "en": "deadline", "docEn": "deadline", "ph": "['dedlain]", "zh": "截止日期", "cat": "课程内容", "audioIdx": 45, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 259.785, "end": 261.449}, {"ch": "ch9", "id": "ch9_46", "en": "observation", "docEn": "observation", "ph": "[,ɔbzə:'veiʃən]", "zh": "观察", "cat": "课程内容", "audioIdx": 46, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 265.449, "end": 267.398}, {"ch": "ch9", "id": "ch9_47", "en": "investigation", "docEn": "investigation", "ph": "[in,vesti'ɡeiʃən]", "zh": "调查", "cat": "课程内容", "audioIdx": 47, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 271.398, "end": 273.508}, {"ch": "ch9", "id": "ch9_48", "en": "proposal", "docEn": "proposal", "ph": "[prəu'pəuzəl]", "zh": "提议", "cat": "课程内容", "audioIdx": 48, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 277.508, "end": 279.157}, {"ch": "ch9", "id": "ch9_49", "en": "insert", "docEn": "insert", "ph": "[in'sə:t, 'insə:t]", "zh": "插入", "cat": "课程内容", "audioIdx": 49, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 283.157, "end": 284.671}, {"ch": "ch9", "id": "ch9_50", "en": "subheadings", "docEn": "subheadings", "ph": "['sʌb,hediŋz]", "zh": "副标题", "cat": "课程内容", "audioIdx": 50, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 288.671, "end": 290.581}, {"ch": "ch9", "id": "ch9_51", "en": "paragraph", "docEn": "paragraph", "ph": "['pærəɡrɑ:f, -ɡræf]", "zh": "段落", "cat": "课程内容", "audioIdx": 51, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 294.581, "end": 296.345}, {"ch": "ch9", "id": "ch9_52", "en": "formatting", "docEn": "formatting", "ph": "[fɔ:'meitiŋ]", "zh": "格式化", "cat": "课程内容", "audioIdx": 52, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 300.345, "end": 302.149}, {"ch": "ch9", "id": "ch9_53", "en": "due", "docEn": "due", "ph": "[dju:, du:]", "zh": "到期的", "cat": "课程内容", "audioIdx": 53, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 306.149, "end": 307.404}, {"ch": "ch9", "id": "ch9_54", "en": "submit", "docEn": "submit", "ph": "[səb'mit]", "zh": "提交", "cat": "课程内容", "audioIdx": 54, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 311.404, "end": 313.048}, {"ch": "ch9", "id": "ch9_55", "en": "inaccurate", "docEn": "inaccurate", "ph": "[in'ækjuret]", "zh": "不准确的", "cat": "课程内容", "audioIdx": 55, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 317.048, "end": 318.788}, {"ch": "ch9", "id": "ch9_56", "en": "invalid", "docEn": "invalid", "ph": "['invəli:d, -lid, ,invə'li:d, 'in-]", "zh": "无效的", "cat": "课程内容", "audioIdx": 56, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 322.788, "end": 324.292}, {"ch": "ch9", "id": "ch9_57", "en": "delay", "docEn": "delay", "ph": "[di'lei]", "zh": "延期", "cat": "课程内容", "audioIdx": 57, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 328.292, "end": 329.646}, {"ch": "ch9", "id": "ch9_58", "en": "page numbering", "docEn": "page numbering", "ph": "", "zh": "标页码", "cat": "课程内容", "audioIdx": 58, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 333.646, "end": 335.58}, {"ch": "ch9", "id": "ch9_59", "en": "group discussion", "docEn": "group discussion", "ph": "", "zh": "小组讨论", "cat": "课程内容", "audioIdx": 59, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 339.58, "end": 341.535}, {"ch": "ch9", "id": "ch9_60", "en": "telephone interview", "docEn": "telephone interview", "ph": "", "zh": "电话采访", "cat": "课程内容", "audioIdx": 60, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 345.535, "end": 347.694}, {"ch": "ch9", "id": "ch9_61", "en": "contents page", "docEn": "contents page", "ph": "", "zh": "目录页", "cat": "课程内容", "audioIdx": 61, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 351.694, "end": 353.738}, {"ch": "ch9", "id": "ch9_62", "en": "oral presentation", "docEn": "oral presentation", "ph": "", "zh": "口头陈述", "cat": "课程内容", "audioIdx": 62, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 357.738, "end": 359.978}, {"ch": "ch9", "id": "ch9_63", "en": "written assignment/work", "docEn": "written assignment/work", "ph": "", "zh": "笔头作业", "cat": "课程内容", "audioIdx": 63, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 363.978, "end": 366.412}, {"ch": "ch9", "id": "ch9_64", "en": "computer-loaded information", "docEn": "computer-loaded information", "ph": "", "zh": "计算机加载信息", "cat": "课程内容", "audioIdx": 64, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 370.412, "end": 373.066}, {"ch": "ch9", "id": "ch9_65", "en": "draft version", "docEn": "draft version", "ph": "", "zh": "初稿", "cat": "课程内容", "audioIdx": 65, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 377.066, "end": 378.94}, {"ch": "ch9", "id": "ch9_66", "en": "research methodology", "docEn": "research methodology", "ph": "", "zh": "研究方法", "cat": "课程内容", "audioIdx": 66, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 382.94, "end": 385.254}, {"ch": "ch9", "id": "ch9_67", "en": "discuss the result", "docEn": "discuss the result", "ph": "", "zh": "讨论结果", "cat": "课程内容", "audioIdx": 67, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 389.254, "end": 391.299}, {"ch": "ch9", "id": "ch9_68", "en": "data collection", "docEn": "data collection", "ph": "", "zh": "数据收集", "cat": "课程内容", "audioIdx": 68, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 395.299, "end": 397.258}, {"ch": "ch9", "id": "ch9_69", "en": "science research", "docEn": "science research", "ph": "", "zh": "科学研究", "cat": "课程内容", "audioIdx": 69, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 401.258, "end": 403.362}, {"ch": "ch9", "id": "ch9_70", "en": "analyze material", "docEn": "analyze material", "ph": "", "zh": "分析材料", "cat": "课程内容", "audioIdx": 70, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 407.362, "end": 409.476}, {"ch": "ch9", "id": "ch9_71", "en": "suggestions", "docEn": "suggestions", "ph": "[səɡ'dʒestʃən]", "zh": "建议", "cat": "建议", "audioIdx": 71, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 413.476, "end": 415.536}, {"ch": "ch9", "id": "ch9_72", "en": "recommend", "docEn": "recommend", "ph": "[,rekə'mend]", "zh": "推荐", "cat": "建议", "audioIdx": 72, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 419.536, "end": 421.185}, {"ch": "ch9", "id": "ch9_73", "en": "drawbacks", "docEn": "drawbacks", "ph": "['drɔ:bæk]", "zh": "缺点", "cat": "建议", "audioIdx": 73, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 425.185, "end": 426.959}, {"ch": "ch9", "id": "ch9_74", "en": "advice", "docEn": "advice", "ph": "[əd'vais]", "zh": "建议", "cat": "建议", "audioIdx": 74, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 430.959, "end": 432.554}, {"ch": "ch9", "id": "ch9_75", "en": "guidance", "docEn": "guidance", "ph": "['ɡaidəns]", "zh": "指导", "cat": "建议", "audioIdx": 75, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 436.554, "end": 438.258}, {"ch": "ch9", "id": "ch9_76", "en": "rehearsing", "docEn": "rehearsing", "ph": "[ri'hə:s]", "zh": "排练", "cat": "建议", "audioIdx": 76, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 442.258, "end": 444.047}, {"ch": "ch9", "id": "ch9_77", "en": "useful", "docEn": "useful", "ph": "['ju:sful]", "zh": "有用的", "cat": "建议", "audioIdx": 77, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 448.047, "end": 449.667}, {"ch": "ch9", "id": "ch9_78", "en": "helpful", "docEn": "helpful", "ph": "['helpful]", "zh": "有帮助的", "cat": "建议", "audioIdx": 78, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 453.667, "end": 455.341}, {"ch": "ch9", "id": "ch9_79", "en": "learning method", "docEn": "learning method", "ph": "", "zh": "学习方法", "cat": "建议", "audioIdx": 79, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 459.341, "end": 461.14}, {"ch": "ch9", "id": "ch9_80", "en": "reading list", "docEn": "reading list", "ph": "", "zh": "阅读书目", "cat": "建议", "audioIdx": 80, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 465.14, "end": 466.94}, {"ch": "ch9", "id": "ch9_81", "en": "be better sequenced", "docEn": "be better sequenced", "ph": "", "zh": "安排得更好", "cat": "建议", "audioIdx": 81, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 470.94, "end": 473.114}, {"ch": "ch9", "id": "ch9_82", "en": "cut…down", "docEn": "cut…down", "ph": "", "zh": "削减", "cat": "建议", "audioIdx": 82, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 477.114, "end": 479.293}, {"ch": "ch9", "id": "ch9_83", "en": "proper structure", "docEn": "proper structure", "ph": "", "zh": "合理的结构", "cat": "建议", "audioIdx": 83, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 483.293, "end": 485.308}, {"ch": "ch9", "id": "ch9_84", "en": "wide selection of", "docEn": "wide selection of", "ph": "", "zh": "广泛的选择", "cat": "建议", "audioIdx": 84, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 489.308, "end": 491.392}, {"ch": "ch9", "id": "ch9_85", "en": "tutor", "docEn": "tutor", "ph": "['tju:tə]", "zh": "导师", "cat": "人物", "audioIdx": 85, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 495.392, "end": 496.831}, {"ch": "ch9", "id": "ch9_86", "en": "teacher", "docEn": "teacher", "ph": "['ti:tʃə]", "zh": "老师", "cat": "人物", "audioIdx": 86, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 500.831, "end": 502.386}, {"ch": "ch9", "id": "ch9_87", "en": "author", "docEn": "author", "ph": "['ɔ:θə]", "zh": "作家", "cat": "人物", "audioIdx": 87, "chName": "第九章：课业讨论", "isAudioExtra": false, "start": 506.386, "end": 507.865}, {"ch": "ch10", "id": "ch10_0", "en": "fiction", "docEn": "fiction", "ph": "['fikʃən]", "zh": "小说", "cat": "文件书籍", "audioIdx": 0, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 0, "end": 1.754}, {"ch": "ch10", "id": "ch10_1", "en": "database", "docEn": "database", "ph": "['deitəbeis]", "zh": "数据库", "cat": "文件书籍", "audioIdx": 1, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 5.754, "end": 7.389}, {"ch": "ch10", "id": "ch10_2", "en": "magazine", "docEn": "magazine", "ph": "[,mæɡə'zi:n]", "zh": "杂志", "cat": "文件书籍", "audioIdx": 2, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 11.389, "end": 13.093}, {"ch": "ch10", "id": "ch10_3", "en": "dictionary", "docEn": "dictionary", "ph": "['dikʃənəri]", "zh": "字典", "cat": "文件书籍", "audioIdx": 3, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 17.093, "end": 18.742}, {"ch": "ch10", "id": "ch10_4", "en": "journal", "docEn": "journal", "ph": "['dʒə:nəl]", "zh": "期刊", "cat": "文件书籍", "audioIdx": 4, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 22.742, "end": 24.177}, {"ch": "ch10", "id": "ch10_5", "en": "password", "docEn": "password", "ph": "['pɑ:swə:d, 'pæs-]", "zh": "密码", "cat": "文件书籍", "audioIdx": 5, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 28.177, "end": 29.936}, {"ch": "ch10", "id": "ch10_6", "en": "catalogue", "docEn": "catalogue", "ph": "['kætəlɔɡ]", "zh": "目录", "cat": "文件书籍", "audioIdx": 6, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 33.936, "end": 35.575}, {"ch": "ch10", "id": "ch10_7", "en": "index", "docEn": "index", "ph": "['indeks]", "zh": "索引", "cat": "文件书籍", "audioIdx": 7, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 39.575, "end": 41.23}, {"ch": "ch10", "id": "ch10_8", "en": "textbook", "docEn": "textbook", "ph": "['tekstbuk]", "zh": "教科书", "cat": "文件书籍", "audioIdx": 8, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 45.23, "end": 46.929}, {"ch": "ch10", "id": "ch10_9", "en": "back issues", "docEn": "back issues", "ph": "", "zh": "过期报刊", "cat": "文件书籍", "audioIdx": 9, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 50.929, "end": 52.753}, {"ch": "ch10", "id": "ch10_10", "en": "manual", "docEn": "manual", "ph": "['mænjuəl]", "zh": "手册", "cat": "文件书籍", "audioIdx": 10, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 56.753, "end": 58.353}, {"ch": "ch10", "id": "ch10_11", "en": "periodical", "docEn": "periodical", "ph": "[,piəri'ɔdikəl]", "zh": "期刊", "cat": "文件书籍", "audioIdx": 11, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 62.353, "end": 64.157}, {"ch": "ch10", "id": "ch10_12", "en": "driving license", "docEn": "driving license", "ph": "", "zh": "驾驶执照", "cat": "文件书籍", "audioIdx": 12, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 68.157, "end": 70.356}, {"ch": "ch10", "id": "ch10_13", "en": "passport photo", "docEn": "passport photo", "ph": "", "zh": "护照照片", "cat": "文件书籍", "audioIdx": 13, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 74.356, "end": 76.44}, {"ch": "ch10", "id": "ch10_14", "en": "ID", "docEn": "ID", "ph": "", "zh": "身份证", "cat": "文件书籍", "audioIdx": 14, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 80.44, "end": 81.855}, {"ch": "ch10", "id": "ch10_15", "en": "credit card", "docEn": "credit card", "ph": "", "zh": "信用卡", "cat": "文件书籍", "audioIdx": 15, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 85.855, "end": 87.604}, {"ch": "ch10", "id": "ch10_16", "en": "bank statement", "docEn": "bank statement", "ph": "", "zh": "银行账单", "cat": "文件书籍", "audioIdx": 16, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 91.604, "end": 93.508}, {"ch": "ch10", "id": "ch10_17", "en": "reference book", "docEn": "reference book", "ph": "", "zh": "参考书目", "cat": "文件书籍", "audioIdx": 17, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 97.508, "end": 99.303}, {"ch": "ch10", "id": "ch10_18", "en": "national newspaper", "docEn": "national newspaper", "ph": "", "zh": "全国性报刊", "cat": "文件书籍", "audioIdx": 18, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 103.303, "end": 105.537}, {"ch": "ch10", "id": "ch10_19", "en": "local papers", "docEn": "local papers", "ph": "", "zh": "地方报纸", "cat": "文件书籍", "audioIdx": 19, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 109.537, "end": 111.521}, {"ch": "ch10", "id": "ch10_20", "en": "union card", "docEn": "union card", "ph": "", "zh": "会员卡", "cat": "文件书籍", "audioIdx": 20, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 115.521, "end": 117.386}, {"ch": "ch10", "id": "ch10_21", "en": "training resource", "docEn": "training resource", "ph": "", "zh": "培训资源", "cat": "文件书籍", "audioIdx": 21, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 121.386, "end": 304.43}, {"ch": "ch10", "id": "ch10_22", "en": "online databases", "docEn": "online databases", "ph": "", "zh": "网上数据库", "cat": "文件书籍", "audioIdx": 22, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 127.43, "end": 129.809}, {"ch": "ch10", "id": "ch10_23", "en": "printed version", "docEn": "printed version", "ph": "", "zh": "打印版", "cat": "文件书籍", "audioIdx": 23, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 133.809, "end": 135.698}, {"ch": "ch10", "id": "ch10_24", "en": "qualification", "docEn": "qualification", "ph": "[,kwɔlifi'keiʃən]", "zh": "资格", "cat": "会员金额", "audioIdx": 24, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 139.698, "end": 141.817}, {"ch": "ch10", "id": "ch10_25", "en": "administration", "docEn": "administration", "ph": "[əd,mini'streiʃən]", "zh": "行政", "cat": "会员金额", "audioIdx": 25, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 145.817, "end": 147.932}, {"ch": "ch10", "id": "ch10_26", "en": "external member", "docEn": "external member", "ph": "", "zh": "外部会员", "cat": "会员金额", "audioIdx": 26, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 151.932, "end": 153.886}, {"ch": "ch10", "id": "ch10_27", "en": "minimum (maximum) fine", "docEn": "minimum (maximum) fine", "ph": "", "zh": "最低(最高)罚款", "cat": "会员金额", "audioIdx": 27, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 157.886, "end": 161.445}, {"ch": "ch10", "id": "ch10_28", "en": "nominal charge", "docEn": "nominal charge", "ph": "", "zh": "象征性收费", "cat": "会员金额", "audioIdx": 28, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 165.445, "end": 167.389}, {"ch": "ch10", "id": "ch10_29", "en": "library", "docEn": "library", "ph": "['laibrəri]", "zh": "图书馆", "cat": "设施服务", "audioIdx": 29, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 171.389, "end": 173.024}, {"ch": "ch10", "id": "ch10_30", "en": "counter", "docEn": "counter", "ph": "['kauntə]", "zh": "柜台", "cat": "设施服务", "audioIdx": 30, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 177.024, "end": 178.553}, {"ch": "ch10", "id": "ch10_31", "en": "video", "docEn": "video", "ph": "['vidiəu]", "zh": "视频", "cat": "设施服务", "audioIdx": 31, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 182.553, "end": 183.972}, {"ch": "ch10", "id": "ch10_32", "en": "cassette", "docEn": "cassette", "ph": "[kæ'set]", "zh": "磁带", "cat": "设施服务", "audioIdx": 32, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 187.972, "end": 189.552}, {"ch": "ch10", "id": "ch10_33", "en": "laptop", "docEn": "laptop", "ph": "['læptɔp]", "zh": "笔记本电脑", "cat": "设施服务", "audioIdx": 33, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 193.552, "end": 195.171}, {"ch": "ch10", "id": "ch10_34", "en": "classroom", "docEn": "classroom", "ph": "['klɑ:srum]", "zh": "教室", "cat": "设施服务", "audioIdx": 34, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 199.171, "end": 201.03}, {"ch": "ch10", "id": "ch10_35", "en": "software", "docEn": "software", "ph": "['sɔftwεə, 'sɔ:-]", "zh": "软件", "cat": "设施服务", "audioIdx": 35, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 205.03, "end": 206.81}, {"ch": "ch10", "id": "ch10_36", "en": "laboratory", "docEn": "laboratory", "ph": "[lə'bɔrətəri]", "zh": "实验室", "cat": "设施服务", "audioIdx": 36, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 210.81, "end": 212.634}, {"ch": "ch10", "id": "ch10_37", "en": "borrow", "docEn": "borrow", "ph": "['bɔrəu]", "zh": "借", "cat": "设施服务", "audioIdx": 37, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 216.634, "end": 218.018}, {"ch": "ch10", "id": "ch10_38", "en": "return", "docEn": "return", "ph": "[ri'tə:n]", "zh": "还", "cat": "设施服务", "audioIdx": 38, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 222.018, "end": 223.573}, {"ch": "ch10", "id": "ch10_39", "en": "overdue", "docEn": "overdue", "ph": "['əuvə'dju:]", "zh": "过期的", "cat": "设施服务", "audioIdx": 39, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 227.573, "end": 229.057}, {"ch": "ch10", "id": "ch10_40", "en": "renew", "docEn": "renew", "ph": "[ri'nju:]", "zh": "续借", "cat": "设施服务", "audioIdx": 40, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 233.057, "end": 234.427}, {"ch": "ch10", "id": "ch10_41", "en": "available", "docEn": "available", "ph": "[ə'veiləbl]", "zh": "可利用的", "cat": "设施服务", "audioIdx": 41, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 238.427, "end": 240.026}, {"ch": "ch10", "id": "ch10_42", "en": "recall", "docEn": "recall", "ph": "[ri'kɔ:l, 'ri:kɔ:l]", "zh": "召回", "cat": "设施服务", "audioIdx": 42, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 244.026, "end": 245.52}, {"ch": "ch10", "id": "ch10_43", "en": "photocopying facility", "docEn": "photocopying facility", "ph": "", "zh": "复印设备", "cat": "设施服务", "audioIdx": 43, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 249.52, "end": 252.024}, {"ch": "ch10", "id": "ch10_44", "en": "lecture room(hall/theatre)", "docEn": "lecture room(hall/theatre)", "ph": "", "zh": "教室", "cat": "设施服务", "audioIdx": 44, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 256.024, "end": 259.214}, {"ch": "ch10", "id": "ch10_45", "en": "security office", "docEn": "security office", "ph": "", "zh": "保卫处", "cat": "设施服务", "audioIdx": 45, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 263.214, "end": 265.523}, {"ch": "ch10", "id": "ch10_46", "en": "computer printer", "docEn": "computer printer", "ph": "", "zh": "电脑打印", "cat": "设施服务", "audioIdx": 46, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 269.523, "end": 271.552}, {"ch": "ch10", "id": "ch10_47", "en": "audio-visual room", "docEn": "audio-visual room", "ph": "", "zh": "视听教室", "cat": "设施服务", "audioIdx": 47, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 275.552, "end": 277.726}, {"ch": "ch10", "id": "ch10_48", "en": "computer centre", "docEn": "computer centre", "ph": "", "zh": "计算机中心", "cat": "设施服务", "audioIdx": 48, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 281.726, "end": 283.785}, {"ch": "ch10", "id": "ch10_49", "en": "internet service", "docEn": "internet service", "ph": "", "zh": "网络服务", "cat": "设施服务", "audioIdx": 49, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 287.785, "end": 289.875}, {"ch": "ch10", "id": "ch10_50", "en": "CD-ROM", "docEn": "CD-ROM", "ph": "", "zh": "只读型光盘", "cat": "设施服务", "audioIdx": 50, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 293.875, "end": 295.669}, {"ch": "ch10", "id": "ch10_51", "en": "technical support", "docEn": "technical support", "ph": "", "zh": "技术支持", "cat": "设施服务", "audioIdx": 51, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 299.669, "end": 301.793}, {"ch": "ch10", "id": "ch10_52", "en": "lecture", "docEn": "lecture", "ph": "['lektʃə]", "zh": "讲座", "cat": "课程咨询", "audioIdx": 52, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 305.793, "end": 307.343}, {"ch": "ch10", "id": "ch10_53", "en": "workshop", "docEn": "workshop", "ph": "['wə:kʃɔp]", "zh": "研讨会", "cat": "课程咨询", "audioIdx": 53, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 311.343, "end": 313.072}, {"ch": "ch10", "id": "ch10_54", "en": "coursework", "docEn": "coursework", "ph": "['kɔ:swə:k]", "zh": "作业", "cat": "课程咨询", "audioIdx": 54, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 317.072, "end": 318.881}, {"ch": "ch10", "id": "ch10_55", "en": "final assessment", "docEn": "final assessment", "ph": "", "zh": "最终评估", "cat": "课程咨询", "audioIdx": 55, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 322.881, "end": 324.911}, {"ch": "ch10", "id": "ch10_56", "en": "a case study", "docEn": "a case study", "ph": "", "zh": "案例分析", "cat": "课程咨询", "audioIdx": 56, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 328.911, "end": 330.7}, {"ch": "ch10", "id": "ch10_57", "en": "a short report", "docEn": "a short report", "ph": "", "zh": "简短的报告", "cat": "课程咨询", "audioIdx": 57, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 334.7, "end": 336.679}, {"ch": "ch10", "id": "ch10_58", "en": "counseling services", "docEn": "counseling services", "ph": "", "zh": "咨询服务", "cat": "课程咨询", "audioIdx": 58, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 340.679, "end": 343.008}, {"ch": "ch10", "id": "ch10_59", "en": "semester", "docEn": "semester", "ph": "[si'mestə]", "zh": "学期", "cat": "课程咨询", "audioIdx": 59, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 347.008, "end": 348.763}, {"ch": "ch10", "id": "ch10_60", "en": "term", "docEn": "term", "ph": "[tə:m]", "zh": "学期", "cat": "课程咨询", "audioIdx": 60, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 352.763, "end": 354.207}, {"ch": "ch10", "id": "ch10_61", "en": "strategy", "docEn": "strategy", "ph": "['strætidʒi]", "zh": "策略", "cat": "课程咨询", "audioIdx": 61, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 358.207, "end": 359.911}, {"ch": "ch10", "id": "ch10_62", "en": "technique", "docEn": "technique", "ph": "[tek'ni:k]", "zh": "技巧", "cat": "课程咨询", "audioIdx": 62, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 363.911, "end": 365.561}, {"ch": "ch10", "id": "ch10_63", "en": "skill", "docEn": "skill", "ph": "[skil]", "zh": "技能", "cat": "课程咨询", "audioIdx": 63, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 369.561, "end": 371.1}, {"ch": "ch10", "id": "ch10_64", "en": "speech", "docEn": "speech", "ph": "[spi:tʃ]", "zh": "演讲", "cat": "课程咨询", "audioIdx": 64, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 375.1, "end": 376.805}, {"ch": "ch10", "id": "ch10_65", "en": "orientation", "docEn": "orientation", "ph": "[,ɔ:rien'teiʃən, əu-]", "zh": "迎新，入职培训", "cat": "课程咨询", "audioIdx": 65, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 380.805, "end": 382.859}, {"ch": "ch10", "id": "ch10_66", "en": "review", "docEn": "review", "ph": "[ri'vju:]", "zh": "回顾", "cat": "课程咨询", "audioIdx": 66, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 386.859, "end": 388.308}, {"ch": "ch10", "id": "ch10_67", "en": "timetable", "docEn": "timetable", "ph": "['taim,teibl]", "zh": "时间表", "cat": "课程咨询", "audioIdx": 67, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 392.308, "end": 394.118}, {"ch": "ch10", "id": "ch10_68", "en": "waiting list", "docEn": "waiting list", "ph": "", "zh": "等待名单", "cat": "课程咨询", "audioIdx": 68, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 398.118, "end": 399.922}, {"ch": "ch10", "id": "ch10_69", "en": "academic year", "docEn": "academic year", "ph": "", "zh": "学年", "cat": "课程咨询", "audioIdx": 69, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 403.922, "end": 405.866}, {"ch": "ch10", "id": "ch10_70", "en": "full-time intensive", "docEn": "full-time intensive", "ph": "", "zh": "全日制密集型", "cat": "课程咨询", "audioIdx": 70, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 409.866, "end": 412.16}, {"ch": "ch10", "id": "ch10_71", "en": "part-time", "docEn": "part-time", "ph": "", "zh": "非全日制的", "cat": "课程咨询", "audioIdx": 71, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 416.16, "end": 417.93}, {"ch": "ch10", "id": "ch10_72", "en": "diploma course", "docEn": "diploma course", "ph": "", "zh": "证书课程", "cat": "课程咨询", "audioIdx": 72, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 421.93, "end": 423.929}, {"ch": "ch10", "id": "ch10_73", "en": "Personnel Management", "docEn": "Personnel Management", "ph": "", "zh": "人事管理", "cat": "课程咨询", "audioIdx": 73, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 427.929, "end": 430.213}, {"ch": "ch10", "id": "ch10_74", "en": "modular courses", "docEn": "modular courses", "ph": "", "zh": "单元课程", "cat": "课程咨询", "audioIdx": 74, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 434.213, "end": 436.467}, {"ch": "ch10", "id": "ch10_75", "en": "time/stress management", "docEn": "time/stress management", "ph": "", "zh": "时间/压力管理", "cat": "课程咨询", "audioIdx": 75, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 440.467, "end": 442.996}, {"ch": "ch10", "id": "ch10_76", "en": "leisure time", "docEn": "leisure time", "ph": "", "zh": "休闲时间", "cat": "课程咨询", "audioIdx": 76, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 446.996, "end": 448.781}, {"ch": "ch10", "id": "ch10_77", "en": "trial session", "docEn": "trial session", "ph": "", "zh": "实验课程", "cat": "课程咨询", "audioIdx": 77, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 452.781, "end": 454.74}, {"ch": "ch10", "id": "ch10_78", "en": "teaching session", "docEn": "teaching session", "ph": "", "zh": "教学课程", "cat": "课程咨询", "audioIdx": 78, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 458.74, "end": 460.729}, {"ch": "ch10", "id": "ch10_79", "en": "report writing", "docEn": "report writing", "ph": "", "zh": "报告写作", "cat": "课程咨询", "audioIdx": 79, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 464.729, "end": 466.614}, {"ch": "ch10", "id": "ch10_80", "en": "researcher", "docEn": "researcher", "ph": "[ri:'sə:tʃə]", "zh": "研究人员", "cat": "人物", "audioIdx": 80, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 470.614, "end": 472.333}, {"ch": "ch10", "id": "ch10_81", "en": "staff", "docEn": "staff", "ph": "[stɑ:f, stæf]", "zh": "员工", "cat": "人物", "audioIdx": 81, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 476.333, "end": 478.027}, {"ch": "ch10", "id": "ch10_82", "en": "undergraduate", "docEn": "undergraduate", "ph": "[,ʌndə'ɡrædjuət]", "zh": "本科生", "cat": "人物", "audioIdx": 82, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 482.027, "end": 483.941}, {"ch": "ch10", "id": "ch10_83", "en": "postgraduate", "docEn": "postgraduate", "ph": "[pəust'ɡrædjuəit, -eit]", "zh": "研究生", "cat": "人物", "audioIdx": 83, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 487.941, "end": 489.866}, {"ch": "ch10", "id": "ch10_84", "en": "colleague", "docEn": "colleague", "ph": "['kɔli:ɡ]", "zh": "同事", "cat": "人物", "audioIdx": 84, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 493.866, "end": 495.435}, {"ch": "ch10", "id": "ch10_85", "en": "director", "docEn": "director", "ph": "[di'rektə]", "zh": "主管", "cat": "人物", "audioIdx": 85, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 499.435, "end": 500.959}, {"ch": "ch10", "id": "ch10_86", "en": "borrower", "docEn": "borrower", "ph": "['bɔrəuə]", "zh": "借用人", "cat": "人物", "audioIdx": 86, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 504.959, "end": 506.479}, {"ch": "ch10", "id": "ch10_87", "en": "instructor", "docEn": "instructor", "ph": "[in'strʌktə]", "zh": "指导员", "cat": "人物", "audioIdx": 87, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 510.479, "end": 512.203}, {"ch": "ch10", "id": "ch10_88", "en": "conductor", "docEn": "conductor", "ph": "[kən'dʌktə]", "zh": "售票员；管理者", "cat": "人物", "audioIdx": 88, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 516.203, "end": 517.872}, {"ch": "ch10", "id": "ch10_89", "en": "Cataloguing Assistant", "docEn": "Cataloguing Assistant", "ph": "", "zh": "编目助手", "cat": "人物", "audioIdx": 89, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 521.872, "end": 524.192}, {"ch": "ch10", "id": "ch10_90", "en": "overseas student", "docEn": "overseas student", "ph": "", "zh": "留学生", "cat": "人物", "audioIdx": 90, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 528.192, "end": 530.266}, {"ch": "ch10", "id": "ch10_91", "en": "full-time student", "docEn": "full-time student", "ph": "", "zh": "全日制学生", "cat": "人物", "audioIdx": 91, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 534.266, "end": 536.44}, {"ch": "ch10", "id": "ch10_92", "en": "international student", "docEn": "international student", "ph": "", "zh": "国际学生", "cat": "人物", "audioIdx": 92, "chName": "第十章：图书馆", "isAudioExtra": false, "start": 540.44, "end": 542.709}]);
       // 核心运行状态
       var activePool = [];
       var currentIndex = 0;
-      var currentChapter = 'ch6';
+      var currentChapter = 'ch9';
       var currentMode = 'practice';
-      var includeAudioExtra = false; // true: 124词(含音频8末尾的 team leader), false: 123词(纯文档词)
+      var includeAudioExtra = false; // true: 305词(含音频8末尾的 team leader), false: 304词(纯文档词)
       var isRandomOrder = false;
       var practiceSubMode = 'both'; // 'both': 写英+中, 'zhOnly': 看英写中
       var forceShowEn = false;
@@ -1342,6 +1345,7 @@
         ch7: { loaded: false, buffer: null, segments: [], audioEl: document.getElementById('wavPlayer_ch7'), defaultDuration: durCh7, expectedCount: 27 },
         ch8: { loaded: false, buffer: null, segments: [], audioEl: document.getElementById('wavPlayer_ch8'), defaultDuration: durCh8, expectedCount: 46 }
       };
+      ['ch9','ch10'].forEach(function(c){mountedWavs[c]={loaded:false,buffer:null,segments:[],audioEl:document.getElementById('wavPlayer_'+c),defaultDuration:window.AUDIO_INDEX[c].duration,expectedCount:window.AUDIO_INDEX[c].segments.length};});
       var activeBufferSource = null;
       var sliceStopTimer = null;
       var isDeckFullPlaying = false;
@@ -1549,7 +1553,7 @@
 
       function syncNativeDeckVisibility() {
         var deck = document.getElementById('nativeWavDeck');
-        var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+        var chKey = (['ch6','ch7','ch8','ch9','ch10'].includes(currentChapter)) ? currentChapter : 'ch6';
         var info = mountedWavs[chKey];
         if (info && info.loaded) {
           deck.classList.add('show');
@@ -1731,7 +1735,7 @@
       function updateStatsUI() {
         var total = activePool.length;
         document.getElementById('ch8CountText').textContent = includeAudioExtra ? '46' : '45';
-        document.getElementById('allCountText').textContent = includeAudioExtra ? '124' : '123';
+        document.getElementById('allCountText').textContent = includeAudioExtra ? '305' : '304';
         document.getElementById('statTotal').textContent = total;
         document.getElementById('statProgress').textContent = total > 0 ? (currentIndex + 1) + '/' + total : '0/0';
         document.getElementById('statMastered').textContent = Object.keys(masteredMap).length;
@@ -1806,7 +1810,7 @@
         if (!word) return;
         document.getElementById('btnToggleShowEn').textContent=forceShowEn?'🙈 隐藏英文词':'👁️ 显示英文词';
 
-        var seqNum = '原音频第 ' + (word.audioIdx + 1) + ' 词';
+        var seqNum = '词表第 ' + (word.audioIdx + 1) + ' 词';
         document.getElementById('pracCategory').textContent = word.chName + ' · ' + seqNum + ' (' + word.cat + ')';
 
         var info = mountedWavs[word.ch];
@@ -1822,7 +1826,7 @@
 
         if (info && info.loaded) {
           speakerBtn.classList.add('wav-ready');
-          timeTag.textContent = '🎧 原录音片段: ' + sTime + 's ~ ' + eTime + 's';
+          timeTag.textContent = (window.AUDIO_INDEX[word.ch].synthetic?'🔊 合成英语朗读: ':'🎧 原录音片段: ') + sTime + 's ~ ' + eTime + 's';
           timeTag.style.color = '#059669';
         } else {
           speakerBtn.classList.remove('wav-ready');
@@ -1873,8 +1877,8 @@
         var chTitleMap = {
           ch6: '🎧 第六章：找工作，注册 (' + activePool.length + '词听写卷)',
           ch7: '🎧 第七章：传统节日 (' + activePool.length + '词听写卷)',
-          ch8: '🎧 第八章：文化 (' + activePool.length + '词听写卷)',
-          all: '🎧 第六/七/八章合集 (' + activePool.length + '词听写卷)',
+          ch8: '🎧 第八章：文化 (' + activePool.length + '词听写卷)',ch9:'🔊 第九章：课业讨论（合成朗读）',ch10:'🔊 第十章：图书馆（合成朗读）',
+          all: '🎧 第六至十章合集 (' + activePool.length + '词听写卷)',
           mistakes: '📓 错题本专项听写卷 (' + activePool.length + '词)'
         };
         document.getElementById('sheetTitle').textContent = chTitleMap[currentChapter] || '🎧 听写考卷';
@@ -1987,8 +1991,8 @@
       function stopDeckFullPlay() {
         isDeckFullPlaying = false;
         var btn = document.getElementById('btnDeckPlayFull');
-        if (btn) btn.textContent = '▶️ 播原音频整轨';
-        ['ch6', 'ch7', 'ch8'].forEach(function(k) {
+        if (btn) btn.textContent = '▶️ 播放整章音频';
+        ['ch6', 'ch7', 'ch8', 'ch9', 'ch10'].forEach(function(k) {
           var el = mountedWavs[k].audioEl;
           if (el && !el.paused) el.pause();
         });
@@ -1999,7 +2003,7 @@
         var scrubber = document.getElementById('deckScrubber');
 
         btnPlay.addEventListener('click', function() {
-          var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+          var chKey = (['ch6','ch7','ch8','ch9','ch10'].includes(currentChapter)) ? currentChapter : 'ch6';
           var info = mountedWavs[chKey];
           if (!info || !info.loaded || !info.audioEl.src) {
             showToast('请先选入该章节的 .wav 原文件');
@@ -2014,15 +2018,15 @@
             stopDeckFullPlay();
           } else {
             isDeckFullPlaying = true;
-            btnPlay.textContent = '⏸️ 暂停原音频';
-            stopAllContinuousPlay(); isDeckFullPlaying=true; btnPlay.textContent='⏸️ 暂停原音频'; info.audioEl.play().catch(function(){stopDeckFullPlay();showToast('播放失败，请检查网络后重试');});
+            btnPlay.textContent = '⏸️ 暂停整章音频';
+            stopAllContinuousPlay(); isDeckFullPlaying=true; btnPlay.textContent='⏸️ 暂停整章音频'; info.audioEl.play().catch(function(){stopDeckFullPlay();showToast('播放失败，请检查网络后重试');});
           }
         });
 
-        ['ch6', 'ch7', 'ch8'].forEach(function(k) {
+        ['ch6', 'ch7', 'ch8', 'ch9', 'ch10'].forEach(function(k) {
           var audioEl = mountedWavs[k].audioEl;
           audioEl.addEventListener('timeupdate', function() {
-            var activeCh = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+            var activeCh = (['ch6','ch7','ch8','ch9','ch10'].includes(currentChapter)) ? currentChapter : 'ch6';
             if (k !== activeCh) return;
             var dur = audioEl.duration || mountedWavs[k].defaultDuration;
             var cur = audioEl.currentTime;
@@ -2054,7 +2058,7 @@
         });
 
         scrubber.addEventListener('input', function() {
-          var chKey = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+          var chKey = (['ch6','ch7','ch8','ch9','ch10'].includes(currentChapter)) ? currentChapter : 'ch6';
           var info = mountedWavs[chKey];
           if (info && info.loaded && info.audioEl) {
             info.audioEl.currentTime = parseFloat(this.value);
@@ -2089,7 +2093,7 @@
           } else if (name.indexOf('八') !== -1 || name.indexOf('8') !== -1 || name.indexOf('文化') !== -1) {
             mountWavFile(f, 'ch8');
           } else {
-            var target = (currentChapter === 'ch6' || currentChapter === 'ch7' || currentChapter === 'ch8') ? currentChapter : 'ch6';
+            var target = (['ch6','ch7','ch8','ch9','ch10'].includes(currentChapter)) ? currentChapter : 'ch6';
             mountWavFile(f, target);
           }
         }
@@ -2160,17 +2164,17 @@
           if (mBtn) mBtn.click();
         });
 
-        // 词库范围切换（含音频8末尾第46词 team leader vs 纯文档 123 词）
+        // 词库范围切换（含音频8末尾第46词 team leader vs 纯文档 304 词）
         document.getElementById('btnScopeToggle').addEventListener('click', function() {
           includeAudioExtra = !includeAudioExtra;
           if (includeAudioExtra) {
-            this.textContent = '🎧 含音频8末尾附加词 (124词)';
+            this.textContent = '🎧 含音频8末尾附加词 (305词)';
             this.classList.add('active-mode');
-            showToast('已对齐原版音频8末尾多录的第46词 team leader (共124词)');
+            showToast('已对齐原版音频8末尾多录的第46词 team leader (共305词)');
           } else {
-            this.textContent = '📖 纯文档词表 (123词)';
+            this.textContent = '📖 纯文档词表 (304词)';
             this.classList.remove('active-mode');
-            showToast('已切换为纯文档词表 (第6章51 + 第7章27 + 第8章45 = 123词)');
+            showToast('已切换为纯文档词表 (第6章51 + 第7章27 + 第8章45 + 第9章88 + 第10章93 = 304词)');
           }
           buildActivePool();
         });
@@ -2464,7 +2468,7 @@
             updateStatsUI();
           } else {
             msg.style.background = '#fff1f2';
-            msg.style.color = '#9f1239';
+            msg.style.color = '#9f3049';
             msg.textContent = '请核对参考答案，也可自行标记：' + (flashReverse ? w.docEn : w.zh);
             mistakesMap[w.id] = true; delete masteredMap[w.id];
             saveStorage();
@@ -2616,21 +2620,21 @@
         var p=clipPlayer.play();if(p)p.catch(function(){if(ticket===playbackId)showToast('请再点一次喇叭播放；如仍无声，请检查网络和手机静音设置。');});
       }
       function setupHostedAudio(){
-        ['ch6','ch7','ch8'].forEach(function(ch){
+        ['ch6','ch7','ch8','ch9','ch10'].forEach(function(ch){
           var m=window.AUDIO_INDEX[ch],info=mountedWavs[ch];
           info.loaded=true;info.segments=m.segments;info.defaultDuration=m.duration;
           info.audioEl.preload='metadata';info.audioEl.src='audio/'+ch+'.mp3';
           VOCAB_DATA.filter(function(w){return w.ch===ch;}).forEach(function(w){w.start=m.segments[w.audioIdx].start;w.end=m.segments[w.audioIdx].end;});
           updateWavUI(ch,'已内置原录音',m.duration);
-          var chip=document.getElementById('chipWavCh'+ch.slice(-1));
-          chip.textContent='✓ 第'+ch.slice(-1)+'章 · 原录音就绪';
+          var chip=document.getElementById('chipWavCh'+ch.slice(2));
+          chip.textContent='✓ 第'+ch.slice(2)+'章 · '+(m.synthetic?'合成朗读':'原录音就绪');
           chip.onclick=function(){document.querySelector('#chapterTabs [data-ch="'+ch+'"]').click();};
         });
         document.getElementById('btnFcDirection').addEventListener('click',function(){flashReverse=!flashReverse;stopAudioNow();renderFlashcard();saveProgress();});
         document.getElementById('fcZhInput').setAttribute('autocapitalize','none');
         document.getElementById('fcZhInput').setAttribute('spellcheck','false');
         document.getElementById('btnScopeToggle').classList.remove('active-mode');
-        document.getElementById('deckNowPlayingTitle').textContent='🎧 原录音整章播放（保留听写停顿）';
+        document.getElementById('deckNowPlayingTitle').textContent='🎧 整章播放（第6—8章原录音，第9—10章合成朗读）';
         document.getElementById('sheetSubStatus').textContent='跟随当前章节与顺序；每词播完后留出书写时间。中文可对照参考自评。';
         document.getElementById('pracFeedback').setAttribute('aria-live','polite');
         document.getElementById('deckScrubber').setAttribute('aria-label','整章播放进度');
@@ -2641,7 +2645,7 @@
         document.querySelector('.wav-upload-trigger').style.display='none';
         var modal=document.querySelector('#wavModal .modal-box');
         modal.querySelector('h3').textContent='🎵 原录音使用说明';
-        modal.querySelector('p').textContent='三章原录音和124个逐词片段已经内置。打开网页即可播放，无需重新上传。第八章末尾的附加词可用上方“纯文档词表”按钮开关；默认练习文档内123词。整章音频保留原始停顿，逐词听写已去除长静音。';
+        modal.querySelector('p').textContent='第六至八章使用原录音，第九至十章使用合成英语女声；305个逐词片段已经内置。打开网页即可播放，无需重新上传。第八章末尾的附加词可用上方“纯文档词表”按钮开关；默认练习文档内304词。整章音频保留原始停顿，逐词听写已去除长静音。';
         modal.querySelectorAll('input[type=file]').forEach(function(input){input.closest('label').style.display='none';});
         document.querySelectorAll('.wav-pill').forEach(function(p){p.style.cursor='default';});
         document.addEventListener('click',function(){setTimeout(saveProgress,0);});
@@ -2678,7 +2682,7 @@
       function restoreProgress(){
         try{
           var p=JSON.parse(localStorage.getItem('ielts_678_progress_v1')||'null');if(!p)return;
-          if(!['ch6','ch7','ch8','all','mistakes'].includes(p.chapter))return;
+          if(!['ch6','ch7','ch8','ch9','ch10','all','mistakes'].includes(p.chapter))return;
           currentChapter=p.chapter;includeAudioExtra=!!p.extra;isRandomOrder=!!p.random;flashReverse=!!p.reverse;
           buildActivePool();
           if(Array.isArray(p.order)&&p.order.length===activePool.length){
@@ -2689,7 +2693,7 @@
           document.querySelectorAll('#chapterTabs .ch-tab').forEach(function(t){t.classList.toggle('active',t.dataset.ch===currentChapter);});
           document.getElementById('btnOrderToggle').textContent=isRandomOrder?'🔀 随机抽查顺序':'📑 严格按音频顺序';
           document.getElementById('btnOrderToggle').classList.toggle('active-mode',isRandomOrder);
-          document.getElementById('btnScopeToggle').textContent=includeAudioExtra?'🎧 含音频8末尾附加词 (124词)':'📖 纯文档词表 (123词)';
+          document.getElementById('btnScopeToggle').textContent=includeAudioExtra?'🎧 含音频8末尾附加词 (305词)':'📖 纯文档词表 (304词)';
           document.getElementById('btnScopeToggle').classList.toggle('active-mode',includeAudioExtra);
           updateStatsUI();renderPracticeCard();renderFlashcard();
           var nav=document.querySelector('#bottomNav [data-mode="'+p.mode+'"]');if(nav)nav.click();
@@ -2700,6 +2704,7 @@
       setupHostedAudio();
       buildActivePool();
       restoreProgress();
+      if((function(){try{return !localStorage.getItem("ielts_ch910_seen");}catch(e){return false;}})()){document.querySelector('#chapterTabs [data-ch="ch9"]').click();document.querySelector('#bottomNav [data-mode="practice"]').click();try{localStorage.setItem("ielts_ch910_seen","1");}catch(e){}}
     })();
   </script>
 </body>
